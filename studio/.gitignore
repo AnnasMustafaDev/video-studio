@@ -1,0 +1,7 @@
+node_modules
+dist
+.DS_Store
+.env
+
+# Renders, stills and the stills bundle. Videos you import go in public/ and are tracked.
+out/

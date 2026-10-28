@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Motion Studio preview</title>
+<link rel="icon" href="data:," />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div id="viewport">
+  <div id="stage">
+    <!-- dark: the hook and the problem -->
+    <section id="dark" class="layer">
+      <div id="hook" class="headline hero"></div>
+    </section>
+
+    <!-- light: the product -->
+    <section id="light" class="layer">
+      <div id="cap" class="headline"></div>
+      <div id="win">
+        <div class="screen">
+          <div class="cam">
+            <img id="shot" alt="" src="../assets/screen.svg" />
+          </div>
+          <div id="spot"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- end card -->
+    <section id="end" class="layer">
+      <div id="poster">
+        <div class="prule"></div>
+        <h1 class="ptitle"><span>Product</span></h1>
+        <div class="ptag">One line of value. <em>One accent.</em></div>
+        <div class="pcta">example.com</div>
+      </div>
+    </section>
+
+    <div id="brand"><span>Brand</span></div>
+    <div id="ring"></div>
+    <svg id="cursor" viewBox="0 0 24 24"><path d="M4 2 L4 19 L8.6 14.8 L11.4 21.4 L14.2 20.2 L11.4 13.8 L17.6 13.6 Z" /></svg>
+    <div id="subs"><span></span></div>
+  </div>
+</div>
+
+<div id="bar">
+  <button id="play" aria-label="Play">Play</button>
+  <input id="scrub" type="range" min="0" max="1000" value="0" aria-label="Timeline" />
+  <span id="time" class="mono">0.0 s</span>
+  <label><input id="subsToggle" type="checkbox" /> Subtitles</label>
+</div>
+<script type="module" src="main.js"></script>
+</body>
+</html>

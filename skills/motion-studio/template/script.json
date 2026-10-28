@@ -1,0 +1,25 @@
+{
+  "title": "Product film",
+  "fps": 60,
+  "bpm": 110,
+  "voice": { "voice": "af_heart", "speed": 0.96, "whisper": "base.en" },
+  "scenes": {
+    "hook": { "minBars": 2, "lead": 0.5, "gaps": [0.5], "tail": 0 },
+    "product": { "minBars": 4, "lead": 1, "gaps": [1], "tail": 2 },
+    "end": { "minBars": 3, "lead": 1, "gaps": [], "tail": 3 }
+  },
+  "music": {
+    "chords": [[220, 261.63, 329.63], [174.61, 220, 261.63], [196, 261.63, 329.63], [196, 246.94, 293.66]],
+    "roots": [55, 43.65, 65.41, 49],
+    "intro": ["hook"],
+    "breakdown": [],
+    "lift": "product",
+    "endHit": true
+  },
+  "lines": [
+    { "id": "h1", "scene": "hook", "text": "Four hours, every week.", "de": "Vier Stunden, jede Woche." },
+    { "id": "p1", "scene": "product", "text": "Now it builds itself.", "de": "Jetzt baut es sich selbst." },
+    { "id": "p2", "scene": "product", "text": "One click, and it's done.", "de": "Ein Klick, und es ist fertig." },
+    { "id": "e1", "scene": "end", "text": "Try it today.", "de": "Probieren Sie es heute aus." }
+  ]
+}

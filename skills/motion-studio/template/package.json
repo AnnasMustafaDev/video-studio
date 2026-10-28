@@ -1,0 +1,21 @@
+{
+  "name": "motion-studio-project",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "serve": "node tools/serve.mjs",
+    "timeline": "node tools/timeline.mjs",
+    "music": "node tools/music.mjs",
+    "preview": "node tools/render.mjs preview",
+    "render": "node tools/render.mjs video out/work/video.mp4 blur=4",
+    "mix": "node tools/mix.mjs",
+    "srt": "node tools/srt.mjs"
+  },
+  "dependencies": {
+    "@fontsource/jetbrains-mono": "5.1.0",
+    "@fontsource/manrope": "5.1.0",
+    "gsap": "3.13.0",
+    "lucide-static": "0.460.0",
+    "playwright-core": "1.56.1"
+  }
+}

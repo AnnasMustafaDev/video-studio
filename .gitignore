@@ -1,0 +1,9 @@
+node_modules/
+out/
+.cache/
+*.log
+.DS_Store
+# renders and review images stay local; markdown paper trail is tracked
+projects/**/*.png
+projects/**/*.jpg
+projects/**/*.mp4

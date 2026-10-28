@@ -1,0 +1,2 @@
+# Index cache if PROMPT_MOTION_CACHE points here (default lives in ~/.cache/prompt-motion-search/)
+.cache/

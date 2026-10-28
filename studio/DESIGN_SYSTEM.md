@@ -191,6 +191,72 @@ See Transitions above.
 
 `useInOut({delay, durationInFrames})` (enter/exit progress), `useStagger()`, `useSafeArea()`, `directionVector()`.
 
+## Frame ramp, text floor, one accent per frame (video-native type)
+
+The px `type` scale above is for reading text. For hero moments use the frame ramp in `tokens.ts`: sizes in percent of the composition WIDTH (vw), so a hero word can fill the frame instead of collapsing into a web layout. Evidence: a published launch-video spec (HeyGen frame spec); reasoning documented, numbers not independently checked.
+
+| Step | vw | px at 1920 | Use |
+|---|---|---|---|
+| `wordmark` | 30 | 576 | One giant keyword, once per film |
+| `stat` | 18 | 346 | A numeral that is the whole scene |
+| `display` | 14 | 269 | One or two words |
+| `claim` | 6.5 | 125 | A claim or fragment line (source says 6 to 9; 6.5 fits five words in the safe area) |
+| `reading` | 3.2 | 61 | Reading text on a hero frame |
+| `label` | 1.4 | 27 | Chrome labels: the text floor |
+
+Text floor: nothing below `TEXT_FLOOR_VW` (1.4 vw, 27 px at 1920); `frameType()` enforces it. Accent: one accented thing per frame, a test you can run on any still. Atoms (colours, families) are sacred, composition is free, numbers come from the script.
+
+```tsx
+const t = useFrameType("stat");            // { fontSize, lineHeight, letterSpacing, fontWeight }
+<div style={{ fontFamily: font.sans, ...t }}>30</div>
+```
+
+### `<FragmentChain>`: film copy as fragments (F-A2)
+
+1 to 4 word fragments with a picture beat between them. `mode="build"`: fragments append to one held line, the newest in the accent, the line re-centres once per fragment (widths measured with a canvas, so the font must be loaded; `fonts.ts` blocks rendering until it is). `mode="replace"`: each leaves whole, the next takes the same centre. Budget: about 15 to 25 words per 30 s, 6 or fewer for a muted loop, at most 8 words on one frame, copy on at most about 65 % of frames. Check with `lintCopy()` or `node scripts/copy-lint.mjs "a|b|c" --seconds 11`. Evidence: numbers from one author's study of eight films (their claim); the discipline is good, taste evidence mixed.
+
+```tsx
+<FragmentChain fragments={["Move once.", "Land softly.", "Cut."]} mode="build" step="claim" framesPerFragment={26} delay={6} />
+```
+
+### `<GhostType>`: typed text with a locked box (F-C14)
+
+The full text is always laid out; untyped characters are transparent, so lines never reflow and the card never jumps. No cursor (cursors stay out of the system). Use only when a brief calls for typed text (prompt box, terminal).
+
+```tsx
+<GhostType text="Same frame, same pixels." fontSize={t.fontSize} delay={30} maxWidth={1000} />
+```
+
+### `<Camera>` with `speedCurve` and `logZoom` (F-B4)
+
+Camera speed is a table of shares of cruise speed over seconds, integrated into position, so it cannot surge or stop unless the table says so. Zoom runs in log space. Write the table in the storyboard as the camera language of a glide shot. Evidence: one precisely described prompt; the optical-flow check from it is not built.
+
+```tsx
+const cam = speedCurve([[0, 0], [0.5, 0.55], [1.1, 1], [2.2, 1], [3, 0.15], [3.3, 0]], { fps: 30, distance: 2600 });
+<Camera x={cam.position(frame)} zoom={logZoom(p, 1, 1.35)}>...</Camera>
+```
+
+### `buoyant()`: a rising element that never freezes (F-A3)
+
+Cubic ease-out plus a half-sine bob over the whole move; ends exactly at 1 with about 2 % overshoot, so it is the one bounce allowed: one element per scene. Check any move with `node scripts/export-curve.mjs buoyant` (prints the longest mid-move stall) and plot the JSON with `inspect.mjs plot`. Evidence: one production write-up; the constants are this studio's own.
+
+```tsx
+const rise = (1 - buoyant()(progress)) * 90;   // px, progress 0..1
+```
+
+## Transitions added
+
+| Preset | When | Evidence |
+|---|---|---|
+| `velocityCut({ travel, frames })` + `velocityCutTiming(frames)` | Momentum should cross the edit: the outgoing scene accelerates (x1.15 per 60-fps frame) and is cut at its fastest frame; the incoming scene starts at the same speed (36 px per 60-fps frame, never above 60) and decays x0.93 per frame. Delay the incoming scene's entrances by `0.4 * frames`. Text must be under 20 px per frame when read. | Author-measured numbers, claimed |
+| `occluderCut({ from })` + `occluderTiming(frames)` | A soft neutral band sweeps across and the hard cut happens at the midpoint, with a 28 px drag before and a settle after. | Author-tuned on placeholder material: a starting point |
+
+Still at most three transition types per video. Line-carry, impact slam and light leak are not built: line-carry needs per-scene cooperation, and glows and leaks are outside this system.
+
+## Frame arithmetic traps
+
+Listed in the header of `src/lib/curves.ts`: `fadeIn(0)` is an empty frame, exit fades must reach 0 on the last frame, frame N is the first frame after an N-frame move, no double fades, keyframes start off-screen, freeze copy before hard-coding frames. Helpers: `softFade`, `exitOpacity`.
+
 ## Not in the system (on purpose)
 
 Glows, lens flares, light leaks, particles, 3D tilts, typewriter cursors, elastic bounces, rainbow gradients. If a brief truly needs one, add it as a deliberate, documented component, not a one-off.

@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Day 2 · Kinetic typography sequence · Video Studio</title>
+<meta name="description" content="Practise timing, easing and stagger with a short type-only sequence.">
+<meta property="og:title" content="Day 2 · Kinetic typography sequence · Video Studio">
+<meta property="og:description" content="Practise timing, easing and stagger with a short type-only sequence.">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23eef3ff'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%233b6cf6'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../../assets/site.css">
+<link rel="stylesheet" href="../../../assets/panel-skills.css">
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="../../../"><span class="dot"></span>Video Studio</a>
+    <nav class="main" aria-label="Main"><a href="../../../">Home</a><a href="../../../tour/">Tour</a><a href="../../../guide/">Guide</a><a href="../../../skills/">Skills</a><a href="../../../prompts/" aria-current="page">Prompts</a><a href="../../../studio/">Studio</a><a href="../../../techniques/">Techniques</a><a href="../../../shot-library/">Shot library</a><a href="../../../research/">Research</a><a href="../../../gallery/">Gallery</a><a href="../../../credits/">Credits</a></nav>
+    <div class="tools">
+      <a class="btn" href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">GitHub</a>
+      <button class="btn" id="theme-toggle" type="button" aria-label="Toggle light or dark theme">Theme</button>
+    </div>
+  </div>
+</header>
+<main>
+  <div class="wrap">
+<nav class="crumbs ps-crumbs" aria-label="Breadcrumb"><a href="../../../">Home</a> <span aria-hidden="true">/</span> <a href="../../../prompts/">Prompts</a> <span aria-hidden="true">/</span> <a href="../../../prompts/#learning-plan">Learning plan</a> <span aria-hidden="true">/</span> <span aria-current="page">Day 2 · Kinetic typography sequence</span></nav><div class="ps-narrow"><header class="ps-head"><div class="ps-badges"><span class="badge plain">Day 2</span> <span class="badge">Learning plan</span> </div><h1>Kinetic typography sequence</h1></header><dl class="ps-info ps-info-prompt"><div class="wide"><dt>Purpose</dt><dd>Practise timing, easing and stagger with a short type-only sequence.</dd></div><div class=""><dt>Use when</dt><dd>Day 2 of the 7-day plan. Main skill: timing, easing and stagger.</dd></div><div class=""><dt>Stage</dt><dd>Learning. Uses <a href="../../63-kinetic-type-hook/"><code>63-kinetic-type-hook.md</code></a> principles with deliberate easing experiments.</dd></div><div class=""><dt>Inputs you must fill in</dt><dd><code>[a 10 to 15 word line]</code>, <code>[bpm or &quot;no music&quot;]</code>.</dd></div><div class=""><dt>Expected output</dt><dd>A beat map, one sequence built three ways (linear, ease-out, spring), side-by-side stills, your pick with reasons, files in <code>learning/day-2/</code>.</dd></div><div class=""><dt>Next prompt</dt><dd><a href="../../13-quality-review/"><code>13-quality-review.md</code></a>, <a href="../../70-post-mortem/"><code>70-post-mortem.md</code></a> (short), then <a href="../day-3/"><code>day-3.md</code></a>.</dd></div></dl><section class="ps-section ps-prompt"><h2 id="prompt">Prompt</h2>
+<pre><code class="lang-text">Learning day 2: a kinetic typography sequence, 8 to 10 seconds, 16:9, 30 fps. The goal is timing, easing and stagger.
+
+Text: &quot;[line of 10 to 15 words]&quot;. Rhythm: [bpm or &quot;no music, natural reading pace&quot;].
+
+1. Beat map: split the text into 4 to 6 beats, one phrase each. Give frame ranges, the emphasis word per beat, and the hold before each exit. Reading time: at least 0.3 s per word on screen, plus 0.5 s.
+2. Build the sequence three times as separate compositions, identical except for the motion curve: (a) linear interpolate, (b) ease-out cubic-bezier, name it, (c) spring with a named config and a subtle overshoot. Stagger words by a fixed number of frames; tell me the number.
+3. Then vary the stagger only on version (c): 1, 3 and 6 frames per word. Render the same mid-reveal frame for each.
+4. Render matching stills (same frames) for all versions and put them side by side. Describe the difference in feel in plain words, and which one you would ship and why.
+5. Teach me: what overshoot, settle, stagger and hold look like in these stills, pointing at specific frames.</code></pre></section><section class="ps-section ps-additions"><h2 id="studio-additions">Studio additions</h2>
+<pre><code class="lang-text">Compositions Day2Linear, Day2Ease, Day2Spring (and Day2Stagger1/3/6) in studio/src/videos/day-2/, sharing one staggered-text component from studio/src/lib/ with the curve as a prop. Stills via npm run stills -- [CompId] [frames]. Save brief, prompt, beat map and notes to learning/day-2/. If you could not view the stills, say so.</code></pre></section><nav class="ps-prevnext" aria-label="Previous and next"><a class="ps-pn prev" href="../day-1/"><span class="ps-pn-dir">Previous</span><span class="ps-pn-title">5-second animated title</span></a><a class="ps-pn next" href="../day-3/"><span class="ps-pn-dir">Next</span><span class="ps-pn-title">Animated product UI demo</span></a></nav><p class="ps-small"><a href="https://github.com/AnnasMustafaDev/video-studio/blob/main/prompts/learning/day-2.md" rel="noopener noreferrer">View this prompt on GitHub</a></p></div>
+  </div>
+</main>
+<footer class="site">
+  <div class="wrap cols">
+    <div>
+      <strong>Video Studio</strong><br>
+      A personal studio for motion graphics and animated videos with Claude Code.
+    </div>
+    <div>
+      <a href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">Source on GitHub</a><br>
+      <a href="../../../credits/">Credits and licences</a>
+    </div>
+  </div>
+</footer>
+<script src="../../../assets/site.js" defer></script>
+</body>
+</html>

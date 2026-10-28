@@ -16,6 +16,8 @@ This repo is where every personal video, animation and motion-graphics job start
 | `learning/` | 7-day plan, one folder per day with brief, prompt, storyboard, notes |
 | `source/` | The notes this repo was built from |
 
+Skills and prompts refer to this repo as `{{VIDEO_STUDIO}}`; `tools/install-skills.mjs` swaps it for the real absolute path when it installs a skill. Never commit a personal absolute path.
+
 ## Which engine
 
 - **Remotion (`studio/`)**: default. Kinetic type, UI demos, diagrams, data viz, explainers, captions, templates.

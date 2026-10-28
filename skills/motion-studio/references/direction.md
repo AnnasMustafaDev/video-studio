@@ -68,3 +68,52 @@ Do not open on the logo, a feature list, or a generic "Introducing…".
 - One action, one label, one place (a URL or an in-app path like "Settings › Exports").
 - On screen for at least 2 seconds, still.
 - The last frame is a clean end card: name, one-line promise, CTA, brand mark.
+
+## Concept triple: Idea, Device, Grammar
+
+Before any directions, fill an inventory of real specifics (product facts, real UI, real numbers). A concept is then three sentences:
+
+- **Idea:** what the viewer should believe, 8 words or fewer.
+- **Device:** one object that carries the idea through every shot (a dot handed from shot to shot that ends as the mark).
+- **Grammar:** a rule the form obeys (opens and closes on the same tick; every change is caused by the cursor).
+
+Write three concepts through different lenses, then kill weak ones with four tests: **ownership** (is it about this product), **deletion** (remove the device; does the film still work? then it is decoration), **specificity** (could only this product say it), **competitor** (could a rival's film say the same). Only then choose techniques. Cheap tells to avoid are in [banned-effects.md](banned-effects.md).
+Why: stops "three looks, no idea", which the three-directions step can still produce. Evidence: doc-level with four worked concepts (F-A11); the strength of the resulting films is only claimed. Extra fields in `directions.md` and `brief.md`, not a new stage.
+
+## Precedent-based taste rules
+
+Rules that earned a place by being sent back in review live in [gotchas.md](gotchas.md) (section "Taste precedents"): each has the rule, the case that produced it, and a self-check. Add new ones in that form (rule, case, check question), merge duplicates with `learnings.md`.
+Why: they pre-empt review rounds. Evidence: first-hand, one author's projects (F-A12).
+
+## Pacing norms (reference numbers, not pass/fail gates)
+
+Measured by one author on professional launch films; the films are not named in what we read, so treat them as sanity numbers for storyboards and reviews. Evidence: the author's claim (F-A13).
+
+| Norm | Number |
+|---|---|
+| Median shot | about 1.5 s; new visual beat about every 0.7 s (calm default about 1 s) |
+| Opening | first frame already moving; first readable word near 0.4 s; product on screen by about 3 s unless a problem act earns the wait |
+| Energy curve | two peaks: a designed lull near 65 percent, the biggest peak near 82 percent; no low-energy stretch over 4 s |
+| Earned stillness | one hold of about 1.0 to 1.6 s on the key claim, then the biggest spike. Spend stillness once |
+| Accent | about 5 percent of pixels |
+| End card | about 2 s total: 0.6 to 1.3 s hold, at most 6 percent creep |
+| Repeats | a repeated reveal runs about 40 percent faster the second time |
+
+Voice-led films follow the voice, not these numbers; use them to spot a storyboard that is flat or all peaks.
+
+## Hook patterns beyond the felt moment
+
+**A story with a breaking point.** For explainers, data stories and kinetic hooks: a small physical story where one quantity builds over N steps and fails visibly at step N (five glasses fill with risk, the last overflows). Write it as numbered steps with a state change at each, start calm, then a sudden failure with a clear visual change. Constraints that stop over-building: a single screen, loopable, minimal interface, input to visible transformation to output.
+Why: two builders independently found it the one pattern that reliably gave an interesting result. Evidence: only claimed (F-C10); fits our "felt human moment" lesson.
+
+**Real assets over synthesised UI.** For a product walkthrough composite a real screen recording or import the real component, with code-made cursor, callouts and zooms; draw UI from scratch only for abstract diagrams. Feed real screenshots and brand images and animate and layer them.
+Why: commenters report fully synthetic UI looks fake and generated SVG looks generic; rendering the app's own components is fine. Evidence: opinion of several builders (F-C11); the HTML engine already does this via `capture.md`.
+
+## Music-led films: beat map first
+
+For films without a voice-over the first deliverable is the beat map: BPM, total beats, how many beats before its drop the song starts, and the structure as beat ranges ("beats 0 to 6: setup; beat 12, the drop: zoom lands"). The drop is the structural anchor; a quiet breakdown carries the hold scene. Rule: "no dead time", not "always moving": the page never empties between beats, and the beat is not a license for constant motion. Voice-led films do not use this; the voice sets the pace. Details: [audio.md](audio.md).
+Why: makes sync a property of the plan. Evidence: consistent across four films (F-B8), sync quality not verified.
+
+## Brief skeleton and start gate
+
+The brief carries, as fixed headings: inputs, direction (with Banned list), structure, build, gotchas, start gate. Template: `~/.claude/skills/motion-director/templates/brief.md`. The start gate is in [golden-scene.md](golden-scene.md).

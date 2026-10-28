@@ -9,10 +9,16 @@
 // An existing installed skill that differs is moved to ~/.claude/skills/.backup/<name>-<UTC timestamp>/
 // first, then replaced by a fresh copy (so files deleted in the repo disappear from the install too).
 // An installed skill identical to the repo copy is left alone.
+//
+// Placeholder: the skills refer to this repo as {{VIDEO_STUDIO}} so no personal path is committed. On install,
+// every {{VIDEO_STUDIO}} in a text file (md, mjs, js, json, txt, yml, yaml) becomes the absolute repo root,
+// derived from this script's location; a path that follows it (e.g. {{VIDEO_STUDIO}}\studio) gets the OS
+// separator (backslashes on Windows). The same/changed comparison uses the transformed content, so a second
+// run reports "unchanged". Binary files are copied byte for byte.
 import { createHash } from 'node:crypto';
-import { cpSync, existsSync, mkdirSync, readdirSync, readFileSync, renameSync, statSync } from 'node:fs';
+import { existsSync, mkdirSync, readdirSync, readFileSync, renameSync, statSync, writeFileSync } from 'node:fs';
 import { homedir } from 'node:os';
-import { dirname, join, relative, resolve } from 'node:path';
+import { dirname, join, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const args = process.argv.slice(2);
@@ -42,10 +48,33 @@ function files(dir, base = dir) {
   return out.sort();
 }
 
-function digest(dir) {
+const TEXT_EXT = new Set(['.md', '.mjs', '.js', '.json', '.txt', '.yml', '.yaml']);
+const PLACEHOLDER = /\{\{VIDEO_STUDIO\}\}([\\/][^\s`'"()<>|,;\]]*)?/g;
+
+// Content as it will be installed: placeholder replaced in text files, everything else untouched.
+function installed(path, rel) {
+  const buf = readFileSync(path);
+  const dot = rel.lastIndexOf('.');
+  if (dot < 0 || !TEXT_EXT.has(rel.slice(dot).toLowerCase())) return buf;
+  const text = buf.toString('utf8');
+  if (!text.includes('{{VIDEO_STUDIO}}')) return buf;
+  return Buffer.from(text.replace(PLACEHOLDER, (_, rest = '') => REPO + rest.replace(/[\\/]/g, sep)), 'utf8');
+}
+
+function digest(dir, transform) {
   const h = createHash('sha256');
-  for (const f of files(dir)) h.update(f).update('\0').update(readFileSync(join(dir, f))).update('\0');
+  for (const f of files(dir)) {
+    h.update(f).update('\0').update(transform ? installed(join(dir, f), f) : readFileSync(join(dir, f))).update('\0');
+  }
   return h.digest('hex');
+}
+
+function copySkill(from, to) {
+  for (const f of files(from)) {
+    const target = join(to, f);
+    mkdirSync(dirname(target), { recursive: true });
+    writeFileSync(target, installed(join(from, f), f));
+  }
 }
 
 if (!existsSync(SRC)) {
@@ -96,7 +125,7 @@ for (const name of selected) {
   let action = 'install';
   let backup = null;
   if (existsSync(to)) {
-    if (digest(from) === digest(to)) {
+    if (digest(from, true) === digest(to, false)) {
       console.log(`  same      ${name}  (${count} files, from ${source}, already up to date)`);
       report.push({ name, source, action: 'unchanged', files: count });
       continue;
@@ -108,7 +137,7 @@ for (const name of selected) {
       renameSync(to, backup);
     }
   }
-  if (!dryRun) cpSync(from, to, { recursive: true, filter: (p) => !SKIP.has(p.split(/[\\/]/).pop()) });
+  if (!dryRun) copySkill(from, to);
   console.log(`  ${action.padEnd(9)} ${name}  (${count} files, from ${source})${backup ? `\n            previous version backed up to ${backup}` : ''}`);
   report.push({ name, source, action, files: count, backup });
 }

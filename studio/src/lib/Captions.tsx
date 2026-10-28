@@ -23,16 +23,30 @@ type Props = {
   readonly pauseMs?: number;
   /** How long a page stays after its last word. */
   readonly lingerMs?: number;
+  /** Cut audio: a page never stays longer than this (see `paginateCaptions`). */
+  readonly maxPageMs?: number;
+  /** Cut audio: start a new page after a word that ends a sentence. */
+  readonly breakOnSentence?: boolean;
   /** Distance above the bottom safe margin. */
   readonly offsetY?: number;
   readonly maxWidth?: number;
   readonly accentColor?: string;
 };
 
+/**
+ * Caption pages. By default a page ends at `maxWordsPerPage` or at a pause longer than `pauseMs`.
+ * On CUT audio (joined takes, trimmed pauses) pauses vanish and one page can swallow dozens of
+ * words (F-C13), so also pass `maxPageMs` and `breakOnSentence`: a page then also ends at a
+ * word cap, a time cap and a sentence end, never by pause alone. Test with a pause-free input.
+ */
 export const paginateCaptions = (
   captions: readonly CaptionWord[],
   maxWordsPerPage: number,
   pauseMs: number,
+  { maxPageMs = Infinity, breakOnSentence = false }: {
+    maxPageMs?: number;
+    breakOnSentence?: boolean;
+  } = {},
 ): Page[] => {
   const pages: Page[] = [];
   for (const word of captions) {
@@ -40,7 +54,9 @@ export const paginateCaptions = (
     const startsNewPage =
       !current ||
       current.words.length >= maxWordsPerPage ||
-      word.startMs - current.endMs > pauseMs;
+      word.startMs - current.endMs > pauseMs ||
+      word.endMs - current.startMs > maxPageMs ||
+      (breakOnSentence && /[.!?]["')\]]?$/.test(current.words[current.words.length - 1].text.trim()));
     if (startsNewPage) {
       pages.push({ words: [word], startMs: word.startMs, endMs: word.endMs });
     } else {
@@ -60,6 +76,8 @@ export const Captions: React.FC<Props> = ({
   maxWordsPerPage = 6,
   pauseMs = 500,
   lingerMs = 400,
+  maxPageMs,
+  breakOnSentence,
   offsetY = 0,
   maxWidth = 1300,
   accentColor = palette.accent,
@@ -69,7 +87,10 @@ export const Captions: React.FC<Props> = ({
   const { insets, width } = useSafeArea();
   const ms = (frame / fps) * 1000;
 
-  const pages = paginateCaptions(captions, maxWordsPerPage, pauseMs);
+  const pages = paginateCaptions(captions, maxWordsPerPage, pauseMs, {
+    maxPageMs,
+    breakOnSentence,
+  });
   const pageIndex = pages.findIndex((p, i) => {
     const nextStart = pages[i + 1]?.startMs ?? Infinity;
     return ms >= p.startMs && ms < Math.min(p.endMs + lingerMs, nextStart);

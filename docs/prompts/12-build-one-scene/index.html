@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>12 · Build one scene · Video Studio</title>
+<meta name="description" content="Implement only scene 1, at full quality, and prove it with rendered frames before anything else is built.">
+<meta property="og:title" content="12 · Build one scene · Video Studio">
+<meta property="og:description" content="Implement only scene 1, at full quality, and prove it with rendered frames before anything else is built.">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23eef3ff'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%233b6cf6'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../assets/site.css">
+<link rel="stylesheet" href="../../assets/panel-skills.css">
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="../../"><span class="dot"></span>Video Studio</a>
+    <nav class="main" aria-label="Main"><a href="../../">Home</a><a href="../../tour/">Tour</a><a href="../../guide/">Guide</a><a href="../../skills/">Skills</a><a href="../../prompts/" aria-current="page">Prompts</a><a href="../../studio/">Studio</a><a href="../../techniques/">Techniques</a><a href="../../shot-library/">Shot library</a><a href="../../research/">Research</a><a href="../../gallery/">Gallery</a><a href="../../credits/">Credits</a></nav>
+    <div class="tools">
+      <a class="btn" href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">GitHub</a>
+      <button class="btn" id="theme-toggle" type="button" aria-label="Toggle light or dark theme">Theme</button>
+    </div>
+  </div>
+</header>
+<main>
+  <div class="wrap">
+<nav class="crumbs ps-crumbs" aria-label="Breadcrumb"><a href="../../">Home</a> <span aria-hidden="true">/</span> <a href="../../prompts/">Prompts</a> <span aria-hidden="true">/</span> <span aria-current="page">12 · Build one scene</span></nav><div class="ps-narrow"><header class="ps-head"><div class="ps-badges"><span class="badge plain">Prompt 12</span> <span class="badge">Staged build</span> <span class="badge warn">Only claimed</span></div><h1>Build one scene</h1></header><dl class="ps-info ps-info-prompt"><div class="wide"><dt>Purpose</dt><dd>Implement only scene 1, at full quality, and prove it with rendered frames before anything else is built.</dd></div><div class=""><dt>Use when</dt><dd>The storyboard is approved.</dd></div><div class=""><dt>Stage</dt><dd>Staged prompt 3 of 4. Implementation, first scene.</dd></div><div class=""><dt>Inputs you must fill in</dt><dd>None in the original. Studio additions: <code>[slug]</code>, <code>[CompId]</code>, <code>[fps]</code>, <code>[width]x[height]</code>.</dd></div><div class=""><dt>Expected output</dt><dd>Scene 1 in code, composition registered, stills rendered and inspected, visible issues fixed. Remaining scenes untouched.</dd></div><div class=""><dt>Why this exists</dt><dd>A written five-line plan and an attached example scene are cheap checks before code. Evidence: the golden-scene idea is only claimed (one Reddit post, standard few-shot principle); the plan-first step is only claimed by two posters. Findings F-C1, F-C7.</dd></div><div class=""><dt>Next prompt</dt><dd><a href="../13-quality-review/"><code>13-quality-review.md</code></a> on scene 1, then <a href="../14-build-next-scene/"><code>14-build-next-scene.md</code></a>.</dd></div></dl><div class="ps-intro-text"><p>Source: notes §6, prompt 3, verbatim.</p></div><section class="ps-section ps-prompt"><h2 id="prompt">Prompt</h2>
+<pre><code class="lang-text">Implement only scene 1 in Remotion using the approved storyboard. Focus on composition, typography, timing and motion quality. Use reusable components and frame-based animation. Start the preview, render representative frames and inspect the actual output if your tools support it. Fix visible issues before proceeding. Do not build the remaining scenes yet.</code></pre></section><section class="ps-section ps-additions"><h2 id="studio-additions">Studio additions</h2>
+<pre><code class="lang-text">Storyboard: projects/[yyyy-mm-dd]-[slug]/storyboard.md.
+Code: studio/src/videos/[slug]/scenes/Scene01.tsx and studio/src/videos/[slug]/[Name].tsx (the composition). Register [CompId] in studio/src/Root.tsx at [width]x[height], [fps] fps, with the full duration from the storyboard (later scenes can be placeholders of the right length).
+Take every colour, font, spacing, easing and timing default from studio/src/lib/tokens.ts and existing components in studio/src/lib/. If you need a new reusable piece, put it in studio/src/lib/ and note it.
+Check: npm run stills -- [CompId] [the scene-1 frames from the storyboard] in studio/. Open each image and describe what you see. Check clipping, safe margins, alignment, font loaded, focal point, and that motion is mid-ease at transition midpoints. If you could not view the images, say so.
+Plan check before code (five lines, then wait only if the scene is risky): what you will build, what you will not touch, the tokens and lib components you will reuse, the one thing most likely to go wrong, and which stills prove it. If a fresh agent is cheap here, have it list the five weakest decisions of that plan first.
+Golden scene: if an approved scene from an earlier video of the same type exists (see the golden scenes list at the end of studio/DESIGN_SYSTEM.md), read it and build this scene in the same structure (beat mapping, stagger, entrance style), changing only the content, and list what you copied. Once this scene passes prompt 13 it becomes the golden scene for scenes 2 to N.
+Stop after scene 1.</code></pre>
+<p>Source: golden-scene wording after u/Sangkwun and plan-first after u/TheHol1day (r/ClaudeAI); our wording.</p></section><nav class="ps-prevnext" aria-label="Previous and next"><a class="ps-pn prev" href="../17-pick-shots-from-library/"><span class="ps-pn-dir">Previous</span><span class="ps-pn-title">17 · Pick shots from the library</span></a><a class="ps-pn next" href="../13-quality-review/"><span class="ps-pn-dir">Next</span><span class="ps-pn-title">13 · Visual quality review</span></a></nav><p class="ps-small"><a href="https://github.com/AnnasMustafaDev/video-studio/blob/main/prompts/12-build-one-scene.md" rel="noopener noreferrer">View this prompt on GitHub</a></p></div>
+  </div>
+</main>
+<footer class="site">
+  <div class="wrap cols">
+    <div>
+      <strong>Video Studio</strong><br>
+      A personal studio for motion graphics and animated videos with Claude Code.
+    </div>
+    <div>
+      <a href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">Source on GitHub</a><br>
+      <a href="../../credits/">Credits and licences</a>
+    </div>
+  </div>
+</footer>
+<script src="../../assets/site.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Day 6 · Sound-designed version · Video Studio</title>
+<meta name="description" content="Practise audio synchronization and pacing by sound-designing the day 5 teaser.">
+<meta property="og:title" content="Day 6 · Sound-designed version · Video Studio">
+<meta property="og:description" content="Practise audio synchronization and pacing by sound-designing the day 5 teaser.">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23eef3ff'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%233b6cf6'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../../assets/site.css">
+<link rel="stylesheet" href="../../../assets/panel-skills.css">
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="../../../"><span class="dot"></span>Video Studio</a>
+    <nav class="main" aria-label="Main"><a href="../../../">Home</a><a href="../../../tour/">Tour</a><a href="../../../guide/">Guide</a><a href="../../../skills/">Skills</a><a href="../../../prompts/" aria-current="page">Prompts</a><a href="../../../studio/">Studio</a><a href="../../../techniques/">Techniques</a><a href="../../../shot-library/">Shot library</a><a href="../../../research/">Research</a><a href="../../../gallery/">Gallery</a><a href="../../../credits/">Credits</a></nav>
+    <div class="tools">
+      <a class="btn" href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">GitHub</a>
+      <button class="btn" id="theme-toggle" type="button" aria-label="Toggle light or dark theme">Theme</button>
+    </div>
+  </div>
+</header>
+<main>
+  <div class="wrap">
+<nav class="crumbs ps-crumbs" aria-label="Breadcrumb"><a href="../../../">Home</a> <span aria-hidden="true">/</span> <a href="../../../prompts/">Prompts</a> <span aria-hidden="true">/</span> <a href="../../../prompts/#learning-plan">Learning plan</a> <span aria-hidden="true">/</span> <span aria-current="page">Day 6 · Sound-designed version</span></nav><div class="ps-narrow"><header class="ps-head"><div class="ps-badges"><span class="badge plain">Day 6</span> <span class="badge">Learning plan</span> </div><h1>Sound-designed version</h1></header><dl class="ps-info ps-info-prompt"><div class="wide"><dt>Purpose</dt><dd>Practise audio synchronization and pacing by sound-designing the day 5 teaser.</dd></div><div class=""><dt>Use when</dt><dd>Day 6 of the 7-day plan. Main skill: audio synchronization and pacing.</dd></div><div class=""><dt>Stage</dt><dd>Learning. A run of <a href="../../50-sound-design/"><code>50-sound-design.md</code></a> on Day5Teaser.</dd></div><div class=""><dt>Inputs you must fill in</dt><dd><code>[music file and licence, or &quot;compose one&quot;]</code>, <code>[SFX source]</code>.</dd></div><div class=""><dt>Expected output</dt><dd>A cue sheet, music and SFX placed by peak, one picture tweak the sound revealed, a measured -14 LUFS mix, a silent vs sound comparison note, files in <code>learning/day-6/</code>.</dd></div><div class=""><dt>Next prompt</dt><dd><a href="../../53-final-render-delivery/"><code>53-final-render-delivery.md</code></a> on the teaser, then <a href="../day-7/"><code>day-7.md</code></a>.</dd></div></dl><section class="ps-section ps-prompt"><h2 id="prompt">Prompt</h2>
+<pre><code class="lang-text">Learning day 6: sound-design the day 5 teaser (Day5Teaser). The goal is audio synchronization and pacing.
+
+Music: [file and licence, or &quot;compose a bed in code&quot;]. SFX: [source, or &quot;synthesise whoosh, pop, click with ffmpeg&quot;].
+
+1. Cue sheet: every visual hit that deserves sound (transitions, the reveal, the end card) with frame, sound, level and reason. Also mark one place where silence is stronger. Fewer cues are better. Show it to me first.
+2. Music: sparse under the hook, a lift into the reveal, an impact on the reveal frame, a clean ending on the end card. Tell me where scene cuts and bar lines disagree, and propose moving cuts by a few frames to land on the beat. Apply only what I approve.
+3. SFX placed by their peak on the visual hit, not by their start.
+4. Mix to -14 LUFS integrated, true peak at or below -1 dBTP. Measure with ffmpeg ebur128 and report the numbers.
+5. Render the teaser with sound. Write a short comparison: what the sound changed about the pacing and the feel compared with the silent day 5 version.
+6. Teach me: what &quot;place by peak&quot;, ducking, LUFS and true peak mean, in one line each.</code></pre></section><section class="ps-section ps-additions"><h2 id="studio-additions">Studio additions</h2>
+<pre><code class="lang-text">Audio in studio/public/audio/day-5/, cue frames in studio/src/videos/day-5/cues.ts derived from scene starts. Measure: ffmpeg -i [mix.wav or mp4] -af ebur128=peak=true -f null -. Save the cue sheet, numbers and notes to learning/day-6/.</code></pre></section><nav class="ps-prevnext" aria-label="Previous and next"><a class="ps-pn prev" href="../day-5/"><span class="ps-pn-dir">Previous</span><span class="ps-pn-title">15-second product teaser</span></a><a class="ps-pn next" href="../day-7/"><span class="ps-pn-dir">Next</span><span class="ps-pn-title">Recreate a reference style</span></a></nav><p class="ps-small"><a href="https://github.com/AnnasMustafaDev/video-studio/blob/main/prompts/learning/day-6.md" rel="noopener noreferrer">View this prompt on GitHub</a></p></div>
+  </div>
+</main>
+<footer class="site">
+  <div class="wrap cols">
+    <div>
+      <strong>Video Studio</strong><br>
+      A personal studio for motion graphics and animated videos with Claude Code.
+    </div>
+    <div>
+      <a href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">Source on GitHub</a><br>
+      <a href="../../../credits/">Credits and licences</a>
+    </div>
+  </div>
+</footer>
+<script src="../../../assets/site.js" defer></script>
+</body>
+</html>

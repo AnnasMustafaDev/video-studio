@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Motion vocabulary for directing (motion-director) · Video Studio</title>
+<meta name="description" content="Knowing these terms lets you direct precisely. Use the prompt terms in briefs and storyboards.">
+<meta property="og:title" content="Motion vocabulary for directing (motion-director) · Video Studio">
+<meta property="og:description" content="Knowing these terms lets you direct precisely. Use the prompt terms in briefs and storyboards.">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23eef3ff'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%233b6cf6'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../../assets/site.css">
+<link rel="stylesheet" href="../../../assets/panel-skills.css">
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="../../../"><span class="dot"></span>Video Studio</a>
+    <nav class="main" aria-label="Main"><a href="../../../">Home</a><a href="../../../tour/">Tour</a><a href="../../../guide/">Guide</a><a href="../../../skills/" aria-current="page">Skills</a><a href="../../../prompts/">Prompts</a><a href="../../../studio/">Studio</a><a href="../../../techniques/">Techniques</a><a href="../../../shot-library/">Shot library</a><a href="../../../research/">Research</a><a href="../../../gallery/">Gallery</a><a href="../../../credits/">Credits</a></nav>
+    <div class="tools">
+      <a class="btn" href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">GitHub</a>
+      <button class="btn" id="theme-toggle" type="button" aria-label="Toggle light or dark theme">Theme</button>
+    </div>
+  </div>
+</header>
+<main>
+  <div class="wrap">
+<nav class="crumbs ps-crumbs" aria-label="Breadcrumb"><a href="../../../">Home</a> <span aria-hidden="true">/</span> <a href="../../../skills/">Skills</a> <span aria-hidden="true">/</span> <a href="../../../skills/motion-director/">motion-director</a> <span aria-hidden="true">/</span> <span aria-current="page">Motion vocabulary for directing</span></nav><header class="ps-head"><div class="ps-badges"><span class="badge plain">Reference</span> <span class="badge">motion-director</span></div><h1>Motion vocabulary for directing</h1></header><div class="ps-doc"><article class="ps-article"><p>Knowing these terms lets you direct precisely. Use the prompt terms in briefs and storyboards.</p>
+<table><thead><tr><th>Term</th><th>What it is</th><th>Use it for</th><th>Prompt terms</th></tr></thead><tbody><tr><td><strong>Kinetic typography</strong></td><td>Text itself is the animation: words slide, scale, split, rotate, reveal, change emphasis</td><td>Hooks, title sequences, product statements</td><td>word-by-word reveal, staggered text, per-character animation, masked reveal, tracking expansion</td></tr><tr><td><strong>Easing and springs</strong></td><td>Easing shapes acceleration; a spring adds a physical response, possibly with overshoot. The biggest difference between robotic and polished motion</td><td>Every move</td><td>ease-out, cubic-bezier, spring animation, subtle overshoot, settling motion, no linear movement unless intentional</td></tr><tr><td><strong>Staging and hierarchy</strong></td><td>Staging decides what the viewer notices first; hierarchy decides what matters most. Don&#39;t animate everything equally</td><td>Every frame</td><td>single focal point, negative space, foreground / midground / background, parallax, asymmetric composition, controlled hierarchy</td></tr><tr><td><strong>Transitions and match cuts</strong></td><td>A transition connects scenes; a match cut uses a shared shape, position, motion or idea so the change feels continuous</td><td>Scene changes</td><td>match cut, shape morph, directional wipe, camera-driven transition, overlapping transition, motivated cut</td></tr><tr><td><strong>Lighting, texture, depth</strong></td><td>Make flat graphics tactile or cinematic. Use selectively: too much glow, blur and grain look cheap</td><td>Hero moments, backgrounds</td><td>rim lighting, soft bloom, ambient occlusion, subtle film grain, depth of field, specular highlights</td></tr></tbody></table>
+<h2 id="animation-principles-worth-naming">Animation principles worth naming</h2>
+<ul><li><strong>Anticipation:</strong> a small move against the direction before the main move.</li><li><strong>Follow-through and overlap:</strong> parts settle at different times; the label lands after the card.</li><li><strong>Overshoot and settle:</strong> passes the target slightly, returns. Small for UI and type, larger for playful brands.</li><li><strong>Stagger:</strong> items start one after another (40 to 80 ms), or each on its spoken word.</li><li><strong>Arcs:</strong> natural moves curve; straight lines read mechanical.</li><li><strong>Hold:</strong> stillness so the viewer can read. A hold is a decision, not dead time.</li><li><strong>Squash and stretch:</strong> for characters and playful shapes; avoid on UI and type.</li></ul>
+<h2 id="camera-and-transition-words">Camera and transition words</h2>
+<p>push in / pull out, dolly, truck, crane, whip pan (both shots on screen), rack focus, parallax, screen-recorder zoom (content scales inside a fixed frame), flood (a shape grows past the corners to become the next scene), shared element (an object becomes the next scene), mask reveal, iris, hard cut on the beat, J-cut / L-cut (sound leads or trails the picture).</p>
+<h2 id="sound-words">Sound words</h2>
+<p>bed (music under everything), sting (short musical accent), riser (builds into a moment), impact / hit, whoosh (by its peak, on the move), UI click / tick, room tone, ducking (music dips under voice), silence as accent, -14 LUFS (web loudness).</p>
+<h2 id="frame-based-reminder-for-whoever-builds-it">Frame-based reminder (for whoever builds it)</h2>
+<p>Every animation is a pure function of the frame: in Remotion <code>useCurrentFrame()</code>, <code>interpolate()</code>, <code>spring()</code>, <code>useVideoConfig()</code>; no CSS transitions, <code>requestAnimationFrame</code>, timers or unseeded randomness. Same frame in, same image out.</p>
+<h2 id="added-terms-research-round">Added terms (research round)</h2>
+<table><thead><tr><th>Term</th><th>What it is</th><th>Prompt terms</th></tr></thead><tbody><tr><td><strong>X becomes Y</strong></td><td>The storyboard form of a transition: outgoing object, carried content, incoming object</td><td>iris, accordion squeeze, flood-and-contract, line carry, label carry</td></tr><tr><td><strong>Velocity-matched cut</strong></td><td>Cut at the fastest frame; the next shot starts at that speed and brakes</td><td>exit ramp, entry decay, momentum across the cut</td></tr><tr><td><strong>Occluder cut</strong></td><td>A soft foreground object covers the screen and the cut hides inside it</td><td>hidden cut, no-cut transition</td></tr><tr><td><strong>Light-leak burn</strong></td><td>A wash ramps up, the cut hides at the peak, it recedes faster; the old picture washes out</td><td>leak, burn (tint with the accent, no flare)</td></tr><tr><td><strong>Fragment chain</strong></td><td>Copy as 1 to 4 word pieces, build mode (append, newest in accent) or replace mode</td><td>fragment, build, replace, one giant keyword</td></tr><tr><td><strong>Karaoke fill, weight pump</strong></td><td>Word fills at speaking rate; variable-font weight pulses on the beat</td><td>word fill, weight envelope</td></tr><tr><td><strong>Earned stillness</strong></td><td>One hold on the key claim, then the biggest spike; spend it once</td><td>hold, drop-out, silence hole</td></tr><tr><td><strong>Golden scene</strong></td><td>An approved scene used as the working example for the rest</td><td>reference scene</td></tr></tbody></table>
+<p>Named moves written in the card format (intent, core motion, parameters with what happens if wrong, pitfalls) belong to the shot library: <code>skills/shot-library</code>. Draw 3 to 5 moves from it when a film risks repeating the familiar fade-up, push-in and end card.</p><nav class="ps-prevnext" aria-label="Previous and next"><a class="ps-pn prev" href="../storyboard/"><span class="ps-pn-dir">Previous</span><span class="ps-pn-title">Storyboard</span></a><a class="ps-pn next" href="../template-acceptance/"><span class="ps-pn-dir">Next</span><span class="ps-pn-title">Acceptance criteria: &lt;title&gt;</span></a></nav></article><aside class="ps-side"><details class="ps-side-d" open><summary>On this page</summary><ul class="ps-toc"><li class="l2"><a href="#animation-principles-worth-naming">Animation principles worth naming</a></li><li class="l2"><a href="#camera-and-transition-words">Camera and transition words</a></li><li class="l2"><a href="#sound-words">Sound words</a></li><li class="l2"><a href="#frame-based-reminder-for-whoever-builds-it">Frame-based reminder (for whoever builds it)</a></li><li class="l2"><a href="#added-terms-research-round">Added terms (research round)</a></li></ul></details><details class="ps-side-d" open><summary>In motion-director</summary><ul class="ps-sidelist"><li><a href="../">SKILL.md</a></li><li><a href="../brief/">The brief: 10 ingredients</a></li><li><a href="../directions/">Three creative directions</a></li><li><a href="../director-review/">Director review of the plan (Round 0)</a></li><li><a href="../reference-analysis/">Reference breakdown</a></li><li><a href="../storyboard/">Storyboard</a></li><li class="on"><span aria-current="page">Motion vocabulary for directing</span></li><li><a href="../template-acceptance/">Acceptance criteria: &lt;title&gt;</a></li><li><a href="../template-brief/">Brief: &lt;title&gt;</a></li><li><a href="../template-directions/">Directions: &lt;title&gt;</a></li><li><a href="../template-glossary/">Glossary: &lt;title&gt;</a></li><li><a href="../template-reference/">Reference breakdown: &lt;reference name / file&gt;</a></li><li><a href="../template-storyboard/">Storyboard: &lt;title&gt;</a></li></ul></details><p class="ps-side-foot"><a href="https://github.com/AnnasMustafaDev/video-studio/blob/main/skills/motion-director/references/vocabulary.md" rel="noopener noreferrer">View source on GitHub</a></p></aside></div><script>
+(function(){
+  var mq = window.matchMedia('(min-width: 981px)');
+  function sync(){ document.querySelectorAll('details.ps-side-d').forEach(function(d){ d.open = mq.matches; }); }
+  sync();
+  if (mq.addEventListener) mq.addEventListener('change', sync);
+  var links = [].slice.call(document.querySelectorAll('.ps-toc a'));
+  if (!links.length || !('IntersectionObserver' in window)) return;
+  var byId = {};
+  links.forEach(function(a){ byId[decodeURIComponent(a.getAttribute('href').slice(1))] = a; });
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (!e.isIntersecting) return;
+      links.forEach(function(a){ a.classList.remove('on'); });
+      var a = byId[e.target.id]; if (a) a.classList.add('on');
+    });
+  }, { rootMargin: '-70px 0px -70% 0px' });
+  Object.keys(byId).forEach(function(id){ var el = document.getElementById(id); if (el) io.observe(el); });
+})();
+</script>
+  </div>
+</main>
+<footer class="site">
+  <div class="wrap cols">
+    <div>
+      <strong>Video Studio</strong><br>
+      A personal studio for motion graphics and animated videos with Claude Code.
+    </div>
+    <div>
+      <a href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">Source on GitHub</a><br>
+      <a href="../../../credits/">Credits and licences</a>
+    </div>
+  </div>
+</footer>
+<script src="../../../assets/site.js" defer></script>
+</body>
+</html>

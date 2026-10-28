@@ -1,6 +1,26 @@
 import { interpolate, spring, useCurrentFrame, useVideoConfig } from "remotion";
 import { ease, safeArea, getFormat, springs, timing } from "./tokens";
 import type { SpringToken } from "./tokens";
+import { frameType } from "./tokens";
+import type { FrameStep } from "./tokens";
+
+// Pure motion math (buoyant ease, velocity-matched cut, speedCurve, logZoom, curve export,
+// frame-arithmetic traps) lives in curves.ts so Node scripts can load it. Re-exported here.
+export {
+  buoyant,
+  entryDecay,
+  exitRamp,
+  exitOpacity,
+  softFade,
+  logZoom,
+  speedCurve,
+  sampleCurve,
+  velocityOf,
+  longestStall,
+  VELOCITY_CUT_DEFAULTS,
+  VELOCITY_CUT_MAX_SPEED,
+} from "./curves";
+export type { CurveFile, EasingFn, SpeedKey } from "./curves";
 
 export type Direction = "up" | "down" | "left" | "right";
 
@@ -92,4 +112,10 @@ export const useSafeArea = () => {
   const { width, height } = useVideoConfig();
   const format = getFormat(width, height);
   return { format, insets: safeArea[format], width, height };
+};
+
+/** Frame-relative type style (vw ramp, text floor enforced) for the current composition width. */
+export const useFrameType = (step: FrameStep) => {
+  const { width } = useVideoConfig();
+  return frameType(width, step);
 };

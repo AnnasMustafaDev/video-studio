@@ -28,3 +28,13 @@ Verdict: FIX AND RE-REVIEW | READY FOR APPROVAL
 ```
 
 Then apply the fixes to `storyboard.md` and present it to the user for approval. Do not hand over to a builder before the user approves.
+
+## Added checks (research round)
+
+12. **Banned list:** the brief has a film-specific `Banned for this film` line; the storyboard breaks none of it, and any lifted ban says where and why.
+13. **Concept:** Idea, Device and Grammar are filled and pass the deletion test; the device does not drop out at a scene seam.
+14. **Hand-offs:** every transition reads "X becomes Y" (or "hard cut, page already set"); no two scenes use the same morph without a flag.
+15. **Earns its place:** each scene justifies itself within about 3 seconds or is cut. If every transition has the same duration the rhythm will be even and tensionless: name the one hard cut and the one fast fade.
+16. **Criteria:** the glossary and acceptance criteria exist and are measurable.
+17. **Optional critic for a risky scene:** a fresh agent that did not write the plan lists its five weakest decisions and the cheapest check for each before anything renders.
+Why: reviewing a plan before spending render time was reached independently by two builders (claimed); the earns-its-place test answers the most reported fault of AI motion, even rhythm.

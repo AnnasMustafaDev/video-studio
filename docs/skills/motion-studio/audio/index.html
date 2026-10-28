@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Music, sound effects, loudness (motion-studio) · Video Studio</title>
+<meta name="description" content="tools/music.mjs renders music with the Web Audio OfflineAudioContext inside headless Edge and writes audio/music.wav (48 kHz stereo). No licensing questions, and it sits...">
+<meta property="og:title" content="Music, sound effects, loudness (motion-studio) · Video Studio">
+<meta property="og:description" content="tools/music.mjs renders music with the Web Audio OfflineAudioContext inside headless Edge and writes audio/music.wav (48 kHz stereo). No licensing questions, and it sits...">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23eef3ff'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%233b6cf6'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../../assets/site.css">
+<link rel="stylesheet" href="../../../assets/panel-skills.css">
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="../../../"><span class="dot"></span>Video Studio</a>
+    <nav class="main" aria-label="Main"><a href="../../../">Home</a><a href="../../../tour/">Tour</a><a href="../../../guide/">Guide</a><a href="../../../skills/" aria-current="page">Skills</a><a href="../../../prompts/">Prompts</a><a href="../../../studio/">Studio</a><a href="../../../techniques/">Techniques</a><a href="../../../shot-library/">Shot library</a><a href="../../../research/">Research</a><a href="../../../gallery/">Gallery</a><a href="../../../credits/">Credits</a></nav>
+    <div class="tools">
+      <a class="btn" href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">GitHub</a>
+      <button class="btn" id="theme-toggle" type="button" aria-label="Toggle light or dark theme">Theme</button>
+    </div>
+  </div>
+</header>
+<main>
+  <div class="wrap">
+<nav class="crumbs ps-crumbs" aria-label="Breadcrumb"><a href="../../../">Home</a> <span aria-hidden="true">/</span> <a href="../../../skills/">Skills</a> <span aria-hidden="true">/</span> <a href="../../../skills/motion-studio/">motion-studio</a> <span aria-hidden="true">/</span> <span aria-current="page">Music, sound effects, loudness</span></nav><header class="ps-head"><div class="ps-badges"><span class="badge plain">Reference</span> <span class="badge">motion-studio</span></div><h1>Music, sound effects, loudness</h1></header><div class="ps-doc"><article class="ps-article"><h2 id="music-bed-composed-in-code">Music bed composed in code</h2>
+<p><code>tools/music.mjs</code> renders music with the Web Audio <code>OfflineAudioContext</code> inside headless Edge and writes <code>audio/music.wav</code> (48 kHz stereo). No licensing questions, and it sits on the exact beat grid of <code>build/timeline.json</code>.</p>
+<ul><li>Instruments: kick, hats, clap, saw bass with a closing low-pass, detuned-saw pad, noise riser, sub impact, convolver reverb from a seeded noise impulse, glue compressor on the master.</li><li>100 to 115 BPM for product films (110 worked well). Chords one per bar (e.g. Am, F, C, G).</li><li><strong>Arrangement follows the story</strong> (configure in <code>script.json</code> → <code>music</code>):<ul><li><code>intro</code>: soft kick only during the hook.</li><li><code>breakdown</code>: drop drums and darken the pad under a tense or reflective beat (a question, a pause).</li><li><code>lift</code>: riser in the bar before, impact on the downbeat of the payoff scene, brighter pad inside it.</li><li><code>end</code>: impact on the last bar for the logo, then let the reverb tail ring.</li></ul></li><li>Scene changes land on bar lines for free because the timeline snaps scenes to bars.</li></ul>
+<h2 id="ducking">Ducking</h2>
+<p>Sidechain the music under the voice bus (<code>sidechaincompress=threshold=0.025:ratio=5:attack=30:release=420</code>). Music level about 0.5 before ducking. No hand-drawn volume automation.</p>
+<h2 id="hits-table-the-only-source-of-sfx">Hits table: the only source of SFX</h2>
+<p>The storyboard has a hits table (<code>time | visual event | sound | level</code>). The <code>SFX</code> cue sheet in <code>comp/main.js</code> is a one-to-one copy of it, with times expressed through <code>S/E/L/W</code> helpers so cues move with the edit. Nothing else adds sound effects. The renderer exports the cues to <code>build/comp_timing.json</code>; after the mix, <code>node ~/.claude/skills/motion-review/tools/inspect.mjs sync &lt;mp4&gt; build/comp_timing.json</code> checks every cue lands within ±40 ms and draws a waveform with the hits marked. A hit without a visual event, or a visual accent without a hit, is a storyboard bug: fix the table first, then the code.</p>
+<h2 id="sound-effects">Sound effects</h2>
+<p>Synthesised with ffmpeg <code>lavfi</code>, each with a known peak offset:</p>
+<table><thead><tr><th>SFX</th><th>Recipe</th><th>Peak</th></tr></thead><tbody><tr><td>whoosh</td><td>pink noise, band-pass 900 Hz, gaussian envelope peaking at 0.42 s, HP 180, LP 5200</td><td>0.42 s</td></tr><tr><td>pop</td><td><code>sin(2π(380+900t)t)·(1−e^(−900t))·e^(−26t)</code>, LP 4 kHz</td><td>0</td></tr><tr><td>tick / click</td><td><code>(sin 2100 + 0.5 sin 3400)·e^(−90t)</code></td><td>0</td></tr></tbody></table>
+<ul><li><strong>Place every SFX by its peak</strong> on the visual hit (<code>adelay = (cue − peak)</code>).</li><li>Cues come from the composition (<code>window.__timing.sfx</code>, <code>{name, at, vol}</code>), so they move with the edit.</li><li>Volumes: whoosh 0.4 to 0.55, pop 0.25 to 0.3, click 0.4. Fewer is better: transitions, clicks, the payoff.</li></ul>
+<h2 id="loudness">Loudness</h2>
+<ul><li>Final mix <code>loudnorm=I=-14:TP=-1:LRA=11</code> for web and social; -16 for presentations.</li><li>Measure with <code>ffmpeg -i mix.wav -af ebur128=peak=true -f null -</code>.</li><li>Fade the last 1.2 s.</li></ul>
+<h2 id="storytelling-with-sound">Storytelling with sound</h2>
+<ul><li>Problem: sparse, a ticking clock or room tone, muted drums.</li><li>Solution: full groove, clean UI clicks on cursor presses.</li><li>Payoff: the riser and impact land exactly on the result.</li><li>End: one impact on the logo, then silence or the reverb tail.</li></ul>
+<h2 id="derive-the-hits-table-from-the-animation">Derive the hits table from the animation</h2>
+<p>For UI-style films with many micro-hits, do not hand-place sound events. Compute the contact frame of each spring, the 50 percent frame of each pop-in and the velocity peak of each whip from the <strong>same constants and spring functions the picture uses</strong>, and export them as the cue list; <code>inspect.mjs sync</code> then verifies it. Retiming the animation retimes the sound. Helper: see <code>studio/src/lib/Sfx.tsx</code>. For narrated films the voice leads and the hand-authored hits table stays the source. Distance sound (only when a scene depicts distance): delay by distance at 343 m/s, low-pass and pan by position. Why: sound sync becomes a property of the code. Evidence: cue-export design documented with sync-audit tolerances; the historical-film example is unseen (F-A8).</p>
+<h2 id="music-led-films-beat-map-drop-anchor-loop-seam">Music-led films: beat map, drop anchor, loop seam</h2>
+<ul><li>Fix BPM and total beats; start the song a stated number of beats before its drop; write the structure as beat ranges; zoom or reveal lands on the drop; a quiet breakdown carries the hold scene. Show the beat map before building.</li><li>&quot;Something happens on every beat&quot; means no dead time, not constant motion: the page never empties, and not every beat moves the whole picture.</li><li><strong>Loops:</strong> the last frame equals the first, including cursor position <strong>and</strong> cursor speed; accent, cursor and type identical in first and last frame. The opening word returns on the beat when the loop restarts.</li></ul>
+<p>Why: sync as a property of the plan; the loop checklist adds cursor speed to the &quot;re-set the opening word&quot; learning. Evidence: stated in the prompts of films that were posted; seam quality not verified (F-B8, F-B9).</p>
+<h2 id="beat-grid-acceptance-tracks-you-did-not-write">Beat-grid acceptance (tracks you did not write)</h2>
+<ul><li>Fit a straight line to the detected beat times by least squares and report the residual; accept up to about 15 ms.</li><li>Check half-time and double-time candidates by whether kicks land on whole beats; separate the drum stem for dense mixes.</li><li>Classify onsets by band: kick drives impacts, snare drives swaps and flash cuts, hi-hat drives micro-motion density.</li><li>Keep float seconds until the last step into frames; after rendering, measure cut error (target 3 frames or less).</li><li><strong>Cap:</strong> full-frame or camera-layer beat hits at most <strong>3 per film</strong>, at least 16 beats apart; the rest only on the hero element. Beat sync does not mean pulsing the whole picture.</li></ul>
+<p>Why: a complete grid-acceptance step we lacked, and a hard fix for beat-frequency jitter. Evidence: documented; one 70 s film reported all cuts within 2.2 frames (author&#39;s measurement), the cap came from a user complaint (F-A9). Our own <code>music.mjs</code> grid is exact by construction; use this for imported tracks.</p>
+<h2 id="silence-and-restraint">Silence and restraint</h2>
+<p>SFX only on structural moments (transition, main reveal, payoff, logo). Recipes, each an alternative to adding sound:</p>
+<ul><li>One soft sound per text fragment, near-silence while it is read, a big hit only for the one reveal. No pitch climbing in a stacked lockup.</li><li><strong>Spotlight a claim with silence:</strong> cut a statement card 3 to 12 frames into a 12 to 24 frame hole in the music and bring the beat back about 17 frames later; or drop bass and kick for 2 to 4 beats and land the next visual event on the returning downbeat. Mute the sub 12 to 18 frames before the hardest cut and release it on the cut.</li><li>A calm film can be mastered effects-only at about -18 LUFS (below the -14 web target on purpose; say so in the report).</li></ul>
+<p>Why: a concrete alternative to &quot;add more SFX&quot;, which is how films get busy. Evidence: documented with a warning rule in the author&#39;s score script; the underlying measurements are theirs (F-A15, F-C5).</p>
+<h2 id="voice-over-music-per-phrase">Voice over music, per phrase</h2>
+<p>After the mix, check each phrase: voice about 9 dB above music between 300 Hz and 4 kHz. The single sidechain stays; try a 3-band duck only if a mix sounds muddy (author&#39;s figures: lows 30, mids 85, air 55 percent, 0.3 s hold, 50 ms look-ahead, 0.5 s release; untested here). Why: measurable, replaces &quot;ducking audible but not pumping&quot; by ear. Evidence: precise in a finished film&#39;s prompt (F-B11).</p>
+<h2 id="visual-lead-to-be-a-b-tested-not-a-rule">Visual lead (to be A/B-tested, not a rule)</h2>
+<p>Viewers expect light before sound, so a caption or cut tied to a word may start a few frames before the word&#39;s onset. Candidate range 80 to 150 ms (2 to 5 frames at 30 fps), not the 250 ms one commenter suggested. Add a <code>lead</code> column to the hits table (default 0 for SFX, which are placed by peak; the existing word enter starts 60 ms before the word). Test once on the next narrated film: picture at onset versus onset minus 4 frames, choose on the phone sheet, then record the number in learnings. Evidence: one comment, no demonstration (F-C3); matches how editors treat J-cuts.</p><nav class="ps-prevnext" aria-label="Previous and next"><span></span><a class="ps-pn next" href="../banned-effects/"><span class="ps-pn-dir">Next</span><span class="ps-pn-title">Banned effects: a list per film</span></a></nav></article><aside class="ps-side"><details class="ps-side-d" open><summary>On this page</summary><ul class="ps-toc"><li class="l2"><a href="#music-bed-composed-in-code">Music bed composed in code</a></li><li class="l2"><a href="#ducking">Ducking</a></li><li class="l2"><a href="#hits-table-the-only-source-of-sfx">Hits table: the only source of SFX</a></li><li class="l2"><a href="#sound-effects">Sound effects</a></li><li class="l2"><a href="#loudness">Loudness</a></li><li class="l2"><a href="#storytelling-with-sound">Storytelling with sound</a></li><li class="l2"><a href="#derive-the-hits-table-from-the-animation">Derive the hits table from the animation</a></li><li class="l2"><a href="#music-led-films-beat-map-drop-anchor-loop-seam">Music-led films: beat map, drop anchor, loop seam</a></li><li class="l2"><a href="#beat-grid-acceptance-tracks-you-did-not-write">Beat-grid acceptance (tracks you did not write)</a></li><li class="l2"><a href="#silence-and-restraint">Silence and restraint</a></li><li class="l2"><a href="#voice-over-music-per-phrase">Voice over music, per phrase</a></li><li class="l2"><a href="#visual-lead-to-be-a-b-tested-not-a-rule">Visual lead (to be A/B-tested, not a rule)</a></li></ul></details><details class="ps-side-d" open><summary>In motion-studio</summary><ul class="ps-sidelist"><li><a href="../">SKILL.md</a></li><li class="on"><span aria-current="page">Music, sound effects, loudness</span></li><li><a href="../banned-effects/">Banned effects: a list per film</a></li><li><a href="../capture/">Capturing a real app</a></li><li><a href="../delivery/">Final delivery (Phase 5)</a></li><li><a href="../design-system/">A reusable motion-design system</a></li><li><a href="../design/">Visual design</a></li><li><a href="../direction/">Direction: brief, story, script, captions</a></li><li><a href="../engine/">Engine: composition, live player, renderer</a></li><li><a href="../formats/">Formats and delivery</a></li><li><a href="../golden-scene/">Build loop: golden scene, plan check, commits, acceptance criteria</a></li><li><a href="../gotchas/">Gotchas catalogue</a></li><li><a href="../learnings/">Learnings log</a></li><li><a href="../motion/">Motion</a></li><li><a href="../qa/">QA checklists</a></li><li><a href="../reference-analysis/">Using a visual reference</a></li><li><a href="../review/">Render, inspect, fix: the review loop</a></li><li><a href="../three-d/">3D (three.js): rarely the right call</a></li><li><a href="../transitions/">Transitions: &quot;X becomes Y&quot;, velocity handoff, hidden cuts</a></li><li><a href="../vocabulary/">Vocabulary → recipes in this engine</a></li><li><a href="../voice/">Voice-over</a></li><li><a href="../workflow/">Staged workflow</a></li></ul></details><p class="ps-side-foot"><a href="https://github.com/AnnasMustafaDev/video-studio/blob/main/skills/motion-studio/references/audio.md" rel="noopener noreferrer">View source on GitHub</a></p></aside></div><script>
+(function(){
+  var mq = window.matchMedia('(min-width: 981px)');
+  function sync(){ document.querySelectorAll('details.ps-side-d').forEach(function(d){ d.open = mq.matches; }); }
+  sync();
+  if (mq.addEventListener) mq.addEventListener('change', sync);
+  var links = [].slice.call(document.querySelectorAll('.ps-toc a'));
+  if (!links.length || !('IntersectionObserver' in window)) return;
+  var byId = {};
+  links.forEach(function(a){ byId[decodeURIComponent(a.getAttribute('href').slice(1))] = a; });
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (!e.isIntersecting) return;
+      links.forEach(function(a){ a.classList.remove('on'); });
+      var a = byId[e.target.id]; if (a) a.classList.add('on');
+    });
+  }, { rootMargin: '-70px 0px -70% 0px' });
+  Object.keys(byId).forEach(function(id){ var el = document.getElementById(id); if (el) io.observe(el); });
+})();
+</script>
+  </div>
+</main>
+<footer class="site">
+  <div class="wrap cols">
+    <div>
+      <strong>Video Studio</strong><br>
+      A personal studio for motion graphics and animated videos with Claude Code.
+    </div>
+    <div>
+      <a href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">Source on GitHub</a><br>
+      <a href="../../../credits/">Credits and licences</a>
+    </div>
+  </div>
+</footer>
+<script src="../../../assets/site.js" defer></script>
+</body>
+</html>

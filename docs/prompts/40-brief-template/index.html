@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>40 · Brief template (the 10 ingredients) · Video Studio</title>
+<meta name="description" content="Write a brief that specifies the decisions that make a video feel intentional, using the 10 ingredients as a checklist.">
+<meta property="og:title" content="40 · Brief template (the 10 ingredients) · Video Studio">
+<meta property="og:description" content="Write a brief that specifies the decisions that make a video feel intentional, using the 10 ingredients as a checklist.">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23eef3ff'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%233b6cf6'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../assets/site.css">
+<link rel="stylesheet" href="../../assets/panel-skills.css">
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="../../"><span class="dot"></span>Video Studio</a>
+    <nav class="main" aria-label="Main"><a href="../../">Home</a><a href="../../tour/">Tour</a><a href="../../guide/">Guide</a><a href="../../skills/">Skills</a><a href="../../prompts/" aria-current="page">Prompts</a><a href="../../studio/">Studio</a><a href="../../techniques/">Techniques</a><a href="../../shot-library/">Shot library</a><a href="../../research/">Research</a><a href="../../gallery/">Gallery</a><a href="../../credits/">Credits</a></nav>
+    <div class="tools">
+      <a class="btn" href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">GitHub</a>
+      <button class="btn" id="theme-toggle" type="button" aria-label="Toggle light or dark theme">Theme</button>
+    </div>
+  </div>
+</header>
+<main>
+  <div class="wrap">
+<nav class="crumbs ps-crumbs" aria-label="Breadcrumb"><a href="../../">Home</a> <span aria-hidden="true">/</span> <a href="../../prompts/">Prompts</a> <span aria-hidden="true">/</span> <span aria-current="page">40 · Brief template (the 10 ingredients)</span></nav><div class="ps-narrow"><header class="ps-head"><div class="ps-badges"><span class="badge plain">Prompt 40</span> <span class="badge">Briefs</span> <span class="badge ok">Shown in films</span></div><h1>Brief template (the 10 ingredients)</h1></header><dl class="ps-info ps-info-prompt"><div class="wide"><dt>Purpose</dt><dd>Write a brief that specifies the decisions that make a video feel intentional, using the 10 ingredients as a checklist.</dd></div><div class=""><dt>Use when</dt><dd>Every new video. Fill it in, then paste it after <a href="../00-master-workflow/"><code>00-master-workflow.md</code></a>.</dd></div><div class=""><dt>Stage</dt><dd>Briefing, right before Phase 1.</dd></div><div class=""><dt>Inputs you must fill in</dt><dd>Every <code>[placeholder]</code> below. Leave a line as &quot;your call&quot; if you genuinely do not mind; Claude will document its assumption.</dd></div><div class=""><dt>Expected output</dt><dd>A complete brief you can paste. Saved copy in <code>projects/[yyyy-mm-dd]-[slug]/brief.md</code>.</dd></div><div class=""><dt>Why this exists</dt><dd>Films with a per-film Banned list and a start gate (beat map plus named stills before any code) were shipped by several authors. Evidence: shown in finished films (five, two authors); that the bans cause the quality is the gallery&#39;s reading. Findings F-B1, F-B2, F-C6.</dd></div><div class=""><dt>Next prompt</dt><dd><a href="../00-master-workflow/"><code>00-master-workflow.md</code></a> (paste brief under it), then <a href="../10-creative-directions/"><code>10</code></a> or <a href="../11-storyboard/"><code>11</code></a>.</dd></div></dl><div class="ps-intro-text"><p>Source: the 10 ingredients and the weak/strong example are from notes §3. &quot;You don&#39;t have to specify every pixel. You do need to specify the decisions that make the video feel intentional.&quot;</p></div><section class="ps-section ps-prompt"><h2 id="prompt-fill-in-brief">Prompt (fill-in brief)</h2>
+<pre><code class="lang-text">BRIEF: [working title]
+
+1. Purpose: [what the video must achieve: product launch, explainer, brand identity, educational, social post]. Audience: [who]. The one thing they must remember: [message]. Desired reaction: [feeling or action].
+
+2. Format: [16:9 1920x1080 | 9:16 1080x1920 | 1:1 1080x1080 | 4:5 1080x1350], [30|60] fps, [duration] seconds. Platform: [YouTube | Reels | Shorts | LinkedIn | site | deck]. Muted autoplay: [yes/no].
+
+3. Art direction: [aesthetic in a few words], references: [links or files]. Palette: [background], [text], [one accent], contrast [high/soft]. Materials and texture: [flat | grain | glass | paper | none]. Atmosphere: [calm, tense, playful, precise...].
+
+4. Composition: [centred hero object | left-aligned type | split screen | full-bleed UI], negative space [where], layers [foreground / midground / background], safe margins [px].
+
+5. Typography: typeface [family], weights [e.g. 700 headline, 400 body], size hierarchy [headline / sub / label in px], line breaks [where], tracking [tight/normal/wide], alignment [left/centre]. Exact on-screen text, in order:
+   - &quot;[text 1]&quot;
+   - &quot;[text 2]&quot;
+
+6. Movement: [what moves], direction [from/to], distance [px or % of frame], speed [fast/slow, or frames], trigger [on cut, on beat, on word, after previous element]. Easing: [ease-out | spring with subtle overshoot | no linear unless intentional].
+
+7. Timing: scene list with durations [s], delays, holds (numbers and CTA hold at least 1.5 to 2 s), overlaps, reveal times, ending [what the last frame shows and for how long].
+
+8. Transitions: [cut | match cut | mask reveal | wipe | zoom | morph | camera move] between [scene a] and [scene b], and why it supports the story.
+
+9. Audio: music mood [mood, tempo], sound effects [which, on which visual event], voice-over [yes/no, script file], rhythmic accents [where], silence [where].
+
+10. Quality constraints: no clipped text, broken layouts, random decoration, accidental overlaps, inconsistent fonts or unreviewed final renders. Also: [your extras, e.g. no em dashes on screen, real numbers only].
+
+11. Banned for this film (mandatory, written for this film, not generic): [e.g. crossfades, blur-ins, glows, particles, holds over 1 s, bouncy easing, anything that looks like a template]. Seed it from studio/DESIGN_SYSTEM.md, then add what this film&#39;s subject tempts a model to do.
+
+12. Glossary (vague words defined in motion terms, once, for this film): [e.g. &quot;punchy&quot; = entrances at most 10 frames, one scale event per scene, hard cut into the next]. Round 3 must mean the same as round 1.
+
+13. Gotchas (known failure modes to avoid up front): [e.g. flood must overscale past all corners; start each scene at the zoom the last one ended on; fades under 0.3 s read as pops; last frame must equal first for a loop].
+
+14. Start gate: ask me for anything missing in this brief (with the default you will use if I skip it), then show ONLY: the beat map or timed scene list, and [4 to 8] named stills (frame or timestamp plus what each must show). Write no code until I approve those.
+
+Storyboard the sequence before coding it.</code></pre></section><section class="ps-section ps-prompt"><h2 id="tagged-variant-same-content-for-pasting-into-a-long-build">Tagged variant (same content, for pasting into a long build)</h2>
+<pre><code class="lang-text">&lt;inputs&gt;    what to ask me for; default if I skip each &lt;/inputs&gt;
+&lt;direction&gt; look, type, one accent, motion language. Banned: [per-film list] &lt;/direction&gt;
+&lt;structure&gt; timed scenes or beat ranges; every transition written &quot;A becomes B&quot; &lt;/structure&gt;
+&lt;build&gt;     numbered engineering rules (frame-based only, tokens, reuse lib) &lt;/build&gt;
+&lt;gotchas&gt;   known failures to avoid up front &lt;/gotchas&gt;
+&lt;start&gt;     ask for inputs, then show the beat map and [N] named stills; no code before approval &lt;/start&gt;</code></pre>
+<p>Why tags: each block is a contract the model cannot quietly reinterpret, and the approval stop sits before the expensive step. If you cannot view images or render here, say so first; do not describe results you have not seen.</p></section><section class="ps-section ps-prompt"><h2 id="weak-vs-strong-notes-3-verbatim">Weak vs strong (notes §3, verbatim)</h2>
+<p><strong>Weak prompt:</strong></p>
+<blockquote><p>Make a really cool futuristic animation for an AI startup. Make it cinematic, smooth, premium, with nice transitions and glowing effects.</p></blockquote>
+<p><strong>Why it fails:</strong> it doesn&#39;t define the composition, pacing, typography, visual hierarchy, scene order or actual motion. Claude has to invent everything, often producing generic-looking results.</p>
+<p><strong>Strong prompt:</strong></p>
+<blockquote><p>Design a 12-second premium product-launch animation for an AI developer tool. Use a near-black background, off-white typography and one electric-blue accent. Begin with an abstract grid assembling into a precise geometric mark. At 2.5 seconds, transition into a close-up of a code editor, with selected lines revealing in a staggered sequence. At 6 seconds, transform the code into a clean system diagram. End with the headline &quot;BUILD WHAT&#39;S NEXT&quot; and a small product URL. Use restrained camera movement, purposeful easing, subtle depth, precise alignment and a sound effect synchronized to the main reveal. Keep each scene visually distinct but stylistically consistent. Storyboard the sequence before coding it.</p></blockquote>
+<p><strong>Why it works:</strong> Claude has a defined visual system, a sequence of events, concrete timing and a clear ending.</p>
+<h3 id="how-the-strong-prompt-maps-to-the-10-ingredients">How the strong prompt maps to the 10 ingredients</h3>
+<table><thead><tr><th>Ingredient</th><th>In the strong prompt</th><th>Why it helps</th></tr></thead><tbody><tr><td>1 Purpose</td><td>&quot;product-launch animation for an AI developer tool&quot;</td><td>Sets audience and tone in one phrase.</td></tr><tr><td>2 Format</td><td>&quot;12-second&quot; (aspect and fps still missing: add them)</td><td>Duration fixes the pacing budget.</td></tr><tr><td>3 Art direction</td><td>near-black, off-white, one electric-blue accent</td><td>A closed palette stops random colour.</td></tr><tr><td>4 Composition</td><td>&quot;close-up of a code editor&quot;, &quot;precise alignment&quot;</td><td>Tells Claude where the eye goes.</td></tr><tr><td>5 Typography</td><td>off-white type, exact headline &quot;BUILD WHAT&#39;S NEXT&quot;</td><td>Exact text removes invented copy.</td></tr><tr><td>6 Movement</td><td>grid assembling, staggered line reveals, code transforming</td><td>Names what moves and how, not only the end state.</td></tr><tr><td>7 Timing</td><td>2.5 s and 6 s marks, a clear ending</td><td>Concrete beats replace &quot;smooth&quot;.</td></tr><tr><td>8 Transitions</td><td>code transforms into a diagram (a morph, motivated)</td><td>Continuity instead of decorative wipes.</td></tr><tr><td>9 Audio</td><td>one SFX synced to the main reveal</td><td>Sound placed on a visual event.</td></tr><tr><td>10 Quality</td><td>restrained camera, distinct but consistent scenes, storyboard first</td><td>Guards against over-animation and one-shotting.</td></tr></tbody></table></section><section class="ps-section ps-additions"><h2 id="studio-additions-new-fields">Studio additions (new fields)</h2>
+<ul><li>Fields 11 to 14 are new. Banned list: the reviewer (prompt 13, <code>motion-review</code>) must check the film&#39;s own list, not only the global one.</li><li>Start gate stills: they become the &quot;stills to check&quot; for <a href="../12-build-one-scene/"><code>12-build-one-scene.md</code></a>; keep the same frame numbers.</li><li>Sources: tagged-brief and ban-list structure from the prompt-motion.com briefs of @twoclipping, @ultimaxbt and @rossaxbt; glossary idea from u/TheHol1day and u/FerretVirtual8466 (r/ClaudeAI). Wording is ours.</li></ul></section><nav class="ps-prevnext" aria-label="Previous and next"><a class="ps-pn prev" href="../02-deterministic-rule/"><span class="ps-pn-dir">Previous</span><span class="ps-pn-title">02 · Deterministic, frame-based rule</span></a><a class="ps-pn next" href="../00-master-workflow/"><span class="ps-pn-dir">Next</span><span class="ps-pn-title">00 · Motion Graphics Director: master workflow</span></a></nav><p class="ps-small"><a href="https://github.com/AnnasMustafaDev/video-studio/blob/main/prompts/40-brief-template.md" rel="noopener noreferrer">View this prompt on GitHub</a></p></div>
+  </div>
+</main>
+<footer class="site">
+  <div class="wrap cols">
+    <div>
+      <strong>Video Studio</strong><br>
+      A personal studio for motion graphics and animated videos with Claude Code.
+    </div>
+    <div>
+      <a href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">Source on GitHub</a><br>
+      <a href="../../credits/">Credits and licences</a>
+    </div>
+  </div>
+</footer>
+<script src="../../assets/site.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>01 · Skills check · Video Studio</title>
+<meta name="description" content="Confirm Claude can see and has read the Remotion agent skills before any generation.">
+<meta property="og:title" content="01 · Skills check · Video Studio">
+<meta property="og:description" content="Confirm Claude can see and has read the Remotion agent skills before any generation.">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23eef3ff'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%233b6cf6'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../assets/site.css">
+<link rel="stylesheet" href="../../assets/panel-skills.css">
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="../../"><span class="dot"></span>Video Studio</a>
+    <nav class="main" aria-label="Main"><a href="../../">Home</a><a href="../../tour/">Tour</a><a href="../../guide/">Guide</a><a href="../../skills/">Skills</a><a href="../../prompts/" aria-current="page">Prompts</a><a href="../../studio/">Studio</a><a href="../../techniques/">Techniques</a><a href="../../shot-library/">Shot library</a><a href="../../research/">Research</a><a href="../../gallery/">Gallery</a><a href="../../credits/">Credits</a></nav>
+    <div class="tools">
+      <a class="btn" href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">GitHub</a>
+      <button class="btn" id="theme-toggle" type="button" aria-label="Toggle light or dark theme">Theme</button>
+    </div>
+  </div>
+</header>
+<main>
+  <div class="wrap">
+<nav class="crumbs ps-crumbs" aria-label="Breadcrumb"><a href="../../">Home</a> <span aria-hidden="true">/</span> <a href="../../prompts/">Prompts</a> <span aria-hidden="true">/</span> <span aria-current="page">01 · Skills check</span></nav><div class="ps-narrow"><header class="ps-head"><div class="ps-badges"><span class="badge plain">Prompt 01</span> <span class="badge">Setup and guardrails</span> </div><h1>Skills check</h1></header><dl class="ps-info ps-info-prompt"><div class="wide"><dt>Purpose</dt><dd>Confirm Claude can see and has read the Remotion agent skills before any generation.</dd></div><div class=""><dt>Use when</dt><dd>First session in <code>studio/</code>, after <code>npx remotion skills add</code>, after installing the Remotion plugin, or when output looks like Claude is ignoring Remotion conventions.</dd></div><div class=""><dt>Stage</dt><dd>Setup, before <a href="../00-master-workflow/"><code>00-master-workflow.md</code></a> on a new machine or project.</dd></div><div class=""><dt>Inputs you must fill in</dt><dd>None.</dd></div><div class=""><dt>Expected output</dt><dd>A list of the skills found and which workflow each covers for planning, type, transitions, audio, preview/render and QA. No code, no files changed.</dd></div><div class=""><dt>Next prompt</dt><dd><a href="../02-deterministic-rule/"><code>02-deterministic-rule.md</code></a>, then <a href="../00-master-workflow/"><code>00-master-workflow.md</code></a>.</dd></div></dl><div class="ps-intro-text"><p>Source: notes §2 step 3, verbatim.</p></div><section class="ps-section ps-prompt"><h2 id="prompt">Prompt</h2>
+<pre><code class="lang-text">Inspect this project and identify the Remotion agent skills
+available to you.
+
+Read the relevant skill instructions before creating anything.
+Tell me which workflows you will use for:
+- Creative planning
+- Animation and typography
+- Scene transitions
+- Audio
+- Previewing and rendering
+- Quality assurance
+
+Do not build the video yet.</code></pre></section><section class="ps-section ps-additions"><h2 id="studio-additions">Studio additions</h2>
+<pre><code class="lang-text">Look in studio/.claude/skills/ (official Remotion skills, start with remotion-best-practices) and in ~/.claude/skills/ (personal skills such as motion-studio). Also read studio/DESIGN_SYSTEM.md and list the components in studio/src/lib/. Tell me which scripts exist in studio/package.json for preview, stills and render. If something the workflow needs is missing (for example the stills script or a skill), say what and stop.</code></pre>
+<p>Setup reference (notes §2), run by you, not pasted to Claude:</p>
+<pre><code class="lang-text">npx create-video@latest --yes --blank motion-studio
+cd motion-studio
+npx remotion skills add
+npm run dev
+
+claude plugin marketplace add remotion-dev/claude-code-plugin
+claude plugin install remotion@remotion</code></pre>
+<p>In this repo the project already exists as <code>studio/</code>; run <code>npm run dev</code> there in one terminal and <code>claude</code> in a second.</p></section><nav class="ps-prevnext" aria-label="Previous and next"><span></span><a class="ps-pn next" href="../02-deterministic-rule/"><span class="ps-pn-dir">Next</span><span class="ps-pn-title">02 · Deterministic, frame-based rule</span></a></nav><p class="ps-small"><a href="https://github.com/AnnasMustafaDev/video-studio/blob/main/prompts/01-skills-check.md" rel="noopener noreferrer">View this prompt on GitHub</a></p></div>
+  </div>
+</main>
+<footer class="site">
+  <div class="wrap cols">
+    <div>
+      <strong>Video Studio</strong><br>
+      A personal studio for motion graphics and animated videos with Claude Code.
+    </div>
+    <div>
+      <a href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">Source on GitHub</a><br>
+      <a href="../../credits/">Credits and licences</a>
+    </div>
+  </div>
+</footer>
+<script src="../../assets/site.js" defer></script>
+</body>
+</html>

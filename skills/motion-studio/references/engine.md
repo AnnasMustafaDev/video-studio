@@ -51,6 +51,7 @@ The stage is 1920×1080 and is scaled to fit the window with `translate(-50%,-50
 
 - Headless Edge/Chromium via playwright-core, screenshot per subframe piped as JPEG into ffmpeg (`image2pipe`, `libx264 -crf 15 -preset slow -pix_fmt yuv420p`).
 - 4 subframes at 60 fps for a 68 s film: about 12 minutes on a laptop. Run it in the background.
+- Fast moves (floods, wipes, drags) want 8 subframes: render that section with `blur=8 <from>-<to>` and the rest at `blur=4`, then join the parts, so render time grows only where needed (a shutter of about 0.7 of a frame is the target; per-frame shutter control is not in the template yet). Look at a fast-move frame pair zoomed in for ghost steps ([gotchas.md](gotchas.md)).
 - WebGL in headless Edge: add `--use-angle=d3d11 --ignore-gpu-blocklist` and `preserveDrawingBuffer: true`.
 - The renderer writes `build/comp_timing.json` (sfx cues, line times) for the mixer.
 

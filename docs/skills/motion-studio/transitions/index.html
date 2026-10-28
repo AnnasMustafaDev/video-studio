@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Transitions: &quot;X becomes Y&quot;, velocity handoff, hidden cuts (motion-studio) · Video Studio</title>
+<meta name="description" content="Complements the table in [motion.md](motion.md). Components: see studio/src/lib/transitions.tsx (Remotion); the HTML engine writes the recipe by hand. Numbers below come...">
+<meta property="og:title" content="Transitions: &quot;X becomes Y&quot;, velocity handoff, hidden cuts (motion-studio) · Video Studio">
+<meta property="og:description" content="Complements the table in [motion.md](motion.md). Components: see studio/src/lib/transitions.tsx (Remotion); the HTML engine writes the recipe by hand. Numbers below come...">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23eef3ff'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%233b6cf6'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../../assets/site.css">
+<link rel="stylesheet" href="../../../assets/panel-skills.css">
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="../../../"><span class="dot"></span>Video Studio</a>
+    <nav class="main" aria-label="Main"><a href="../../../">Home</a><a href="../../../tour/">Tour</a><a href="../../../guide/">Guide</a><a href="../../../skills/" aria-current="page">Skills</a><a href="../../../prompts/">Prompts</a><a href="../../../studio/">Studio</a><a href="../../../techniques/">Techniques</a><a href="../../../shot-library/">Shot library</a><a href="../../../research/">Research</a><a href="../../../gallery/">Gallery</a><a href="../../../credits/">Credits</a></nav>
+    <div class="tools">
+      <a class="btn" href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">GitHub</a>
+      <button class="btn" id="theme-toggle" type="button" aria-label="Toggle light or dark theme">Theme</button>
+    </div>
+  </div>
+</header>
+<main>
+  <div class="wrap">
+<nav class="crumbs ps-crumbs" aria-label="Breadcrumb"><a href="../../../">Home</a> <span aria-hidden="true">/</span> <a href="../../../skills/">Skills</a> <span aria-hidden="true">/</span> <a href="../../../skills/motion-studio/">motion-studio</a> <span aria-hidden="true">/</span> <span aria-current="page">Transitions: &quot;X becomes Y&quot;, velocity handoff, hidden cuts</span></nav><header class="ps-head"><div class="ps-badges"><span class="badge plain">Reference</span> <span class="badge">motion-studio</span></div><h1>Transitions: &quot;X becomes Y&quot;, velocity handoff, hidden cuts</h1></header><div class="ps-doc"><article class="ps-article"><p>Complements the table in <a href="../motion/">motion.md</a>. Components: see <code>studio/src/lib/transitions.tsx</code> (Remotion); the HTML engine writes the recipe by hand. Numbers below come from the authors&#39; frame measurements of other films and were tuned on placeholder material: they are starting points, not laws.</p>
+<h2 id="1-every-scene-is-made-out-of-the-previous-one">1. Every scene is made out of the previous one</h2>
+<p>Rule: the storyboard&#39;s transition column never says &quot;cut&quot; or &quot;fade&quot;. It says <strong>&quot;X becomes Y&quot;</strong>: the outgoing object, what it carries (label, words, colour, position), the incoming object. Why: naming the shared element is what removes the crossfade default, and it is checkable on a contact sheet (does frame N-1 contain the thing frame N grows from?). Evidence: shown in two finished films (F-B3); our showreel inspiration already adopted it. Scope: strict for UI and product pieces. For type pieces a hard cut onto a page that is already set is still fine (learnings): then the column says &quot;hard cut, page already set&quot; and the cut sits on a beat.</p>
+<p>Morph vocabulary (write these in the column):</p>
+<table><thead><tr><th>Name</th><th>What happens</th></tr></thead><tbody><tr><td>Iris</td><td>A circle clip opens or closes on the element the viewer was looking at</td></tr><tr><td>Flood and contract</td><td>A solid shape floods past all corners (0.3 to 0.35 s), then contracts into the next scene&#39;s first element</td></tr><tr><td>Accordion squeeze</td><td>Panels fold to a line or strip, and the line is the next scene&#39;s rule or bar</td></tr><tr><td>Line carry</td><td>A rule leaves the frame and the camera follows it; it turns corners and draws the next card (section 3D)</td></tr><tr><td>Bezel or mat grows</td><td>A device bezel grows out of the screen edge, or a mat grows from the photo edge, into the next surface</td></tr><tr><td>Text rises from a mask line</td><td>The next caption starts as the line the previous one sat on</td></tr><tr><td>Label carry</td><td>A button carries its label into the next page&#39;s heading</td></tr></tbody></table>
+<h2 id="2-velocity-matched-cut">2. Velocity-matched cut</h2>
+<p>The outgoing shot accelerates one way and is cut at its fastest frame; the incoming shot starts already moving the same way and brakes to rest, so momentum crosses the edit. Why: it turns &quot;smooth transition&quot; into numbers and explains why some dissolve-free cuts feel dead. Evidence: doc-level, numbers are the author&#39;s measurement at 60 fps (F-A6).</p>
+<table><thead><tr><th>Parameter</th><th>Value (at 60 fps; scale by 60/fps for px per frame)</th></tr></thead><tbody><tr><td>Exit</td><td>speeds up about 1.1x to 1.2x per frame over the last 16 to 24 frames, ends at 25 to 40 px/frame, never above 60</td></tr><tr><td>Entry</td><td>starts at 30 to 55 px/frame, decays about 0.92 to 0.94 per frame</td></tr><tr><td>Text on a moving shot</td><td>under 20 px/frame by the time it is read</td></tr><tr><td>Motion blur</td><td>the cut is an act boundary: subframes never straddle it</td></tr></tbody></table>
+<p>Companion rule: a hard cut works when subject, scale, direction and material continue across it. Helper: see <code>studio/src/lib/transitions.tsx</code> (velocity-matched cut) and <code>studio/src/lib/motion.ts</code>; check the result with <code>inspect.mjs flow</code> (speed must not dip at the cut) and <code>inspect.mjs plot</code> for a single value.</p>
+<h2 id="3-hidden-cut-and-no-cut-recipes">3. Hidden-cut and no-cut recipes</h2>
+<p>Why: each carries a cause before the cut and a result after, and the failure modes are written down. Evidence: doc-level cards (F-A7); re-skin to our tokens (no source brand colours, one accent).</p>
+<p><strong>A. Occluder cut.</strong> A soft, out-of-focus foreground object sweeps across; the hard cut happens inside the frames where it covers the screen. About 28 px of drag before, a settle after, so it reads as one take.</p>
+<p><strong>B. Impact slam (comparison moments only).</strong> Two half-screens with a slanted seam collide: white flash 3 frames, screen shake about 16 px decaying over about 5 frames, a stamp, <strong>all on the same frame</strong> (a one-frame offset scatters it). Counts against the film&#39;s cap of 3 full-frame beat hits (audio.md).</p>
+<p><strong>C. Light-leak burn.</strong> A diagonal wash of light ramps up slowly (ease-in), the cut hides at the peak, it recedes faster. The old picture must also wash out (brightness up, contrast down) or the leak reads as a sticker. Studio fit: tint the wash with the accent or a warm tint of the brand neutral, no flare streaks, no glow clichés; if it is not clearly better than a plain flood, use the flood.</p>
+<p><strong>D. Line carry (no cut at all).</strong> A progress bar extends out of frame, the camera follows the line, the line turns corners and draws the next scene&#39;s card frame. Pin the pen tip near x = 1480 (at 1920 wide) so it never leaves the frame or lags.</p>
+<h2 id="banned-unchanged">Banned, unchanged</h2>
+<p>Cross-dissolves between unrelated shots, wipes and star transitions, zooming in and straight back out. A hard cut still needs a page that is already set.</p><nav class="ps-prevnext" aria-label="Previous and next"><a class="ps-pn prev" href="../three-d/"><span class="ps-pn-dir">Previous</span><span class="ps-pn-title">3D (three.js): rarely the right call</span></a><a class="ps-pn next" href="../vocabulary/"><span class="ps-pn-dir">Next</span><span class="ps-pn-title">Vocabulary → recipes in this engine</span></a></nav></article><aside class="ps-side"><details class="ps-side-d" open><summary>On this page</summary><ul class="ps-toc"><li class="l2"><a href="#1-every-scene-is-made-out-of-the-previous-one">1. Every scene is made out of the previous one</a></li><li class="l2"><a href="#2-velocity-matched-cut">2. Velocity-matched cut</a></li><li class="l2"><a href="#3-hidden-cut-and-no-cut-recipes">3. Hidden-cut and no-cut recipes</a></li><li class="l2"><a href="#banned-unchanged">Banned, unchanged</a></li></ul></details><details class="ps-side-d" open><summary>In motion-studio</summary><ul class="ps-sidelist"><li><a href="../">SKILL.md</a></li><li><a href="../audio/">Music, sound effects, loudness</a></li><li><a href="../banned-effects/">Banned effects: a list per film</a></li><li><a href="../capture/">Capturing a real app</a></li><li><a href="../delivery/">Final delivery (Phase 5)</a></li><li><a href="../design-system/">A reusable motion-design system</a></li><li><a href="../design/">Visual design</a></li><li><a href="../direction/">Direction: brief, story, script, captions</a></li><li><a href="../engine/">Engine: composition, live player, renderer</a></li><li><a href="../formats/">Formats and delivery</a></li><li><a href="../golden-scene/">Build loop: golden scene, plan check, commits, acceptance criteria</a></li><li><a href="../gotchas/">Gotchas catalogue</a></li><li><a href="../learnings/">Learnings log</a></li><li><a href="../motion/">Motion</a></li><li><a href="../qa/">QA checklists</a></li><li><a href="../reference-analysis/">Using a visual reference</a></li><li><a href="../review/">Render, inspect, fix: the review loop</a></li><li><a href="../three-d/">3D (three.js): rarely the right call</a></li><li class="on"><span aria-current="page">Transitions: &quot;X becomes Y&quot;, velocity handoff, hidden cuts</span></li><li><a href="../vocabulary/">Vocabulary → recipes in this engine</a></li><li><a href="../voice/">Voice-over</a></li><li><a href="../workflow/">Staged workflow</a></li></ul></details><p class="ps-side-foot"><a href="https://github.com/AnnasMustafaDev/video-studio/blob/main/skills/motion-studio/references/transitions.md" rel="noopener noreferrer">View source on GitHub</a></p></aside></div><script>
+(function(){
+  var mq = window.matchMedia('(min-width: 981px)');
+  function sync(){ document.querySelectorAll('details.ps-side-d').forEach(function(d){ d.open = mq.matches; }); }
+  sync();
+  if (mq.addEventListener) mq.addEventListener('change', sync);
+  var links = [].slice.call(document.querySelectorAll('.ps-toc a'));
+  if (!links.length || !('IntersectionObserver' in window)) return;
+  var byId = {};
+  links.forEach(function(a){ byId[decodeURIComponent(a.getAttribute('href').slice(1))] = a; });
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (!e.isIntersecting) return;
+      links.forEach(function(a){ a.classList.remove('on'); });
+      var a = byId[e.target.id]; if (a) a.classList.add('on');
+    });
+  }, { rootMargin: '-70px 0px -70% 0px' });
+  Object.keys(byId).forEach(function(id){ var el = document.getElementById(id); if (el) io.observe(el); });
+})();
+</script>
+  </div>
+</main>
+<footer class="site">
+  <div class="wrap cols">
+    <div>
+      <strong>Video Studio</strong><br>
+      A personal studio for motion graphics and animated videos with Claude Code.
+    </div>
+    <div>
+      <a href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">Source on GitHub</a><br>
+      <a href="../../../credits/">Credits and licences</a>
+    </div>
+  </div>
+</footer>
+<script src="../../../assets/site.js" defer></script>
+</body>
+</html>

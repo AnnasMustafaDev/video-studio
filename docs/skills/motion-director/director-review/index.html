@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Director review of the plan (Round 0) (motion-director) · Video Studio</title>
+<meta name="description" content="Before anyone writes code, review the brief and storyboard like a strict creative director. Changing a table costs a minute; re-animating a scene costs an hour. Best run...">
+<meta property="og:title" content="Director review of the plan (Round 0) (motion-director) · Video Studio">
+<meta property="og:description" content="Before anyone writes code, review the brief and storyboard like a strict creative director. Changing a table costs a minute; re-animating a scene costs an hour. Best run...">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23eef3ff'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%233b6cf6'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../../assets/site.css">
+<link rel="stylesheet" href="../../../assets/panel-skills.css">
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="../../../"><span class="dot"></span>Video Studio</a>
+    <nav class="main" aria-label="Main"><a href="../../../">Home</a><a href="../../../tour/">Tour</a><a href="../../../guide/">Guide</a><a href="../../../skills/" aria-current="page">Skills</a><a href="../../../prompts/">Prompts</a><a href="../../../studio/">Studio</a><a href="../../../techniques/">Techniques</a><a href="../../../shot-library/">Shot library</a><a href="../../../research/">Research</a><a href="../../../gallery/">Gallery</a><a href="../../../credits/">Credits</a></nav>
+    <div class="tools">
+      <a class="btn" href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">GitHub</a>
+      <button class="btn" id="theme-toggle" type="button" aria-label="Toggle light or dark theme">Theme</button>
+    </div>
+  </div>
+</header>
+<main>
+  <div class="wrap">
+<nav class="crumbs ps-crumbs" aria-label="Breadcrumb"><a href="../../../">Home</a> <span aria-hidden="true">/</span> <a href="../../../skills/">Skills</a> <span aria-hidden="true">/</span> <a href="../../../skills/motion-director/">motion-director</a> <span aria-hidden="true">/</span> <span aria-current="page">Director review of the plan (Round 0)</span></nav><header class="ps-head"><div class="ps-badges"><span class="badge plain">Reference</span> <span class="badge">motion-director</span></div><h1>Director review of the plan (Round 0)</h1></header><div class="ps-doc"><article class="ps-article"><p>Before anyone writes code, review the brief and storyboard like a strict creative director. Changing a table costs a minute; re-animating a scene costs an hour. Best run by a subagent that did not write the storyboard.</p>
+<h2 id="check">Check</h2>
+<ol><li><strong>Message:</strong> can you say the one thing to remember after reading only the exact text column? Does the hook land in the first 2 s and frame 0 already carry the message?</li><li><strong>Arc:</strong> hook, development, payoff, ending. Does each scene&#39;s purpose move the story, or could it be cut?</li><li><strong>Focal points:</strong> exactly one per scene; the exact text supports it.</li><li><strong>Repetition:</strong> same layout, motion or trick used twice without reason (check every <code>REPEAT?</code> flag and look for unflagged ones).</li><li><strong>Pacing:</strong> gaps over 4 s without a new event; holds long enough to read (0.3 s per word + 0.5 s; numbers and CTA 1.5 to 2 s); showpieces limited to 2 or 3.</li><li><strong>Motion precision:</strong> every animation names direction, distance, duration, easing and trigger. Flag any adjective without numbers (&quot;smooth&quot;, &quot;dynamic&quot;, &quot;cinematic&quot;).</li><li><strong>Transitions:</strong> each is motivated and says what carries across; no transition for its own sake; no cross-dissolve between unrelated shots.</li><li><strong>Consistency:</strong> one palette, one type family (plus mono), one radius scale, shared components; one accent with a meaning.</li><li><strong>Sound:</strong> hits table complete; every hit is a real visual event; music sections change where the story changes; silence placed on purpose.</li><li><strong>Honesty and feasibility:</strong> no invented numbers; illustrative visuals marked; every asset exists or is listed as missing; anything needing 3D, footage or compositing is called out.</li><li><strong>Formats:</strong> each extra aspect ratio composed for its shape; text out of platform UI zones (9:16: top 220 px, bottom 380 px).</li></ol>
+<h2 id="output-append-to-review-md">Output (append to <code>review.md</code>)</h2>
+<pre><code class="lang-markdown">## Round 0: plan review, &lt;date&gt;
+Top 5 defects (most consequential first):
+1. [scene 3, 4.0-6.5 s] WHAT -&gt; WHY it hurts -&gt; FIX (exact change to the storyboard row)
+2. ...
+Flags resolved: ...
+Verdict: FIX AND RE-REVIEW | READY FOR APPROVAL</code></pre>
+<p>Then apply the fixes to <code>storyboard.md</code> and present it to the user for approval. Do not hand over to a builder before the user approves.</p>
+<h2 id="added-checks-research-round">Added checks (research round)</h2>
+<ol><li><strong>Banned list:</strong> the brief has a film-specific <code>Banned for this film</code> line; the storyboard breaks none of it, and any lifted ban says where and why.</li><li><strong>Concept:</strong> Idea, Device and Grammar are filled and pass the deletion test; the device does not drop out at a scene seam.</li><li><strong>Hand-offs:</strong> every transition reads &quot;X becomes Y&quot; (or &quot;hard cut, page already set&quot;); no two scenes use the same morph without a flag.</li><li><strong>Earns its place:</strong> each scene justifies itself within about 3 seconds or is cut. If every transition has the same duration the rhythm will be even and tensionless: name the one hard cut and the one fast fade.</li><li><strong>Criteria:</strong> the glossary and acceptance criteria exist and are measurable.</li><li><strong>Optional critic for a risky scene:</strong> a fresh agent that did not write the plan lists its five weakest decisions and the cheapest check for each before anything renders.</li></ol>
+<p>Why: reviewing a plan before spending render time was reached independently by two builders (claimed); the earns-its-place test answers the most reported fault of AI motion, even rhythm.</p><nav class="ps-prevnext" aria-label="Previous and next"><a class="ps-pn prev" href="../directions/"><span class="ps-pn-dir">Previous</span><span class="ps-pn-title">Three creative directions</span></a><a class="ps-pn next" href="../reference-analysis/"><span class="ps-pn-dir">Next</span><span class="ps-pn-title">Reference breakdown</span></a></nav></article><aside class="ps-side"><details class="ps-side-d" open><summary>On this page</summary><ul class="ps-toc"><li class="l2"><a href="#check">Check</a></li><li class="l2"><a href="#output-append-to-review-md">Output (append to review.md)</a></li><li class="l2"><a href="#added-checks-research-round">Added checks (research round)</a></li></ul></details><details class="ps-side-d" open><summary>In motion-director</summary><ul class="ps-sidelist"><li><a href="../">SKILL.md</a></li><li><a href="../brief/">The brief: 10 ingredients</a></li><li><a href="../directions/">Three creative directions</a></li><li class="on"><span aria-current="page">Director review of the plan (Round 0)</span></li><li><a href="../reference-analysis/">Reference breakdown</a></li><li><a href="../storyboard/">Storyboard</a></li><li><a href="../vocabulary/">Motion vocabulary for directing</a></li><li><a href="../template-acceptance/">Acceptance criteria: &lt;title&gt;</a></li><li><a href="../template-brief/">Brief: &lt;title&gt;</a></li><li><a href="../template-directions/">Directions: &lt;title&gt;</a></li><li><a href="../template-glossary/">Glossary: &lt;title&gt;</a></li><li><a href="../template-reference/">Reference breakdown: &lt;reference name / file&gt;</a></li><li><a href="../template-storyboard/">Storyboard: &lt;title&gt;</a></li></ul></details><p class="ps-side-foot"><a href="https://github.com/AnnasMustafaDev/video-studio/blob/main/skills/motion-director/references/director-review.md" rel="noopener noreferrer">View source on GitHub</a></p></aside></div><script>
+(function(){
+  var mq = window.matchMedia('(min-width: 981px)');
+  function sync(){ document.querySelectorAll('details.ps-side-d').forEach(function(d){ d.open = mq.matches; }); }
+  sync();
+  if (mq.addEventListener) mq.addEventListener('change', sync);
+  var links = [].slice.call(document.querySelectorAll('.ps-toc a'));
+  if (!links.length || !('IntersectionObserver' in window)) return;
+  var byId = {};
+  links.forEach(function(a){ byId[decodeURIComponent(a.getAttribute('href').slice(1))] = a; });
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (!e.isIntersecting) return;
+      links.forEach(function(a){ a.classList.remove('on'); });
+      var a = byId[e.target.id]; if (a) a.classList.add('on');
+    });
+  }, { rootMargin: '-70px 0px -70% 0px' });
+  Object.keys(byId).forEach(function(id){ var el = document.getElementById(id); if (el) io.observe(el); });
+})();
+</script>
+  </div>
+</main>
+<footer class="site">
+  <div class="wrap cols">
+    <div>
+      <strong>Video Studio</strong><br>
+      A personal studio for motion graphics and animated videos with Claude Code.
+    </div>
+    <div>
+      <a href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">Source on GitHub</a><br>
+      <a href="../../../credits/">Credits and licences</a>
+    </div>
+  </div>
+</footer>
+<script src="../../../assets/site.js" defer></script>
+</body>
+</html>

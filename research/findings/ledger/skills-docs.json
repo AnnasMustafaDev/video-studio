@@ -1,0 +1,500 @@
+[
+  {
+    "id": "F-A1",
+    "status": "partial",
+    "paths": [
+      "skills/motion-studio/references/qa.md",
+      "skills/remotion-studio/references/inspect-render.md"
+    ],
+    "why": "Closes the biggest QA hole (frozen stretches and pops that sheets hide), three repos converged.",
+    "note": "Skill docs reference inspect.mjs forensics and declared designed moments; the tool itself belongs to the motion-review integrator."
+  },
+  {
+    "id": "F-A2",
+    "status": "landed",
+    "paths": [
+      "skills/motion-studio/references/design.md",
+      "skills/motion-director/references/storyboard.md",
+      "skills/motion-director/references/vocabulary.md"
+    ],
+    "why": "Checkable answer to text walls and captions that fight the picture; fits one idea per frame.",
+    "note": "Author's no-question ban not adopted. Numbers are the author's measurement."
+  },
+  {
+    "id": "F-A3",
+    "status": "landed",
+    "paths": [
+      "skills/motion-studio/references/motion.md",
+      "skills/motion-studio/references/qa.md",
+      "skills/remotion-studio/references/inspect-render.md"
+    ],
+    "why": "Replaces blind easing retries with a 30 second velocity plot; deterministic frames make it trivial.",
+    "note": "buoyant() helper referenced as studio/src/lib/motion.ts (integrator 3); plot via inspect.mjs plot."
+  },
+  {
+    "id": "F-A4",
+    "status": "deferred",
+    "paths": [],
+    "why": "Only pays off for pieces over about 60 s; the protocol belongs in a prompt, owned by the prompts integrator.",
+    "note": "The existing parallel scene-builder rule in remotion-studio already covers file ownership; pilot-first is covered by scene-1 gate."
+  },
+  {
+    "id": "F-A5",
+    "status": "partial",
+    "paths": [
+      "skills/motion-studio/references/design-system.md",
+      "skills/motion-studio/references/design.md"
+    ],
+    "why": "Frame-relative ramp and text floor give a testable form of one accent and keep layouts from collapsing into web UI.",
+    "note": "Rule landed in skill docs; tokens.ts and DESIGN_SYSTEM.md belong to the studio code owner. Numbers are one project's, to be tuned."
+  },
+  {
+    "id": "F-A6",
+    "status": "landed",
+    "paths": [
+      "skills/motion-studio/references/transitions.md",
+      "skills/motion-studio/references/motion.md",
+      "skills/motion-director/references/vocabulary.md"
+    ],
+    "why": "Turns smooth transition into numbers and explains dead dissolve-free cuts.",
+    "note": "Helpers (velocity-matched cut) referenced as studio/src/lib/transitions.tsx (integrator 3). Numbers are author-measured at 60 fps."
+  },
+  {
+    "id": "F-A7",
+    "status": "landed",
+    "paths": [
+      "skills/motion-studio/references/transitions.md",
+      "skills/motion-studio/references/motion.md"
+    ],
+    "why": "Hidden-cut recipes with written failure modes give meaning to cuts; re-skinned to one accent.",
+    "note": "Impact slam limited to comparison moments and counted in the 3 full-frame hit cap; light-leak must be tinted and flare-free."
+  },
+  {
+    "id": "F-A8",
+    "status": "landed",
+    "paths": [
+      "skills/motion-studio/references/audio.md"
+    ],
+    "why": "Sound sync becomes a property of the code; retiming picture retimes sound.",
+    "note": "Adopt for UI films with many micro-hits; narrated films keep the hand-authored hits table. Sfx.tsx helper is integrator 3's."
+  },
+  {
+    "id": "F-A9",
+    "status": "landed",
+    "paths": [
+      "skills/motion-studio/references/audio.md",
+      "skills/motion-studio/references/qa.md"
+    ],
+    "why": "A grid-acceptance step we lacked plus an evidence-based cap of 3 full-frame beat hits.",
+    "note": "Our own music.mjs grid is exact; the acceptance steps are for imported tracks."
+  },
+  {
+    "id": "F-A10",
+    "status": "deferred",
+    "paths": [],
+    "why": "Verification critic, ledger and round cap belong to motion-review (agent.md, SKILL.md).",
+    "note": "Owned by integrator 1; stop rule already in review.md."
+  },
+  {
+    "id": "F-A11",
+    "status": "landed",
+    "paths": [
+      "skills/motion-studio/references/direction.md",
+      "skills/motion-director/references/directions.md",
+      "skills/motion-director/templates/brief.md",
+      "skills/motion-studio/references/banned-effects.md"
+    ],
+    "why": "Stops style posing as idea, which three-directions can still produce.",
+    "note": "Added as fields and kill tests, not a new stage."
+  },
+  {
+    "id": "F-A12",
+    "status": "landed",
+    "paths": [
+      "skills/motion-studio/references/gotchas.md",
+      "skills/motion-studio/references/direction.md",
+      "skills/motion-studio/references/three-d.md"
+    ],
+    "why": "Rules that came from review rework pre-empt rounds; kept in rule, case, check form.",
+    "note": "Merged with existing learnings spirit; rubric lines belong to motion-review."
+  },
+  {
+    "id": "F-A13",
+    "status": "landed",
+    "paths": [
+      "skills/motion-studio/references/direction.md",
+      "skills/motion-director/references/storyboard.md",
+      "skills/motion-director/templates/storyboard.md"
+    ],
+    "why": "Numbers to check instead of feel; spend stillness once.",
+    "note": "Reference table only, not pass/fail gates; source films not named, author's claim."
+  },
+  {
+    "id": "F-A14",
+    "status": "landed",
+    "paths": [
+      "skills/motion-studio/references/gotchas.md",
+      "skills/remotion-studio/references/determinism.md",
+      "skills/motion-studio/references/voice.md"
+    ],
+    "why": "Each trap causes a visible defect that stills at the wrong frame miss; all apply to Remotion and the HTML engine.",
+    "note": "Comments in motion.ts belong to integrator 3."
+  },
+  {
+    "id": "F-A15",
+    "status": "landed",
+    "paths": [
+      "skills/motion-studio/references/audio.md"
+    ],
+    "why": "Concrete alternative to adding more SFX, which is how films get busy.",
+    "note": "Calm-profile -18 LUFS must be stated in the delivery report."
+  },
+  {
+    "id": "F-A16",
+    "status": "landed",
+    "paths": [
+      "skills/motion-studio/references/motion.md",
+      "skills/motion-director/references/vocabulary.md"
+    ],
+    "why": "Karaoke fill and weight pump are cheap, deterministic and suit voice-led films; the other two are optional spices.",
+    "note": "Component work (word-fill mode in WordStagger or Captions) is integrator 3's."
+  },
+  {
+    "id": "F-A17",
+    "status": "partial",
+    "paths": [
+      "skills/motion-director/references/vocabulary.md"
+    ],
+    "why": "Named cards give precise prompts and a draw counters the model's habit of picking the familiar move.",
+    "note": "Skills only point to skills/shot-library, which another agent owns; the draw helper is deferred."
+  },
+  {
+    "id": "F-A18",
+    "status": "deferred",
+    "paths": [
+      "skills/motion-studio/references/three-d.md"
+    ],
+    "why": "Heavy WebGL documentary technique, out of scope for product films.",
+    "note": "Only a one-line note that it exists; nothing in the default workflow."
+  },
+  {
+    "id": "F-B1",
+    "status": "landed",
+    "paths": [
+      "skills/motion-director/templates/brief.md",
+      "skills/motion-director/references/brief.md",
+      "skills/motion-studio/references/workflow.md",
+      "skills/motion-studio/references/golden-scene.md"
+    ],
+    "why": "A brief the builder cannot quietly reinterpret, with the stop where it is cheapest; recurs in five films by two authors.",
+    "note": "Prompts 40 and 12 are the prompts integrator's."
+  },
+  {
+    "id": "F-B2",
+    "status": "landed",
+    "paths": [
+      "skills/motion-studio/references/banned-effects.md",
+      "skills/motion-director/templates/brief.md",
+      "skills/motion-director/references/director-review.md"
+    ],
+    "why": "Bans remove the model's reflex defaults, where the AI look comes from.",
+    "note": "Mechanism adopted, other authors' specific bans (no serif etc.) not. Rubric check belongs to motion-review."
+  },
+  {
+    "id": "F-B3",
+    "status": "landed",
+    "paths": [
+      "skills/motion-studio/references/transitions.md",
+      "skills/motion-director/templates/storyboard.md",
+      "skills/motion-director/references/storyboard.md",
+      "skills/motion-director/references/vocabulary.md"
+    ],
+    "why": "A checkable hand-off column removes the crossfade default.",
+    "note": "Strict for UI and product pieces; type pieces may still hard cut onto a set page."
+  },
+  {
+    "id": "F-B4",
+    "status": "landed",
+    "paths": [
+      "skills/motion-studio/references/motion.md",
+      "skills/motion-studio/references/qa.md"
+    ],
+    "why": "Speed table makes camera language reviewable; flow test catches surges and stops that stills cannot.",
+    "note": "Flow tool is integrator 1's (inspect.mjs flow); table format is the new part, integrated curves already in learnings."
+  },
+  {
+    "id": "F-B5",
+    "status": "landed",
+    "paths": [
+      "skills/motion-studio/references/motion.md",
+      "skills/motion-studio/references/qa.md",
+      "skills/remotion-studio/references/inspect-render.md"
+    ],
+    "why": "Same finding as F-A3: plot before changing code.",
+    "note": "Merged with F-A3. prompts/15 is the prompts integrator's."
+  },
+  {
+    "id": "F-B6",
+    "status": "partial",
+    "paths": [
+      "skills/remotion-studio/references/phases.md"
+    ],
+    "why": "Moves taste decisions from prompt rounds to direct manipulation; zod schema is native in Remotion.",
+    "note": "Remotion side landed; the HTML player ?tune panel is deferred."
+  },
+  {
+    "id": "F-B7",
+    "status": "deferred",
+    "paths": [],
+    "why": "Layer capture is useful but the fly-over conflicts with our rejected tilted-page look and was not in the adopt list.",
+    "note": "Revisit only if a brief asks for a site showcase."
+  },
+  {
+    "id": "F-B8",
+    "status": "landed",
+    "paths": [
+      "skills/motion-studio/references/audio.md",
+      "skills/motion-studio/references/direction.md",
+      "skills/motion-director/templates/storyboard.md"
+    ],
+    "why": "Makes sync a property of the plan for music-led films.",
+    "note": "Not for voice-led films; no dead time does not mean constant motion."
+  },
+  {
+    "id": "F-B9",
+    "status": "landed",
+    "paths": [
+      "skills/motion-studio/references/audio.md",
+      "skills/motion-studio/references/qa.md"
+    ],
+    "why": "Adds cursor speed and a frame-diff test to the existing re-set-the-opening-word loop rule.",
+    "note": "Loop-twice preview uses existing inspect.mjs probe frames."
+  },
+  {
+    "id": "F-B10",
+    "status": "partial",
+    "paths": [
+      "skills/motion-studio/references/direction.md"
+    ],
+    "why": "A thread object gives a short piece a spine, and the curve-from-same-function rule makes demos self-proving.",
+    "note": "Covered conceptually by the Device field; ThreadDot and SpringGraph components belong to the studio code owner."
+  },
+  {
+    "id": "F-B11",
+    "status": "landed",
+    "paths": [
+      "skills/motion-studio/references/voice.md",
+      "skills/motion-studio/references/audio.md"
+    ],
+    "why": "Onset-anchored per-segment Whisper and a per-phrase level check are measurable improvements.",
+    "note": "ElevenLabs parts rejected (cloud, keys). 3-band duck optional and untested; half-second-late claim is the author's."
+  },
+  {
+    "id": "F-B12",
+    "status": "landed",
+    "paths": [
+      "skills/motion-studio/references/gotchas.md",
+      "skills/motion-studio/references/motion.md",
+      "skills/motion-studio/references/engine.md"
+    ],
+    "why": "4 subframes ghost fast moves; 8 costs render time only where needed.",
+    "note": "Per-section blur=8 render; per-frame shutter control is not in the template yet."
+  },
+  {
+    "id": "F-B13",
+    "status": "landed",
+    "paths": [
+      "skills/motion-studio/references/gotchas.md",
+      "skills/motion-studio/references/qa.md",
+      "skills/motion-studio/references/learnings.md"
+    ],
+    "why": "Each item is a defect we hit or will; several are new (will-change, visibility, selection-box tell, minimum fade, all-intra).",
+    "note": "Rubric lines belong to motion-review."
+  },
+  {
+    "id": "F-B14",
+    "status": "landed",
+    "paths": [
+      "skills/motion-studio/references/workflow.md",
+      "skills/motion-studio/references/golden-scene.md",
+      "skills/motion-studio/SKILL.md",
+      "skills/remotion-studio/SKILL.md"
+    ],
+    "why": "Extends not visually verified to render capability; one line, prevents a false done.",
+    "note": "prompts/00 is the prompts integrator's."
+  },
+  {
+    "id": "F-B15",
+    "status": "partial",
+    "paths": [
+      "skills/remotion-studio/references/phases.md"
+    ],
+    "why": "Asset spec before generation and per-film primitives are small additions.",
+    "note": "Low confidence (second-hand summary), kept as a maybe-level item."
+  },
+  {
+    "id": "F-B16",
+    "status": "partial",
+    "paths": [
+      "skills/remotion-studio/references/delivery.md"
+    ],
+    "why": "Lets the library generate overlays over live footage.",
+    "note": "Flags untested; the doc says run one test render before relying on it."
+  },
+  {
+    "id": "F-B17",
+    "status": "rejected",
+    "paths": [],
+    "why": "Cloned-scene glass adds gradients, glow and per-element cost that clash with flat one-accent taste.",
+    "note": "Keep as a recipe only if a brief asks for it."
+  },
+  {
+    "id": "F-B18",
+    "status": "partial",
+    "paths": [
+      "skills/motion-director/references/brief.md"
+    ],
+    "why": "Techniques yes, design no is a clean wording and shot-duration measurement is useful.",
+    "note": "Mostly covered by reference analysis; prompt 20 belongs to the prompts integrator."
+  },
+  {
+    "id": "F-C1",
+    "status": "landed",
+    "paths": [
+      "skills/motion-studio/references/golden-scene.md",
+      "skills/remotion-studio/references/phases.md"
+    ],
+    "why": "Few-shot principle: a working scene beats a description, and it is nearly free to test.",
+    "note": "DESIGN_SYSTEM.md golden-scenes list and prompt 14 are others'."
+  },
+  {
+    "id": "F-C2",
+    "status": "landed",
+    "paths": [
+      "skills/motion-studio/references/golden-scene.md",
+      "skills/remotion-studio/references/phases.md"
+    ],
+    "why": "An improvement can remove what was right; the commit is the rollback point and the diff read catches it.",
+    "note": "Local commits only, never push. Prompts 15 and 16 are the prompts integrator's."
+  },
+  {
+    "id": "F-C3",
+    "status": "partial",
+    "paths": [
+      "skills/motion-studio/references/audio.md"
+    ],
+    "why": "Anticipation is how editors treat J-cuts, but one comment with no demonstration.",
+    "note": "Marked to be A/B-tested at 80 to 150 ms, not a fixed rule; current 60 ms word lead stays."
+  },
+  {
+    "id": "F-C4",
+    "status": "partial",
+    "paths": [
+      "skills/motion-studio/references/qa.md",
+      "skills/remotion-studio/references/inspect-render.md"
+    ],
+    "why": "Reference-sheet comparison gives the reviewer something to fall short of.",
+    "note": "Docs mention inspect.mjs compare against the golden scene; motion-review input spec belongs to integrator 1."
+  },
+  {
+    "id": "F-C5",
+    "status": "partial",
+    "paths": [
+      "skills/motion-studio/references/workflow.md",
+      "skills/motion-director/references/director-review.md",
+      "skills/motion-studio/references/audio.md"
+    ],
+    "why": "The criticism of even rhythm is more useful than the polish list.",
+    "note": "Earns-its-place test, flag equal transition durations, SFX only on structural moments. Crossfade-everything and one-easing-everywhere rejected."
+  },
+  {
+    "id": "F-C6",
+    "status": "landed",
+    "paths": [
+      "skills/motion-director/templates/glossary.md",
+      "skills/motion-director/templates/acceptance.md",
+      "skills/motion-director/templates/brief.md",
+      "skills/motion-studio/references/golden-scene.md"
+    ],
+    "why": "Two builders hit the same wall: vague words and exact values both fail; thresholds checkable on a still do not.",
+    "note": "Prompts 16 and 40 are the prompts integrator's."
+  },
+  {
+    "id": "F-C7",
+    "status": "landed",
+    "paths": [
+      "skills/motion-studio/references/golden-scene.md",
+      "skills/remotion-studio/references/phases.md",
+      "skills/motion-director/references/director-review.md"
+    ],
+    "why": "A five-line plan costs seconds and catches misreadings; the critic is optional for risky scenes.",
+    "note": "Complements the existing Round 0 review."
+  },
+  {
+    "id": "F-C8",
+    "status": "deferred",
+    "paths": [],
+    "why": "A new system-audit prompt belongs to the prompts integrator.",
+    "note": "Skill docs unchanged."
+  },
+  {
+    "id": "F-C9",
+    "status": "partial",
+    "paths": [
+      "skills/motion-director/templates/storyboard.md",
+      "skills/motion-director/references/storyboard.md",
+      "skills/motion-studio/references/design-system.md"
+    ],
+    "why": "Colour flow, footage placeholders and density tag are cheap planning aids.",
+    "note": "Anti-pattern review flags belong to motion-review; clamp inside text components is a note for the studio code owner. Source's fixed sizes and colour-psychology table not adopted."
+  },
+  {
+    "id": "F-C10",
+    "status": "landed",
+    "paths": [
+      "skills/motion-studio/references/direction.md",
+      "skills/motion-director/references/directions.md"
+    ],
+    "why": "Two builders independently found it the one reliably interesting pattern; fits the felt-moment hook lesson.",
+    "note": "Prompts 62 and 63 are the prompts integrator's."
+  },
+  {
+    "id": "F-C11",
+    "status": "landed",
+    "paths": [
+      "skills/motion-studio/references/direction.md",
+      "skills/remotion-studio/references/phases.md"
+    ],
+    "why": "Synthetic UI looks fake; the HTML engine already captures real apps, Remotion docs did not say so.",
+    "note": "Real components rendered in the film are fine."
+  },
+  {
+    "id": "F-C12",
+    "status": "landed",
+    "paths": [
+      "skills/motion-studio/references/formats.md",
+      "skills/remotion-studio/references/delivery.md"
+    ],
+    "why": "Concrete and checkable.",
+    "note": "The doubtful browser-profile claim was omitted and replaced by pixel format, faststart and range requests."
+  },
+  {
+    "id": "F-C13",
+    "status": "landed",
+    "paths": [
+      "skills/motion-studio/references/formats.md"
+    ],
+    "why": "A precise, reproducible failure when captions are built on cut or joined audio.",
+    "note": "Maybe-level: our line-by-line Kokoro clips sidestep it. Caption component notes are integrator 3's."
+  },
+  {
+    "id": "F-C14",
+    "status": "landed",
+    "paths": [
+      "skills/motion-studio/references/design.md",
+      "skills/motion-studio/references/gotchas.md"
+    ],
+    "why": "One-line layout lock that stops the card jumping as lines wrap.",
+    "note": "Typewriter cursors as decoration stay banned."
+  }
+]

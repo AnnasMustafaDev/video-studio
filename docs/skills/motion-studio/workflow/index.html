@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Staged workflow (motion-studio) · Video Studio</title>
+<meta name="description" content="People getting impressive results use Claude as motion designer, creative director, animator and developer, with a workflow that lets them inspect and improve the actual...">
+<meta property="og:title" content="Staged workflow (motion-studio) · Video Studio">
+<meta property="og:description" content="People getting impressive results use Claude as motion designer, creative director, animator and developer, with a workflow that lets them inspect and improve the actual...">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23eef3ff'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%233b6cf6'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../../assets/site.css">
+<link rel="stylesheet" href="../../../assets/panel-skills.css">
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="../../../"><span class="dot"></span>Video Studio</a>
+    <nav class="main" aria-label="Main"><a href="../../../">Home</a><a href="../../../tour/">Tour</a><a href="../../../guide/">Guide</a><a href="../../../skills/" aria-current="page">Skills</a><a href="../../../prompts/">Prompts</a><a href="../../../studio/">Studio</a><a href="../../../techniques/">Techniques</a><a href="../../../shot-library/">Shot library</a><a href="../../../research/">Research</a><a href="../../../gallery/">Gallery</a><a href="../../../credits/">Credits</a></nav>
+    <div class="tools">
+      <a class="btn" href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">GitHub</a>
+      <button class="btn" id="theme-toggle" type="button" aria-label="Toggle light or dark theme">Theme</button>
+    </div>
+  </div>
+</header>
+<main>
+  <div class="wrap">
+<nav class="crumbs ps-crumbs" aria-label="Breadcrumb"><a href="../../../">Home</a> <span aria-hidden="true">/</span> <a href="../../../skills/">Skills</a> <span aria-hidden="true">/</span> <a href="../../../skills/motion-studio/">motion-studio</a> <span aria-hidden="true">/</span> <span aria-current="page">Staged workflow</span></nav><header class="ps-head"><div class="ps-badges"><span class="badge plain">Reference</span> <span class="badge">motion-studio</span></div><h1>Staged workflow</h1></header><div class="ps-doc"><article class="ps-article"><p>People getting impressive results use Claude as motion designer, creative director, animator and developer, with a workflow that lets them inspect and improve the actual video. Separate creative decisions from implementation, and implementation from quality assurance. Never generate the whole video in one shot.</p>
+<p><code>&lt;VS&gt;</code> = <code>&lt;repo&gt;</code>. Paper trail: <code>&lt;VS&gt;\projects\&lt;yyyy-mm-dd&gt;-&lt;slug&gt;\</code> with <code>brief.md</code>, <code>reference.md</code>, <code>directions.md</code>, <code>storyboard.md</code>, <code>review.md</code>, <code>notes.md</code>, and renders in <code>out/</code> (gitignored). For the HTML engine the film project itself goes in <code>film/</code> inside that folder. Templates for the documents: <code>~/.claude/skills/motion-director/templates/</code>.</p>
+<h2 id="the-five-phases">The five phases</h2>
+<table><thead><tr><th>Phase</th><th>What happens</th><th>Stop?</th></tr></thead><tbody><tr><td><strong>1 Understand and plan</strong></td><td>Brief from the 10 ingredients (assume and document, ask only critical gaps); reference breakdown if any; three genuinely different directions with a recommendation; storyboard of the chosen one with hits table; design system; which assets are code-made versus real</td><td>Stop after directions (user picks) and after the storyboard (user approves)</td></tr><tr><td><strong>2 Design for quality</strong></td><td>Hierarchy and negative space, one focal point per scene, consistent type/spacing/colour/alignment, purposeful easing and duration, controlled stagger and layering, meaningful transitions, depth/texture/light only where justified, sound synced to events, readable text in safe margins</td><td></td></tr><tr><td><strong>3 Implement</strong></td><td>Inspect the project first; tokens and timings centralised; deterministic (every frame from <code>t</code>); reusable pieces; real assets at their aspect ratio; audio and picture timing coordinated. <strong>One scene first</strong></td><td></td></tr><tr><td><strong>4 Render, inspect, improve</strong></td><td>Stills and sheets, look, fix, independent scored review, fix the top defects, re-render, repeat to the stop rule (<a href="../review/">review.md</a>); then the remaining scenes</td><td>Show the user only after a passing round</td></tr><tr><td><strong>5 Deliver</strong></td><td>Final render at spec, ffprobe, sync check, poster, delivery report, learnings (<a href="../delivery/">delivery.md</a>)</td><td></td></tr></tbody></table>
+<p>Prioritise creative quality, visual consistency, deterministic rendering and verified output over adding effects.</p>
+<h2 id="the-10-ingredients-of-a-brief">The 10 ingredients of a brief</h2>
+<ol><li><strong>Purpose:</strong> what the video must achieve, the audience, the one thing to remember.</li><li><strong>Format:</strong> 16:9 / 9:16 / 1:1 / 4:5, resolution, frame rate, duration.</li><li><strong>Art direction:</strong> aesthetic, references, palette, contrast, materials, texture, atmosphere.</li><li><strong>Composition:</strong> where things sit, negative space, foreground / background layers.</li><li><strong>Typography:</strong> typeface, weights, hierarchy, line breaks, tracking, alignment, <strong>exact on-screen text</strong>.</li><li><strong>Movement:</strong> what moves, direction, distance, speed, trigger.</li><li><strong>Timing:</strong> scene durations, delays, holds, overlaps, reveal times, ending.</li><li><strong>Transitions:</strong> cut, match cut, mask reveal, wipe, zoom, morph, camera move, each supporting the story.</li><li><strong>Audio:</strong> music mood, SFX, voice-over, accents and silence, and where they occur.</li><li><strong>Quality constraints:</strong> no clipped text, broken layouts, random decoration, accidental overlaps, inconsistent fonts or unreviewed final renders.</li></ol>
+<p>Full guidance and a weak-versus-strong example: <code>~/.claude/skills/motion-director/references/brief.md</code>.</p>
+<h2 id="the-staged-prompts-one-stage-per-turn">The staged prompts (one stage per turn)</h2>
+<ol><li><strong>Directions:</strong> three genuinely different directions (visual language, palette, type, pacing, animation style, transitions, audio), which is strongest and why. No code.</li><li><strong>Storyboard:</strong> timestamps and a clear arc. For every scene: first frame, last frame, focal point, exact text, animation, easing, transition, audio cue, purpose, how it connects to the next; flag visually repetitive scenes. Plus the hits table.</li><li><strong>Build one scene:</strong> only scene 1 from the approved storyboard; composition, type, timing and motion quality; reusable pieces; frame-based. Render representative frames, inspect, fix before moving on.</li><li><strong>Quality review:</strong> a strict director (best a fresh subagent with <code>motion-review</code>) scores typography, hierarchy, spacing, timing, easing, transitions, consistency, pacing, sound sync; names the five most consequential defects with fixes; the builder fixes the highest-impact ones and re-renders. No new effects unless they solve a real problem.</li></ol>
+<p>The same prompts, for humans, are in <code>&lt;VS&gt;\prompts\</code> (see <a href="../../../prompts/"><code>prompts/INDEX.md</code></a>).</p>
+<h2 id="when-the-user-says-just-make-it">When the user says &quot;just make it&quot;</h2>
+<p>Still write a short brief and storyboard (minutes, not hours), say that you skipped the approval stops at their request, and keep the one-scene-first and review loop: those protect the result, not the process.</p>
+<h2 id="additions-to-the-staged-workflow">Additions to the staged workflow</h2>
+<ul><li><strong>Tagged brief.</strong> <code>brief.md</code> carries fixed headings: <code>inputs</code> (what to ask the user, defaults if skipped), <code>direction</code> (concept triple, look, <strong>Banned for this film</strong>), <code>structure</code> (beat map or timed scenes), <code>build</code> (numbered engineering rules), <code>gotchas</code> (known failures from <a href="../gotchas/">gotchas.md</a> that apply), <code>start</code> (the gate). Template: <code>~/.claude/skills/motion-director/templates/brief.md</code>. Why: a contract the model cannot quietly reinterpret, with the stop where it is cheapest. Evidence: the same skeleton recurs in five finished films by two authors (F-B1).</li><li><strong>Banned list per film</strong> in the direction tag, seeded from <a href="../banned-effects/">banned-effects.md</a>; the reviewer checks it.</li><li><strong>Start gate.</strong> Before any code: the beat map or line-to-visual map plus 4 to 8 named stills. See <a href="../golden-scene/">golden-scene.md</a>.</li><li><strong>Build loop.</strong> Five-line plan before each scene, golden scene as the template for the rest, local commit per approved scene with a diff read, decision log, acceptance criteria and a per-film glossary: <a href="../golden-scene/">golden-scene.md</a>.</li><li><strong>Storyboard rules.</strong> Transition column reads &quot;X becomes Y&quot; (<a href="../transitions/">transitions.md</a>); colour-flow table, a density tag per scene (sparse, medium, dense; dense is rare and deliberate; &quot;dead air&quot; is a static screen under the voice) and a list of where real footage replaces animation (templates in <code>motion-director</code>).</li><li><strong>Say what you cannot do.</strong> At the start say what can only be previewed (no render possible, no way to view images). Never describe results you have not seen. Evidence: only claimed in one prompt (F-B14); it extends our &quot;not visually verified&quot; rule to render capability.</li><li><strong>Earns its place.</strong> In the plan review, each scene must earn its place within about 3 seconds or be cut; if every transition has the same duration, flag it (name the one hard cut and the one fast fade). Why: the even, tensionless rhythm commenters mock. Evidence: widely reported, judgement not a recipe (F-C5).</li></ul><nav class="ps-prevnext" aria-label="Previous and next"><a class="ps-pn prev" href="../voice/"><span class="ps-pn-dir">Previous</span><span class="ps-pn-title">Voice-over</span></a><span></span></nav></article><aside class="ps-side"><details class="ps-side-d" open><summary>On this page</summary><ul class="ps-toc"><li class="l2"><a href="#the-five-phases">The five phases</a></li><li class="l2"><a href="#the-10-ingredients-of-a-brief">The 10 ingredients of a brief</a></li><li class="l2"><a href="#the-staged-prompts-one-stage-per-turn">The staged prompts (one stage per turn)</a></li><li class="l2"><a href="#when-the-user-says-just-make-it">When the user says &quot;just make it&quot;</a></li><li class="l2"><a href="#additions-to-the-staged-workflow">Additions to the staged workflow</a></li></ul></details><details class="ps-side-d" open><summary>In motion-studio</summary><ul class="ps-sidelist"><li><a href="../">SKILL.md</a></li><li><a href="../audio/">Music, sound effects, loudness</a></li><li><a href="../banned-effects/">Banned effects: a list per film</a></li><li><a href="../capture/">Capturing a real app</a></li><li><a href="../delivery/">Final delivery (Phase 5)</a></li><li><a href="../design-system/">A reusable motion-design system</a></li><li><a href="../design/">Visual design</a></li><li><a href="../direction/">Direction: brief, story, script, captions</a></li><li><a href="../engine/">Engine: composition, live player, renderer</a></li><li><a href="../formats/">Formats and delivery</a></li><li><a href="../golden-scene/">Build loop: golden scene, plan check, commits, acceptance criteria</a></li><li><a href="../gotchas/">Gotchas catalogue</a></li><li><a href="../learnings/">Learnings log</a></li><li><a href="../motion/">Motion</a></li><li><a href="../qa/">QA checklists</a></li><li><a href="../reference-analysis/">Using a visual reference</a></li><li><a href="../review/">Render, inspect, fix: the review loop</a></li><li><a href="../three-d/">3D (three.js): rarely the right call</a></li><li><a href="../transitions/">Transitions: &quot;X becomes Y&quot;, velocity handoff, hidden cuts</a></li><li><a href="../vocabulary/">Vocabulary → recipes in this engine</a></li><li><a href="../voice/">Voice-over</a></li><li class="on"><span aria-current="page">Staged workflow</span></li></ul></details><p class="ps-side-foot"><a href="https://github.com/AnnasMustafaDev/video-studio/blob/main/skills/motion-studio/references/workflow.md" rel="noopener noreferrer">View source on GitHub</a></p></aside></div><script>
+(function(){
+  var mq = window.matchMedia('(min-width: 981px)');
+  function sync(){ document.querySelectorAll('details.ps-side-d').forEach(function(d){ d.open = mq.matches; }); }
+  sync();
+  if (mq.addEventListener) mq.addEventListener('change', sync);
+  var links = [].slice.call(document.querySelectorAll('.ps-toc a'));
+  if (!links.length || !('IntersectionObserver' in window)) return;
+  var byId = {};
+  links.forEach(function(a){ byId[decodeURIComponent(a.getAttribute('href').slice(1))] = a; });
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (!e.isIntersecting) return;
+      links.forEach(function(a){ a.classList.remove('on'); });
+      var a = byId[e.target.id]; if (a) a.classList.add('on');
+    });
+  }, { rootMargin: '-70px 0px -70% 0px' });
+  Object.keys(byId).forEach(function(id){ var el = document.getElementById(id); if (el) io.observe(el); });
+})();
+</script>
+  </div>
+</main>
+<footer class="site">
+  <div class="wrap cols">
+    <div>
+      <strong>Video Studio</strong><br>
+      A personal studio for motion graphics and animated videos with Claude Code.
+    </div>
+    <div>
+      <a href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">Source on GitHub</a><br>
+      <a href="../../../credits/">Credits and licences</a>
+    </div>
+  </div>
+</footer>
+<script src="../../../assets/site.js" defer></script>
+</body>
+</html>

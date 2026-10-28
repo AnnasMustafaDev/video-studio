@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>prompt-motion-search skill · Video Studio</title>
+<meta name="description" content="Finds a Claude-made example on prompt-motion.com with its prompt and rewrites it into a brief.">
+<meta property="og:title" content="prompt-motion-search skill · Video Studio">
+<meta property="og:description" content="Finds a Claude-made example on prompt-motion.com with its prompt and rewrites it into a brief.">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23eef3ff'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%233b6cf6'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../assets/site.css">
+<link rel="stylesheet" href="../../assets/panel-skills.css">
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="../../"><span class="dot"></span>Video Studio</a>
+    <nav class="main" aria-label="Main"><a href="../../">Home</a><a href="../../tour/">Tour</a><a href="../../guide/">Guide</a><a href="../../skills/" aria-current="page">Skills</a><a href="../../prompts/">Prompts</a><a href="../../studio/">Studio</a><a href="../../techniques/">Techniques</a><a href="../../shot-library/">Shot library</a><a href="../../research/">Research</a><a href="../../gallery/">Gallery</a><a href="../../credits/">Credits</a></nav>
+    <div class="tools">
+      <a class="btn" href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">GitHub</a>
+      <button class="btn" id="theme-toggle" type="button" aria-label="Toggle light or dark theme">Theme</button>
+    </div>
+  </div>
+</header>
+<main>
+  <div class="wrap">
+<nav class="crumbs ps-crumbs" aria-label="Breadcrumb"><a href="../../">Home</a> <span aria-hidden="true">/</span> <a href="../../skills/">Skills</a> <span aria-hidden="true">/</span> <span aria-current="page">prompt-motion-search</span></nav><header class="ps-head"><div class="ps-badges"><span class="badge">Inspiration</span>  <span class="badge plain">v0.1.0</span></div><h1>Prompt-motion search</h1><p class="lead ps-lead">Finds a Claude-made example on prompt-motion.com with its prompt and rewrites it into a brief.</p></header><dl class="ps-info"><div><dt>Skill</dt><dd><code>prompt-motion-search</code></dd></div><div><dt>Version</dt><dd>0.1.0</dd></div><div><dt>Trigger text</dt><dd><details class="ps-desc"><summary>Find inspiration on prompt-motion.com, a gallery of about 250 motion videos made with Claude, each with the exact prompt (or skill), model, effort, author and the video. Searches by keywords and gallery tags (Product...</summary><p>Find inspiration on prompt-motion.com, a gallery of about 250 motion videos made with Claude, each with the exact prompt (or skill), model, effort, author and the video. Searches by keywords and gallery tags (Product UI, Phone, Charts, Diagrams, Kinetic type, Shapes, Particles, Characters, Photos, Music, Code), shows 3 to 5 matches with full prompt and credit, saves the chosen one with credit into the video&#39;s projects/&lt;date&gt;-&lt;slug&gt;/inspiration.md, then rewrites it into a proper 10-ingredient brief for motion-director. Use when the user says &#39;find a prompt / inspiration on prompt-motion&#39;, &#39;what prompt made X&#39;, &#39;show me animations like ...&#39;, &#39;find me a kinetic type / product UI / chart example made with Claude&#39;, or pastes a prompt-motion.com link.</p></details></dd></div><div><dt>Install</dt><dd><code>node tools/install-skills.mjs prompt-motion-search</code></dd></div><div><dt>Source</dt><dd><a href="https://github.com/AnnasMustafaDev/video-studio/tree/main/skills/prompt-motion-search" rel="noopener noreferrer"><code>skills/prompt-motion-search/</code></a></dd></div></dl><div class="ps-doc"><article class="ps-article"><p>Find a motion video on https://prompt-motion.com that is close to what the user wants, show the prompt behind it with credit, and turn the chosen one into a real brief. You find and adapt ideas; you do not copy anyone&#39;s video.</p>
+<h2 id="home">Home</h2>
+<p>All personal animation and motion-graphics work lives in <code>&lt;repo&gt;</code> (call it <code>$VS</code>). Read <code>$VS\CLAUDE.md</code> and <code>$VS\prompts\INDEX.md</code> first. The human-facing version of this skill is <code>$VS\prompts\21-find-inspiration-prompt-motion.md</code>.</p>
+<p>Tools (Node 18+, no dependencies), in this skill&#39;s <code>tools/</code> folder (installed copy: <code>~/.claude/skills/prompt-motion-search/tools/</code>):</p>
+<pre><code class="lang-bash">node tools/search.mjs &quot;&lt;query&gt;&quot; [--tag &quot;Kinetic type&quot;]... [--limit 5] [--json] [--refresh]
+node tools/show.mjs &lt;https://prompt-motion.com/&lt;slug&gt; | slug&gt; [--json]</code></pre>
+<p><code>search.mjs</code> builds an index of titles, tags, type and author handles from the home page (it embeds every gallery card) cross-checked with <code>sitemap.xml</code>, caches it for 24 h, scores the matches, then fetches only the top <code>--limit</code> pages for the prompt text. <code>show.mjs</code> prints one page. Both print title, tags, type (Prompt / Skill), author with handle and original post, model, effort, posted date, page URL and the full prompt (plus the site&#39;s English translation when the prompt is in another language, and the install line for Skill entries). <code>--json</code> gives the same fields for scripting.</p>
+<h2 id="site-rules-non-negotiable">Site rules (non-negotiable)</h2>
+<p>robots.txt says <code>Content-Signal: search=yes, ai-train=no, use=reference</code> and <code>Disallow: /api/</code>. So:</p>
+<ul><li>Fetch <strong>on demand only</strong>, for a search the user asked for. Never call <code>/api/</code>, never crawl the whole site, never mirror the catalogue or prompt bodies into the repo. The tools enforce this: one request per second, at most 10 page fetches per run, and <code>/api/</code> and other hosts are refused.</li><li>The cache (<code>~/.cache/prompt-motion-search/index.json</code>, outside the repo; override with <code>PROMPT_MOTION_CACHE</code>) holds titles, tags, URLs, handles and dates only, never prompt text. <code>--refresh</code> forces a rebuild before the 24 h TTL.</li><li>Prompts and videos <strong>belong to their authors</strong>. Every time you show or save a prompt, name the author, their handle and link the original post and the gallery page. Only the one prompt the user picked goes into the repo, with that credit.</li><li>Use a prompt as a reference to learn from and adapt. Do not reproduce someone&#39;s video shot for shot or present their prompt as the user&#39;s own.</li></ul>
+<h2 id="workflow">Workflow</h2>
+<ol><li><strong>Goal to query.</strong> Restate what the user is after in one line. Turn it into 2 to 4 keywords (subject words that might be in a title: &quot;showreel&quot;, &quot;dashboard&quot;, &quot;launch&quot;, &quot;logo&quot;, &quot;terminal&quot;) and 0 to 2 tags. Tag words map automatically (e.g. &quot;typography&quot; to Kinetic type, &quot;graph&quot; to Charts, &quot;mobile&quot; to Phone), so pass a <code>--tag</code> only when it is a hard requirement.</li><li><strong>Search.</strong> Run <code>search.mjs</code> with <code>--limit 5</code>. Too few hits: drop a word or a tag. Too generic: add a tag. &quot;What prompt made X&quot; with a link: use <code>show.mjs</code> directly.</li><li><strong>Show 3 to 5 matches.</strong> For each: title, tags, author (@handle, original post link), model and effort, the prompt (shortened to the key lines if it is very long, with &quot;full prompt on the page&quot;), and the page URL to <strong>watch the video</strong> there. Say plainly which ones are one-line prompts. Then ask the user to pick one (or to search again). Stop here until they pick.</li><li><strong>Save the pick with credit.</strong> Find the current video&#39;s paper-trail folder <code>$VS\projects\&lt;yyyy-mm-dd&gt;-&lt;slug&gt;\</code> (create it if the user has started a new video; ask for the slug if it is unclear). Write <code>inspiration.md</code> there:</li></ol>
+<pre><code class="lang-markdown">   # Inspiration: &lt;title&gt;
+
+   - Source: &lt;gallery page URL&gt; (watch the video there)
+   - Author: &lt;name&gt; (@&lt;handle&gt;), original post: &lt;post URL&gt;
+   - Tags: &lt;tags&gt; · Type: &lt;Prompt|Skill&gt; · Model: &lt;model&gt; · Effort: &lt;effort&gt; · Posted: &lt;date&gt;
+   - Retrieved: &lt;today, ISO date&gt;. The prompt belongs to its author; quoted here as a reference for this video only.
+
+   ## Prompt (verbatim)
+
+   &lt;prompt text, plus the site&#39;s English translation if there is one&gt;
+
+   ## What we take from it
+
+   &lt;2 to 5 bullets: the idea, structure or technique we want, and what we will do differently&gt;</code></pre>
+<p>   If the user picks several, add one section per entry to the same file. Never save prompts the user did not pick.</p>
+<ol><li><strong>Rewrite into a brief.</strong> Many gallery prompts are one-liners (&quot;make a dynamic 15-second showreel, go all out&quot;) whose result came from the model and effort level (often Opus at Max/High), not from the words. Copying the sentence will not copy the quality. Hand over to the <code>motion-director</code> skill (or fill <code>$VS\prompts\40-brief-template.md</code> yourself) and write <code>brief.md</code> on the <strong>10 ingredients</strong>: purpose, format, art direction, composition, typography, movement, timing, transitions, audio, quality constraints. Fill every decision the original prompt left to the model, using what is visible in the video the user watched and the &quot;What we take from it&quot; notes; write assumptions down. Long structured prompts (inputs / direction / structure / build / gotchas) already carry many decisions: map them onto the ingredients and adapt the stack to this repo (Remotion in <code>studio/</code>, frame-based, deterministic; or the motion-studio HTML engine for narrated films).</li><li><strong>Continue the normal pipeline.</strong> Brief, then <code>10</code> creative directions (or <code>20</code> reference analysis if the user wants the feel of that exact video), <code>11</code> storyboard, and so on, as in <code>$VS\prompts\INDEX.md</code>. Never one-shot a whole video from the found prompt.</li></ol>
+<h2 id="limits">Limits</h2>
+<ul><li>Search covers titles, tags and author handles, not prompt text (prompt bodies are not cached by design). Titles are descriptive (&quot;Kinetic type showreel&quot;, &quot;Tally product demo&quot;), so subject words work best; style words (&quot;hook&quot;, &quot;cinematic&quot;) rarely appear in titles.</li><li>The site lists mostly Opus 5.5 results and many entries reuse the same &quot;showreel&quot; one-liner. Prefer entries with longer, structured prompts when the user wants something to learn from.</li><li>The parser reads the Next.js flight payload (<code>self.__next_f</code>) and the page&#39;s JSON-LD. If the site changes its markup, fields may come back empty (&quot;-&quot; or &quot;prompt not found&quot;); open the page URL, and fix <code>tools/lib.mjs</code>.</li><li>The video itself is only watched on the site; the tools never download it.</li></ul></article><aside class="ps-side"><details class="ps-side-d" open><summary>On this page</summary><ul class="ps-toc"><li class="l2"><a href="#home">Home</a></li><li class="l2"><a href="#site-rules-non-negotiable">Site rules (non-negotiable)</a></li><li class="l2"><a href="#workflow">Workflow</a></li><li class="l2"><a href="#limits">Limits</a></li></ul></details><p class="ps-side-foot"><a href="../../skills/">All skills</a></p></aside></div><script>
+(function(){
+  var mq = window.matchMedia('(min-width: 981px)');
+  function sync(){ document.querySelectorAll('details.ps-side-d').forEach(function(d){ d.open = mq.matches; }); }
+  sync();
+  if (mq.addEventListener) mq.addEventListener('change', sync);
+  var links = [].slice.call(document.querySelectorAll('.ps-toc a'));
+  if (!links.length || !('IntersectionObserver' in window)) return;
+  var byId = {};
+  links.forEach(function(a){ byId[decodeURIComponent(a.getAttribute('href').slice(1))] = a; });
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (!e.isIntersecting) return;
+      links.forEach(function(a){ a.classList.remove('on'); });
+      var a = byId[e.target.id]; if (a) a.classList.add('on');
+    });
+  }, { rootMargin: '-70px 0px -70% 0px' });
+  Object.keys(byId).forEach(function(id){ var el = document.getElementById(id); if (el) io.observe(el); });
+})();
+</script>
+  </div>
+</main>
+<footer class="site">
+  <div class="wrap cols">
+    <div>
+      <strong>Video Studio</strong><br>
+      A personal studio for motion graphics and animated videos with Claude Code.
+    </div>
+    <div>
+      <a href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">Source on GitHub</a><br>
+      <a href="../../credits/">Credits and licences</a>
+    </div>
+  </div>
+</footer>
+<script src="../../assets/site.js" defer></script>
+</body>
+</html>

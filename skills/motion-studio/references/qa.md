@@ -38,3 +38,30 @@ Render stills at every settled state and at transition midpoints (`node tools/re
 - [ ] `inspect.mjs sync` against `build/comp_timing.json`; poster frame written.
 - [ ] Delivery report written ([delivery.md](delivery.md)).
 - [ ] Append technique-only lessons to `learnings.md`.
+
+## Additional checks (techniques from the research round)
+
+Before a draft:
+
+- [ ] Every item in the film's **Banned for this film** list was looked for in the stills ([banned-effects.md](banned-effects.md)).
+- [ ] The relevant [gotchas.md](gotchas.md) lines were read: fast moves at 8 subframes, no fade under 0.3 s, no `will-change` on scaled text, no highlight box, each scene starts at the previous end zoom, frame-arithmetic traps.
+- [ ] Copy budget: 1 to 4 word fragments, about 15 to 25 words per 30 s, copy on under about 65 percent of frames.
+- [ ] Every transition names the carried element (`X becomes Y`); the frame before a hand-off contains the thing the next frame grows from.
+- [ ] Type is on the frame ramp and above the text floor; one accent mark per frame.
+- [ ] Density: dense scenes are rare and deliberate; no static screen under the voice.
+
+Motion:
+
+- [ ] A move that feels wrong gets plotted before any code change: `inspect.mjs plot` (value and velocity; look for a zero-velocity run mid-move).
+- [ ] Camera glides and transitions: `inspect.mjs flow` on a 30 fps draft (speed never dips, zoom does not reverse, speed continues across velocity-matched cuts).
+- [ ] Rendered file: `inspect.mjs forensics` for frozen stretches, one-frame pops, ghost frames and banding; declare designed moments (a planned freeze, a flash cut) with a reason so thresholds stay strict elsewhere. A cheaper read: `inspect.mjs compare` against the approved golden scene or a reference.
+
+Loops (social loops, showreel):
+
+- [ ] Last frame equals first, including cursor position and speed; accent, cursor and type match. Diff frame N-1 against frame 0 and preview the loop twice (`inspect.mjs probe` returns both frames).
+
+Music-led:
+
+- [ ] Beat-grid residual at most about 15 ms; cut error at most 3 frames; at most 3 full-frame beat hits, 16 beats apart.
+- [ ] Voice about 9 dB above music per phrase between 300 Hz and 4 kHz.
+- [ ] Web embed: the checklist in [formats.md](formats.md).

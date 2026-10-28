@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>80 · Prompt patterns cheat sheet · Video Studio</title>
+<meta name="description" content="Fourteen reusable prompt skeletons from public examples, each with what it is for, a fill-in line, and who it came from.">
+<meta property="og:title" content="80 · Prompt patterns cheat sheet · Video Studio">
+<meta property="og:description" content="Fourteen reusable prompt skeletons from public examples, each with what it is for, a fill-in line, and who it came from.">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23eef3ff'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%233b6cf6'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../assets/site.css">
+<link rel="stylesheet" href="../../assets/panel-skills.css">
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="../../"><span class="dot"></span>Video Studio</a>
+    <nav class="main" aria-label="Main"><a href="../../">Home</a><a href="../../tour/">Tour</a><a href="../../guide/">Guide</a><a href="../../skills/">Skills</a><a href="../../prompts/" aria-current="page">Prompts</a><a href="../../studio/">Studio</a><a href="../../techniques/">Techniques</a><a href="../../shot-library/">Shot library</a><a href="../../research/">Research</a><a href="../../gallery/">Gallery</a><a href="../../credits/">Credits</a></nav>
+    <div class="tools">
+      <a class="btn" href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">GitHub</a>
+      <button class="btn" id="theme-toggle" type="button" aria-label="Toggle light or dark theme">Theme</button>
+    </div>
+  </div>
+</header>
+<main>
+  <div class="wrap">
+<nav class="crumbs ps-crumbs" aria-label="Breadcrumb"><a href="../../">Home</a> <span aria-hidden="true">/</span> <a href="../../prompts/">Prompts</a> <span aria-hidden="true">/</span> <span aria-current="page">80 · Prompt patterns cheat sheet</span></nav><div class="ps-narrow"><header class="ps-head"><div class="ps-badges"><span class="badge plain">Prompt 80</span> <span class="badge">Patterns</span> <span class="badge ok">Shown in films</span></div><h1>Prompt patterns cheat sheet</h1></header><dl class="ps-info ps-info-prompt"><div class="wide"><dt>Purpose</dt><dd>Fourteen reusable prompt skeletons from public examples, each with what it is for, a fill-in line, and who it came from.</dd></div><div class=""><dt>Use when</dt><dd>You are writing a one-off prompt that no numbered file covers, or you want the shortest form of a pattern the numbered files already use.</dd></div><div class=""><dt>Stage</dt><dd>Reference, any stage.</dd></div><div class=""><dt>Inputs you must fill in</dt><dd>The <code>[brackets]</code> of the skeleton you pick.</dd></div><div class=""><dt>Expected output</dt><dd>A short prompt you paste, plus knowing which numbered prompt carries the full version.</dd></div><div class=""><dt>Why this exists</dt><dd>Collects the best patterns from three research passes in one page. Evidence differs per pattern and is marked: &quot;shown&quot; means a finished film exists with that prompt, &quot;claimed&quot; means only a post says so. None was verified by watching video.</dd></div><div class=""><dt>Next prompt</dt><dd>The numbered prompt named in each row.</dd></div></dl><div class="ps-intro-text"><p>All skeletons are our own wording of a structure; credit is to the person whose example showed it.</p>
+<p>| # | Pattern | Evidence | Credit | Full version | | 1 | Tagged brief | shown | @twoclipping, @ultimaxbt, @rossaxbt (prompt-motion.com) | 40 | | 2 | Per-film Banned line | shown | @twoclipping, @ultimaxbt | 40 | | 3 | Beat map header | shown | @twoclipping, @ultimaxbt | 75 | | 4 | Hand-off line (A becomes B) | shown | @twoclipping, @ultimaxbt | 11 | | 5 | Golden scene | claimed | u/Sangkwun (r/ClaudeAI) | 12, 14 | | 6 | Plan first | claimed | u/TheHol1day (r/ClaudeAI) | 12, 14 | | 7 | Define the word / outcome not values | claimed | u/TheHol1day, u/FerretVirtual8466 | 16 | | 8 | Measure first, then fix | one first-hand write-up | Samuel Parks (RapidEye) | 15 | | 9 | Independent verification critic | documented in a public repo | echris6 (motion-video-kit) | 13 | | 10 | Idea, Device, Grammar | documented in a public repo | Leonxlnx (cinetic) | 19 | | 11 | Delegation guide for parallel agents | shown in finished videos | JohnHeibel (PDoomVideo) | 18 | | 12 | System trace | claimed | u/FerretVirtual8466 | 71 | | 13 | Breaking point | claimed | u/SadNose6889, u/AmberMonsoon_ | 63, 62 | | 14 | Honest capability clause | claimed | @twoclipping | 00, 40 |</p></div><section class="ps-section ps-prompt"><h2 id="skeletons">Skeletons</h2>
+<p><strong>1. Tagged brief.</strong> For: turning &quot;a film&quot; into a contract with an approval stop before code.</p>
+<pre><code class="lang-text">&lt;inputs&gt; what to ask me for; defaults if skipped &lt;/inputs&gt;
+&lt;direction&gt; look, type, one accent, motion. Banned: [per-film list] &lt;/direction&gt;
+&lt;structure&gt; timed scenes or beat ranges; transitions as &quot;A becomes B&quot; &lt;/structure&gt;
+&lt;build&gt; numbered rules &lt;/build&gt;  &lt;gotchas&gt; known failures &lt;/gotchas&gt;
+&lt;start&gt; ask for inputs, then show the beat map and [N] named stills; no code yet &lt;/start&gt;</code></pre>
+<p><strong>2. Per-film Banned line.</strong> For: removing the model&#39;s defaults (fade, glow, particle burst) where &quot;AI look&quot; comes from.</p>
+<pre><code class="lang-text">Banned: crossfades, blur-ins, [x], [y], holds longer than [1 s], anything that looks like a template.</code></pre>
+<p><strong>3. Beat map header.</strong> For: music-led pieces where sync is planned, not patched.</p>
+<pre><code class="lang-text">[BPM] BPM, [N] beats, start the song [k] beats before its drop. Beats 0-[a]: [event]. Beat [b] (the drop): [event]. Last frame equals first frame.</code></pre>
+<p><strong>4. Hand-off line.</strong> For: no cut, no fade between scenes.</p>
+<pre><code class="lang-text">Scene [N] is made out of scene [N-1]: [outgoing object] becomes [incoming object], carrying [label/words/colour]. No fade, no cut.</code></pre>
+<p><strong>5. Golden scene.</strong> For: making scene 2..N match scene 1 by example, not description.</p>
+<pre><code class="lang-text">Here is an approved scene. Build scene [N] in the same structure (beat mapping, stagger, entrance style), changing only the content, and list what you copied.</code></pre>
+<p><strong>6. Plan first.</strong> For: stopping silent rework.</p>
+<pre><code class="lang-text">Before any code, tell me in five lines what you will build for scene [N], what you will not touch, and the one thing most likely to go wrong.</code></pre>
+<p><strong>7. Define the word / outcome, not values.</strong> For: keeping &quot;punchier&quot; meaning the same thing in every round.</p>
+<pre><code class="lang-text">For this video &quot;[word]&quot; means: [frame counts, scale event, cut type]. Apply it to scene [N] only and show the diff.
+Result must satisfy: [measurable condition on a still]. Choose the implementation and tell me the values you picked.</code></pre>
+<p><strong>8. Measure first, then fix.</strong> For: motion that pauses, snaps or stalls.</p>
+<pre><code class="lang-text">This move [pauses/snaps] around [time]. Do not try another fix. Plot value and velocity over the move, show me where velocity is zero, then fix the cause.</code></pre>
+<p><strong>9. Independent verification critic.</strong> For: a fresh judge on round 2 and later.</p>
+<pre><code class="lang-text">You did not build this. Artifact: [path]. Previous report: [path]. Mark each earlier top fix FIXED, PARTLY or STILL PRESENT with timestamps, hunt for regressions, then list new defects. End with SHIP or ONE MORE PASS (at most three fixes).</code></pre>
+<p><strong>10. Idea, Device, Grammar.</strong> For: a point of view before a style.</p>
+<pre><code class="lang-text">Idea: [8 words max]. Device: [one object carried through every shot]. Grammar: [one rule the form obeys]. Could a competitor&#39;s film say this? Only then choose techniques.</code></pre>
+<p><strong>11. Delegation guide.</strong> For: parallel agents that must not drift or collide.</p>
+<pre><code class="lang-text">Canvas and safe zones; helper API, one line each; style rules; per-frame budget; every shot a pure function of the frame, seeded randomness only; edit only your own file and report shared bugs; self-check command that renders a labelled sheet.</code></pre>
+<p><strong>12. System trace.</strong> For: auditing a studio instead of a video.</p>
+<pre><code class="lang-text">Describe a video type we have never made. Trace step by step what this studio would do. List every doc promise that does not exist and every default that would leak in.</code></pre>
+<p><strong>13. Breaking point.</strong> For: explainers and data stories with a hook.</p>
+<pre><code class="lang-text">Show [N] steps where [one quantity] builds; at step [N] it fails with a visible change. Single screen, loopable, minimal interface; input, visible transformation, output.</code></pre>
+<p><strong>14. Honest capability clause.</strong> For: preventing a false &quot;done&quot;.</p>
+<pre><code class="lang-text">If you cannot run code or view images here, say so first; do not describe results you have not seen.</code></pre></section><section class="ps-section ps-additions"><h2 id="studio-additions">Studio additions</h2>
+<pre><code class="lang-text">Patterns considered and not kept: the fixed-output style brief with named benchmark studios (the long form is 40 plus 10; the named-studio bar adds little), few-shot voice (we use local Kokoro and write scripts ourselves), the constraint-for-sync talking-head brief (we do not edit raw footage). Credits are to the people named; the words are ours.</code></pre></section><nav class="ps-prevnext" aria-label="Previous and next"><a class="ps-pn prev" href="../76-voice-segment-anchor/"><span class="ps-pn-dir">Previous</span><span class="ps-pn-title">76 · Voice segment anchor (experimental, A/B before trusting)</span></a><span></span></nav><p class="ps-small"><a href="https://github.com/AnnasMustafaDev/video-studio/blob/main/prompts/80-prompt-patterns.md" rel="noopener noreferrer">View this prompt on GitHub</a></p></div>
+  </div>
+</main>
+<footer class="site">
+  <div class="wrap cols">
+    <div>
+      <strong>Video Studio</strong><br>
+      A personal studio for motion graphics and animated videos with Claude Code.
+    </div>
+    <div>
+      <a href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">Source on GitHub</a><br>
+      <a href="../../credits/">Credits and licences</a>
+    </div>
+  </div>
+</footer>
+<script src="../../assets/site.js" defer></script>
+</body>
+</html>

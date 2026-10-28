@@ -14,3 +14,7 @@
 - Post-processing last; depth of field only on non-UI objects. `preserveDrawingBuffer: true` for screenshots; headless Edge with `--use-angle=d3d11 --ignore-gpu-blocklist`.
 - Keep text in the DOM above the canvas, over dark areas, never over the white UI.
 - The finale crane that shows the whole world only works if every earlier object is still in the scene.
+
+## Text in perspective
+
+Sharp text in 3D perspective needs high-resolution rasterising (a layout-level zoom of the text plane); never use depth of field as the fix for soft text. Evidence: first-hand rework rule from one author (F-A12). Real-data worlds (terrain, sun azimuth for a date, painterly filter) are a heavy, documentary-only idea and are not a default here (F-A18, deferred).

@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Review rubric (motion-review) · Video Studio</title>
+<meta name="description" content="Score what you see on the images, at the size the viewer will see it. Anchors: 3 = a viewer notices the problem without being told; 5 = acceptable template work; 8 = a...">
+<meta property="og:title" content="Review rubric (motion-review) · Video Studio">
+<meta property="og:description" content="Score what you see on the images, at the size the viewer will see it. Anchors: 3 = a viewer notices the problem without being told; 5 = acceptable template work; 8 = a...">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23eef3ff'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%233b6cf6'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../../assets/site.css">
+<link rel="stylesheet" href="../../../assets/panel-skills.css">
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="../../../"><span class="dot"></span>Video Studio</a>
+    <nav class="main" aria-label="Main"><a href="../../../">Home</a><a href="../../../tour/">Tour</a><a href="../../../guide/">Guide</a><a href="../../../skills/" aria-current="page">Skills</a><a href="../../../prompts/">Prompts</a><a href="../../../studio/">Studio</a><a href="../../../techniques/">Techniques</a><a href="../../../shot-library/">Shot library</a><a href="../../../research/">Research</a><a href="../../../gallery/">Gallery</a><a href="../../../credits/">Credits</a></nav>
+    <div class="tools">
+      <a class="btn" href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">GitHub</a>
+      <button class="btn" id="theme-toggle" type="button" aria-label="Toggle light or dark theme">Theme</button>
+    </div>
+  </div>
+</header>
+<main>
+  <div class="wrap">
+<nav class="crumbs ps-crumbs" aria-label="Breadcrumb"><a href="../../../">Home</a> <span aria-hidden="true">/</span> <a href="../../../skills/">Skills</a> <span aria-hidden="true">/</span> <a href="../../../skills/motion-review/">motion-review</a> <span aria-hidden="true">/</span> <span aria-current="page">Review rubric</span></nav><header class="ps-head"><div class="ps-badges"><span class="badge plain">Reference</span> <span class="badge">motion-review</span></div><h1>Review rubric</h1></header><div class="ps-doc"><article class="ps-article"><p>Score what you see on the images, at the size the viewer will see it. Anchors: <strong>3</strong> = a viewer notices the problem without being told; <strong>5</strong> = acceptable template work; <strong>8</strong> = a professional would ship it; <strong>10</strong> = nothing to change.</p>
+<h2 id="the-nine-dimensions">The nine dimensions</h2>
+<table><thead><tr><th>Dimension</th><th>8+ looks like</th><th>Typical defects (cost points)</th></tr></thead><tbody><tr><td><strong>Typography</strong></td><td>One family (plus one mono for meta), deliberate weights, tight display tracking, clean line breaks, no widows, readable on the phone sheet</td><td>Clipped descenders, orphan words, mixed fonts, fallback glyphs, text too small on the phone sheet, centred lines that build word by word and look lopsided</td></tr><tr><td><strong>Hierarchy</strong></td><td>One focal point per frame; the eye knows where to go in under 0.5 s; the accent marks the one thing that matters</td><td>Two things fighting, everything the same weight, accent used on decoration, key text smaller than secondary</td></tr><tr><td><strong>Spacing</strong></td><td>Safe margins respected, consistent grid and gaps from the design tokens, optical alignment of left edges</td><td>Elements kissing the edge, uneven gaps, text over busy UI without a scrim, overlaps, cramped cards</td></tr><tr><td><strong>Timing</strong></td><td>Each change lands on its beat or word (±0.1 s); holds long enough to read (≈ 0.3 s per word, numbers and CTA ≥ 1.5 to 2 s still)</td><td>Text gone before it can be read, dead holds with nothing new, reveals late against the voice</td></tr><tr><td><strong>Easing</strong></td><td>Springs or ease-out entrances, faster accelerating exits, at most a small overshoot, motion blur where things move fast</td><td>Linear moves, bouncy overshoot, everything with the same ease and duration, robotic start/stop</td></tr><tr><td><strong>Transitions</strong></td><td>Motivated (a shape, motion or colour carries over); cut frames open on the new image; whips show both shots</td><td>Cross-dissolve between unrelated shots, blank or flash frames at cuts, transition for its own sake, zoom in and straight back out</td></tr><tr><td><strong>Consistency</strong></td><td>Same palette, radius, shadow, stroke and type scale in every scene; tokens, not one-off values</td><td>A scene that looks like another video, a second accent with no meaning, mixed icon strokes</td></tr><tr><td><strong>Pacing</strong></td><td>Something new every 2 to 4 s; long and short beats alternate; tension varies (see Pacing and tension below); showpieces reserved for 2 or 3 moments; clear arc to the end</td><td>Monotone rhythm, a middle that sags, a gap over 4 s, an ending that stops instead of lands, every transition the same length, one easing on everything</td></tr><tr><td><strong>Sound sync</strong></td><td>Every accent in the hits table has a sound within 40 ms (<code>inspect.mjs sync</code>); music sections change on the cuts; mix breathes; full-frame beat hits capped (see below); -14 LUFS / ≤ -1 dBTP</td><td>SFX early or late, sounds with no visual event, wall-to-wall SFX, music fighting the voice. Silent video by design: <code>n/a</code></td></tr></tbody></table>
+<h2 id="pass-fail-checks">Pass / fail checks</h2>
+<p>Blocking (any fail means not READY):</p>
+<ul><li>[ ] Frame 0 is already a finished, readable frame (muted autoplay shows it), and the first 2 s would stop a scroll.</li><li>[ ] Every word the viewer must read is readable on the phone sheet, inside the platform safe area (9:16: nothing important in the top 220 px or bottom 380 px).</li><li>[ ] No clipped, overflowing or overlapping text anywhere on the sheets.</li><li>[ ] No invented numbers, quotes or results; every number carries its reference on the same frame.</li><li>[ ] No cut opens on a blank or full-frame flash (at most two structural flashes in the film); check the strips.</li><li>[ ] The end card / CTA holds still for ≥ 1.5 s.</li><li>[ ] Each non-primary format is composed for its own shape, not a crop or letterbox of the master.</li><li>[ ] No unexplained <code>pop</code>, <code>flash</code>, <code>ghost</code> or <code>loop_seam</code> finding from <code>forensics</code>, and every acceptance criterion in the brief passes.</li><li>[ ] The encoded file matches the brief (<code>inspect.mjs probe</code>: resolution, fps, duration, yuv420p, audio present).</li></ul>
+<p>Non-blocking (report them):</p>
+<ul><li>[ ] No banned defaults: centred title on a gradient, everything fading in, glow on UI, random particles, corner labels, constant camera drift, lens flares.</li><li>[ ] Pacing and tension varied (not one transition type, one curve, one duration throughout); full-frame beat hits within the cap.</li><li>[ ] Longest gap without a new event (name it with its times).</li><li>[ ] Matches the approved storyboard, or the deviation is an improvement you can defend.</li></ul>
+<h2 id="pacing-and-tension-a-criterion-not-a-recipe">Pacing and tension (a criterion, not a recipe)</h2>
+<p>Even rhythm is the commonest AI-motion fault: every cut a crossfade of the same length, one expo-out curve on every entrance, no beat that is sharper or slower than the rest. Check on the strips and the <code>forensics</code> hard-cut list:</p>
+<ul><li>Name the one hard cut and the one fast (under 6 frames) fade or whip. If every transition has the same type and duration, flag it (pacing, transitions).</li><li>Entrance and exit curves and durations differ by role (hero, support, exit); a single curve everywhere is a template tell.</li><li>Numbers to read against (norms from professional launch films, the author&#39;s measurements, so reference points, not pass/fail): median shot about 1.5 to 3 s for a launch cut, a new visual beat about every 1 to 2 s, first readable word by about 0.4 s, low-energy stretch under 4 s, one earned stillness of 1.0 to 1.6 s on the key claim followed by the biggest move, accent colour about 5 percent of pixels, end card about 2 s still, a repeated reveal about 40 percent faster the second time. <code>inspect.mjs forensics</code> gives hard-cut count, median and longest shot, and the still share; the share of still frames is high (over about 40 percent) only when the film is a stills-and-holds piece by design.</li><li>Spent-once rule: a hold longer than 1.6 s that is not the key claim or the end card is a defect or must be declared in <code>qa.json</code> with a reason.</li><li>Full-frame beat hits (whole-picture or camera-layer impacts on the beat): at most 3 per film, at least 16 beats apart; everything else on the beat hits only the hero element. Mark them <code>&quot;scope&quot;:&quot;full&quot;</code> in hits.json and run <code>sync --bpm</code>.</li></ul>
+<h2 id="measured-defects-inspect-mjs-forensics-flow">Measured defects (<code>inspect.mjs forensics</code>, <code>flow</code>)</h2>
+<p>Stills hide time. Run <code>forensics</code> on the encoded file and judge each finding against the flagged frames; a measurement is a pointer, your eyes decide.</p>
+<table><thead><tr><th>Finding</th><th>Counts as a defect when</th></tr></thead><tbody><tr><td><code>still_hold</code></td><td>over 1.6 s and not the key claim or end card; or the first 4 frames are dead (<code>slow_open</code>)</td></tr><tr><td><code>pop</code> / <code>flash</code></td><td>any one-frame glitch; more than two structural flashes in the film</td></tr><tr><td><code>ghost</code></td><td>any frame that is a blend of two shots at a cut (double exposure)</td></tr><tr><td><code>judder</code></td><td>repeated frames or uneven timing inside moving stretches (regular = fps-conversion cadence, irregular = a stall)</td></tr><tr><td><code>banding</code></td><td>staircase gradient steps visible on the poster frame of the flagged time</td></tr><tr><td><code>loop_seam</code></td><td>only if the piece is a loop (<code>&quot;loop&quot;: true</code> in qa.json) and the last frame does not meet the first</td></tr></tbody></table>
+<p>Intended moments are declared in <code>projects/&lt;slug&gt;/qa.json</code> (<code>holds</code>, <code>flashes</code>, <code>cuts</code>, <code>ghosts</code>, <code>pops</code>, <code>judder</code>, <code>ignore</code>, each with a <code>reason</code>); declared items are listed apart and not counted. Declare only what the storyboard promises; do not declare to silence the tool.</p>
+<p>Camera shots: <code>flow</code> gives the global speed curve (frame widths per second) and zoom rate. A glide is one hump or plateau; a <code>speed_dip</code> (speed under half of the neighbouring peak between two moves) or a <code>zoom_reversal</code> (zoom in turning to zoom out) is a surge or stall the stills cannot show. Camera speed is specified in the brief as shares of cruise at timestamps; compare the measured curve to it. Frames where the picture changed by local animation (type, cards) rather than a camera move are skipped, not measured. For any other animated value (a spring, a card position), export it to JSON/CSV and run <code>plot --deriv</code>: a motion bug is diagnosed by plotting value and velocity over frames before any code changes.</p>
+<h2 id="banned-effects-check-cheap-tells-report-each-hit-with-its-time">Banned-effects check (cheap tells, report each hit with its time)</h2>
+<p>Borrowed props (rocket, lightbulb, handshake), a demo with no cause, a recycled end card, the device or hero dropping out at a seam, handheld shake in a bright UI film, more than one sheen or glint per hero, small source or disclaimer text on the last beat (needs 2.5 s or more at half opacity or higher), a brand wordmark held under 1 s. Plus the non-blocking banned defaults below.</p>
+<h2 id="acceptance-criteria-and-glossary">Acceptance criteria and glossary</h2>
+<p>If <code>brief.md</code> has a glossary (&quot;punchy = entrances at most 10 frames, one scale event per scene&quot;) or acceptance criteria (&quot;title block no closer than 120 px to any edge&quot;, &quot;focal point alone for at least 45 frames&quot;), check each one by number on the images and list it as pass or fail. A vague word with no definition in the brief (&quot;premium&quot;, &quot;punchier&quot;) is itself a finding: say which words need defining. Do not score against a taste the brief never stated.</p>
+<h2 id="reference-comparison">Reference comparison</h2>
+<p>If a reference clip, sheet or approved golden scene is given, run <code>inspect.mjs compare</code> and add one line per matched pair: &quot;in what way does ours fall short of (or beat) this&quot; (type scale, density, colour, blur, spacing, focal point). Do not copy the reference&#39;s look as a defect; only gaps in craft count. No reference given: write <code>reference: none</code>.</p>
+<h2 id="ranking-defects">Ranking defects</h2>
+<p>Order the top five by damage to the viewer, not by ease of fixing: (1) anything that breaks the message (unreadable, wrong, missing) &gt; (2) anything that looks broken (clipping, flash frames, overlap) &gt; (3) anything that looks cheap (easing, consistency) &gt; (4) polish.</p></article><aside class="ps-side"><details class="ps-side-d" open><summary>On this page</summary><ul class="ps-toc"><li class="l2"><a href="#the-nine-dimensions">The nine dimensions</a></li><li class="l2"><a href="#pass-fail-checks">Pass / fail checks</a></li><li class="l2"><a href="#pacing-and-tension-a-criterion-not-a-recipe">Pacing and tension (a criterion, not a recipe)</a></li><li class="l2"><a href="#measured-defects-inspect-mjs-forensics-flow">Measured defects (inspect.mjs forensics, flow)</a></li><li class="l2"><a href="#banned-effects-check-cheap-tells-report-each-hit-with-its-time">Banned-effects check (cheap tells, report each hit with its time)</a></li><li class="l2"><a href="#acceptance-criteria-and-glossary">Acceptance criteria and glossary</a></li><li class="l2"><a href="#reference-comparison">Reference comparison</a></li><li class="l2"><a href="#ranking-defects">Ranking defects</a></li></ul></details><details class="ps-side-d" open><summary>In motion-review</summary><ul class="ps-sidelist"><li><a href="../">SKILL.md</a></li><li class="on"><span aria-current="page">Review rubric</span></li></ul></details><p class="ps-side-foot"><a href="https://github.com/AnnasMustafaDev/video-studio/blob/main/skills/motion-review/references/rubric.md" rel="noopener noreferrer">View source on GitHub</a></p></aside></div><script>
+(function(){
+  var mq = window.matchMedia('(min-width: 981px)');
+  function sync(){ document.querySelectorAll('details.ps-side-d').forEach(function(d){ d.open = mq.matches; }); }
+  sync();
+  if (mq.addEventListener) mq.addEventListener('change', sync);
+  var links = [].slice.call(document.querySelectorAll('.ps-toc a'));
+  if (!links.length || !('IntersectionObserver' in window)) return;
+  var byId = {};
+  links.forEach(function(a){ byId[decodeURIComponent(a.getAttribute('href').slice(1))] = a; });
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (!e.isIntersecting) return;
+      links.forEach(function(a){ a.classList.remove('on'); });
+      var a = byId[e.target.id]; if (a) a.classList.add('on');
+    });
+  }, { rootMargin: '-70px 0px -70% 0px' });
+  Object.keys(byId).forEach(function(id){ var el = document.getElementById(id); if (el) io.observe(el); });
+})();
+</script>
+  </div>
+</main>
+<footer class="site">
+  <div class="wrap cols">
+    <div>
+      <strong>Video Studio</strong><br>
+      A personal studio for motion graphics and animated videos with Claude Code.
+    </div>
+    <div>
+      <a href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">Source on GitHub</a><br>
+      <a href="../../../credits/">Credits and licences</a>
+    </div>
+  </div>
+</footer>
+<script src="../../../assets/site.js" defer></script>
+</body>
+</html>

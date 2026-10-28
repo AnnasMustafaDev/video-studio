@@ -7,6 +7,7 @@
 | **Stage** | Implementation, scenes 2..N. |
 | **Inputs you must fill in** | `[N]` scene number, `[slug]`, `[CompId]`, optional `[notes from the last review]`. |
 | **Expected output** | Scene N built, the transition from N-1 into N working, stills of the boundary inspected, earlier scenes unchanged unless a shared component improved. |
+| **Why this exists** | Showing the builder one approved scene beats describing it, and a short plan stops silent rework. Evidence: only claimed (Reddit posts, standard few-shot practice). Findings F-C1, F-C7. |
 | **Next prompt** | `13-quality-review.md` on scene N. After the last scene: `13` on the whole film, then `50-sound-design.md`. |
 
 ## Prompt
@@ -20,8 +21,13 @@ Reuse existing components and tokens. Keep the scene visually distinct from the 
 
 Render representative frames of scene [N], including the transition from scene [N-1] at its start, midpoint and end, and the settled state of scene [N]. Inspect the actual output and fix visible issues. Notes from the last review to carry forward: [notes].
 
+Golden scene: attach studio/src/videos/[slug]/scenes/Scene01.tsx (or the latest approved scene closest in type to scene [N]) and build scene [N] in the same structure: beat mapping, stagger, entrance style, token use. Change only the content. List what you copied and what you deliberately varied (a different typographic action per scene is still required).
+Plan check (five lines before code): what you will build, what you will not touch, which components you reuse, the one thing most likely to go wrong, and which boundary stills prove it. For a risky scene, a fresh agent that did not write the plan lists its five weakest decisions first.
+
 Do not build scene [N+1] yet.
 ```
+
+Source: golden-scene and plan-first patterns after u/Sangkwun and u/TheHol1day (r/ClaudeAI); our wording.
 
 ## Studio additions
 

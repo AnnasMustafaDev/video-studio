@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>61 · Product UI demo from real screenshots · Video Studio</title>
+<meta name="description" content="Animate a product walkthrough from real screenshots or recordings: framing, focus, cursor and transitions, without faking the UI.">
+<meta property="og:title" content="61 · Product UI demo from real screenshots · Video Studio">
+<meta property="og:description" content="Animate a product walkthrough from real screenshots or recordings: framing, focus, cursor and transitions, without faking the UI.">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23eef3ff'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%233b6cf6'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../assets/site.css">
+<link rel="stylesheet" href="../../assets/panel-skills.css">
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="../../"><span class="dot"></span>Video Studio</a>
+    <nav class="main" aria-label="Main"><a href="../../">Home</a><a href="../../tour/">Tour</a><a href="../../guide/">Guide</a><a href="../../skills/">Skills</a><a href="../../prompts/" aria-current="page">Prompts</a><a href="../../studio/">Studio</a><a href="../../techniques/">Techniques</a><a href="../../shot-library/">Shot library</a><a href="../../research/">Research</a><a href="../../gallery/">Gallery</a><a href="../../credits/">Credits</a></nav>
+    <div class="tools">
+      <a class="btn" href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">GitHub</a>
+      <button class="btn" id="theme-toggle" type="button" aria-label="Toggle light or dark theme">Theme</button>
+    </div>
+  </div>
+</header>
+<main>
+  <div class="wrap">
+<nav class="crumbs ps-crumbs" aria-label="Breadcrumb"><a href="../../">Home</a> <span aria-hidden="true">/</span> <a href="../../prompts/">Prompts</a> <span aria-hidden="true">/</span> <span aria-current="page">61 · Product UI demo from real screenshots</span></nav><div class="ps-narrow"><header class="ps-head"><div class="ps-badges"><span class="badge plain">Prompt 61</span> <span class="badge">Specialised films</span> </div><h1>Product UI demo from real screenshots</h1></header><dl class="ps-info ps-info-prompt"><div class="wide"><dt>Purpose</dt><dd>Animate a product walkthrough from real screenshots or recordings: framing, focus, cursor and transitions, without faking the UI.</dd></div><div class=""><dt>Use when</dt><dd>You have an app (yours) and want a silent or music-only demo, feature highlight or launch clip in Remotion. If it is narrated with every cut on a word, use <a href="../60-voiceover-film/"><code>60</code></a> instead.</dd></div><div class=""><dt>Stage</dt><dd>Planning prompt for this job type. Replaces <a href="../10-creative-directions/"><code>10</code></a> and feeds <a href="../11-storyboard/"><code>11</code></a>; then the normal loop <a href="../12-build-one-scene/"><code>12</code></a>, <a href="../13-quality-review/"><code>13</code></a>, <a href="../14-build-next-scene/"><code>14</code></a>.</dd></div><div class=""><dt>Inputs you must fill in</dt><dd><code>[product]</code>, <code>[the feature or flow]</code>, <code>[screenshot/recording paths]</code>, <code>[the one thing to remember]</code>, <code>[CTA]</code>, <code>[format, length]</code>.</dd></div><div class=""><dt>Expected output</dt><dd>An inventory of the screenshots with what each shows and its native size, a shot list (which screen, which region, camera move, cursor action, caption), a list of missing captures, then a storyboard.</dd></div><div class=""><dt>Next prompt</dt><dd><a href="../11-storyboard/"><code>11-storyboard.md</code></a> (or approve the shot list as the storyboard), then <a href="../12-build-one-scene/"><code>12-build-one-scene.md</code></a>.</dd></div></dl><section class="ps-section ps-prompt"><h2 id="prompt">Prompt</h2>
+<pre><code class="lang-text">Plan an animated product UI demo for [product], showing [feature or flow]. Real screenshots and recordings are in [paths]. Format [format], length [N] s. The viewer must remember: [message]. CTA: [one action, real URL].
+
+1. Inventory: list each screenshot or recording, what state of the UI it shows, its pixel size, and whether it is sharp enough to zoom to 2x. Tell me which states are missing for the story and what I should capture (exact screen, state, viewport size, ideally 2x device scale).
+2. Story: hook (a felt problem or a bold claim, not the logo), the flow in the order a real user does it, the result, CTA. One idea per beat, captions of at most 5 words.
+3. Shot list per beat: which screenshot, which region is the focal point (in screenshot pixel coordinates), camera move (hold, push in, pull back, pan; one named move per shot, then hold), focus treatment (dim the rest, outline the region), cursor (appears, glides, clicks, the UI changes 80 to 150 ms after the press), caption text, transition to the next shot (shared element or cut on the click).
+4. Rules: show the real UI flat and legible in a plain frame with one soft shadow. No invented UI, no tilted 3D slabs, no fake numbers; anything illustrative is listed as such. Never zoom in and straight back out. Keep the screenshot edge out of view during zooms.
+
+Do not write code yet.</code></pre></section><section class="ps-section ps-additions"><h2 id="studio-additions">Studio additions</h2>
+<pre><code class="lang-text">Screenshots go in studio/public/[slug]/ui/. Build the camera as keyframes (frame, scale, focusX, focusY) with holds between moves, interpolated in log space for scale; map region coordinates through the camera so outlines and cursor stay aligned at every zoom. Check alignment early with npm run stills -- [CompId] [frames at each zoom] and look at them.
+For capturing my app, use my running local or test instance; I sign in myself.</code></pre></section><nav class="ps-prevnext" aria-label="Previous and next"><a class="ps-pn prev" href="../60-voiceover-film/"><span class="ps-pn-dir">Previous</span><span class="ps-pn-title">60 · Voice-over-driven film (motion-studio engine)</span></a><a class="ps-pn next" href="../62-data-visualization/"><span class="ps-pn-dir">Next</span><span class="ps-pn-title">62 · Data visualization</span></a></nav><p class="ps-small"><a href="https://github.com/AnnasMustafaDev/video-studio/blob/main/prompts/61-product-ui-demo.md" rel="noopener noreferrer">View this prompt on GitHub</a></p></div>
+  </div>
+</main>
+<footer class="site">
+  <div class="wrap cols">
+    <div>
+      <strong>Video Studio</strong><br>
+      A personal studio for motion graphics and animated videos with Claude Code.
+    </div>
+    <div>
+      <a href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">Source on GitHub</a><br>
+      <a href="../../credits/">Credits and licences</a>
+    </div>
+  </div>
+</footer>
+<script src="../../assets/site.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Render, inspect, improve (remotion-studio) · Video Studio</title>
+<meta name="description" content="Successful compilation is not proof of visual quality. Judge rendered frames.">
+<meta property="og:title" content="Render, inspect, improve (remotion-studio) · Video Studio">
+<meta property="og:description" content="Successful compilation is not proof of visual quality. Judge rendered frames.">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23eef3ff'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%233b6cf6'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../../assets/site.css">
+<link rel="stylesheet" href="../../../assets/panel-skills.css">
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="../../../"><span class="dot"></span>Video Studio</a>
+    <nav class="main" aria-label="Main"><a href="../../../">Home</a><a href="../../../tour/">Tour</a><a href="../../../guide/">Guide</a><a href="../../../skills/" aria-current="page">Skills</a><a href="../../../prompts/">Prompts</a><a href="../../../studio/">Studio</a><a href="../../../techniques/">Techniques</a><a href="../../../shot-library/">Shot library</a><a href="../../../research/">Research</a><a href="../../../gallery/">Gallery</a><a href="../../../credits/">Credits</a></nav>
+    <div class="tools">
+      <a class="btn" href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">GitHub</a>
+      <button class="btn" id="theme-toggle" type="button" aria-label="Toggle light or dark theme">Theme</button>
+    </div>
+  </div>
+</header>
+<main>
+  <div class="wrap">
+<nav class="crumbs ps-crumbs" aria-label="Breadcrumb"><a href="../../../">Home</a> <span aria-hidden="true">/</span> <a href="../../../skills/">Skills</a> <span aria-hidden="true">/</span> <a href="../../../skills/remotion-studio/">remotion-studio</a> <span aria-hidden="true">/</span> <span aria-current="page">Render, inspect, improve</span></nav><header class="ps-head"><div class="ps-badges"><span class="badge plain">Reference</span> <span class="badge">remotion-studio</span></div><h1>Render, inspect, improve</h1></header><div class="ps-doc"><article class="ps-article"><p>Successful compilation is not proof of visual quality. Judge rendered frames.</p>
+<p><code>$R</code> = <code>~/.claude/skills/motion-review</code> (tools/inspect.mjs needs ffmpeg + ffprobe).</p>
+<h2 id="1-choose-frames-that-can-fail">1. Choose frames that can fail</h2>
+<p>For each scene: first frame, every settled state, mid-transition frames, the densest text frame, the last frame. For the film: frame 0, each scene boundary (last frame of A, first of B, and the middle of the transition), every hit frame, the end card, and the final frame. Typically 8 to 20 frames for one scene, 20 to 40 for a film.</p>
+<h2 id="2-render-stills-and-the-contact-sheet">2. Render stills and the contact sheet</h2>
+<p>From <code>&lt;repo&gt;\studio</code>:</p>
+<pre><code>npm run stills -- &lt;CompId&gt; 0,30,45,60,90,119</code></pre>
+<p>Writes the stills and a contact sheet to <code>studio/out/stills/&lt;CompId&gt;/</code>. Add phone-size pages (what a viewer sees on a phone at arm&#39;s length):</p>
+<pre><code>node $R/tools/inspect.mjs tile out/stills/&lt;CompId&gt;</code></pre>
+<h2 id="3-look-then-fix">3. Look, then fix</h2>
+<p>Open the contact sheet, the phone pages and any still that looks off at full size. Check: clipping and overflow, alignment and margins, inconsistent typography, text on busy backgrounds, focal point, flicker or discontinuity between neighbouring frames, wrong timing against the storyboard, the final frame. Fix what you see, re-render the same frames, look again.</p>
+<p>Motion (easing, pacing, transitions) cannot be judged from scattered stills. Render a short draft of the section and use sheets and strips on it:</p>
+<pre><code>npx remotion render &lt;CompId&gt; out/draft/&lt;CompId&gt;.mp4 --frames=0-149 --scale=0.5
+node $R/tools/inspect.mjs sheet out/draft/&lt;CompId&gt;.mp4 --every 0.25
+node $R/tools/inspect.mjs strip out/draft/&lt;CompId&gt;.mp4 2.2 2.9 --n 8 --name cut1</code></pre>
+<h2 id="4-independent-review-round">4. Independent review round</h2>
+<p>Spawn a fresh reviewer (<code>~/.claude/skills/motion-review/agent.md</code>) with the stills folder, the draft video, <code>hits.json</code>, the storyboard and the round number. It appends the round to <code>projects/&lt;slug&gt;/review.md</code>: nine scores, top 5 defects with fixes, verdict.</p>
+<p>Fix defects 1 to 3 at least, re-render the same frames, spawn a new reviewer. Stop rule (from motion-review): every score ≥ 8, no blocking check failed, ≥ 2 rounds (≥ 3 for &gt; 30 s or showcase pieces). If the minimum score stalls for two rounds, or after 6 rounds, bring it to the user. Do not add new effects unless they solve a listed defect.</p>
+<h2 id="5-honest-reporting">5. Honest reporting</h2>
+<ul><li>Say exactly what you looked at (&quot;opened the contact sheet and phone pages for frames 0-119, strips for both transitions&quot;).</li><li>If you could not view images (tool missing, render failed), write &quot;not visually verified&quot; in the reply and in <code>notes.md</code>, with what is missing. Never describe a frame you did not open.</li></ul>
+<h2 id="speed-tips">Speed tips</h2>
+<ul><li><code>--scale=0.5</code> and <code>--frames=a-b</code> for drafts; full scale only for the final.</li><li>Keep Remotion Studio (<code>npm run dev</code>) for the user&#39;s own scrubbing; your verification is stills and sheets.</li><li>Re-render only frames affected by a fix plus their neighbours and the scene boundaries.</li></ul>
+<h2 id="measured-checks-research-round">Measured checks (research round)</h2>
+<ul><li><strong>Motion bug? Plot first.</strong> When a move pauses, snaps or feels late, do not try another eased variant. Run <code>inspect.mjs plot</code> on the timing function (value and velocity over frames) and look for a zero-velocity run mid-move, kinks, false overshoot. Fix the cause, plot again. (Evidence: a first-hand write-up: five blind fixes failed, the plot showed 16 percent of the move at zero velocity.)</li><li><strong>Camera and transitions:</strong> <code>inspect.mjs flow</code> on a 30 fps draft: speed never dips, zoom does not reverse, speed continues across a velocity-matched cut. (Evidence: described in a prompt, results not shown.)</li><li><strong>Rendered file:</strong> <code>inspect.mjs forensics</code> for frozen stretches, one-frame pops, ghost frames and banding that sheets hide; declare designed moments (a planned freeze or flash cut) with a reason. (Evidence: three repos converged; one reported about 10 of 36 s frozen.) <code>inspect.mjs compare</code> against the golden scene&#39;s sheet gives the reviewer something to fall short of.</li><li><strong>Ghost steps:</strong> zoom into a fast-move frame pair; if steps remain, render 8 subframes or slow the move.</li><li><strong>Review inputs:</strong> hand the reviewer the film&#39;s banned list, glossary and acceptance criteria as well as the storyboard.</li></ul><nav class="ps-prevnext" aria-label="Previous and next"><a class="ps-pn prev" href="../determinism/"><span class="ps-pn-dir">Previous</span><span class="ps-pn-title">Deterministic Remotion rules</span></a><a class="ps-pn next" href="../phases/"><span class="ps-pn-dir">Next</span><span class="ps-pn-title">The five phases in this repo</span></a></nav></article><aside class="ps-side"><details class="ps-side-d" open><summary>On this page</summary><ul class="ps-toc"><li class="l2"><a href="#1-choose-frames-that-can-fail">1. Choose frames that can fail</a></li><li class="l2"><a href="#2-render-stills-and-the-contact-sheet">2. Render stills and the contact sheet</a></li><li class="l2"><a href="#3-look-then-fix">3. Look, then fix</a></li><li class="l2"><a href="#4-independent-review-round">4. Independent review round</a></li><li class="l2"><a href="#5-honest-reporting">5. Honest reporting</a></li><li class="l2"><a href="#speed-tips">Speed tips</a></li><li class="l2"><a href="#measured-checks-research-round">Measured checks (research round)</a></li></ul></details><details class="ps-side-d" open><summary>In remotion-studio</summary><ul class="ps-sidelist"><li><a href="../">SKILL.md</a></li><li><a href="../delivery/">Final delivery</a></li><li><a href="../determinism/">Deterministic Remotion rules</a></li><li class="on"><span aria-current="page">Render, inspect, improve</span></li><li><a href="../phases/">The five phases in this repo</a></li></ul></details><p class="ps-side-foot"><a href="https://github.com/AnnasMustafaDev/video-studio/blob/main/skills/remotion-studio/references/inspect-render.md" rel="noopener noreferrer">View source on GitHub</a></p></aside></div><script>
+(function(){
+  var mq = window.matchMedia('(min-width: 981px)');
+  function sync(){ document.querySelectorAll('details.ps-side-d').forEach(function(d){ d.open = mq.matches; }); }
+  sync();
+  if (mq.addEventListener) mq.addEventListener('change', sync);
+  var links = [].slice.call(document.querySelectorAll('.ps-toc a'));
+  if (!links.length || !('IntersectionObserver' in window)) return;
+  var byId = {};
+  links.forEach(function(a){ byId[decodeURIComponent(a.getAttribute('href').slice(1))] = a; });
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (!e.isIntersecting) return;
+      links.forEach(function(a){ a.classList.remove('on'); });
+      var a = byId[e.target.id]; if (a) a.classList.add('on');
+    });
+  }, { rootMargin: '-70px 0px -70% 0px' });
+  Object.keys(byId).forEach(function(id){ var el = document.getElementById(id); if (el) io.observe(el); });
+})();
+</script>
+  </div>
+</main>
+<footer class="site">
+  <div class="wrap cols">
+    <div>
+      <strong>Video Studio</strong><br>
+      A personal studio for motion graphics and animated videos with Claude Code.
+    </div>
+    <div>
+      <a href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">Source on GitHub</a><br>
+      <a href="../../../credits/">Credits and licences</a>
+    </div>
+  </div>
+</footer>
+<script src="../../../assets/site.js" defer></script>
+</body>
+</html>

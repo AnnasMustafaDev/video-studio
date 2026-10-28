@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The five phases in this repo (remotion-studio) · Video Studio</title>
+<meta name="description" content="$VS = &lt;repo&gt;. Slug: lowercase-kebab (launch-teaser). Paper trail: $VS\projects\&lt;yyyy-mm-dd&gt;-&lt;slug&gt;\. Composition id: PascalCase of the slug (LaunchTeaser), plus a format...">
+<meta property="og:title" content="The five phases in this repo (remotion-studio) · Video Studio">
+<meta property="og:description" content="$VS = &lt;repo&gt;. Slug: lowercase-kebab (launch-teaser). Paper trail: $VS\projects\&lt;yyyy-mm-dd&gt;-&lt;slug&gt;\. Composition id: PascalCase of the slug (LaunchTeaser), plus a format...">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23eef3ff'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%233b6cf6'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../../assets/site.css">
+<link rel="stylesheet" href="../../../assets/panel-skills.css">
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="../../../"><span class="dot"></span>Video Studio</a>
+    <nav class="main" aria-label="Main"><a href="../../../">Home</a><a href="../../../tour/">Tour</a><a href="../../../guide/">Guide</a><a href="../../../skills/" aria-current="page">Skills</a><a href="../../../prompts/">Prompts</a><a href="../../../studio/">Studio</a><a href="../../../techniques/">Techniques</a><a href="../../../shot-library/">Shot library</a><a href="../../../research/">Research</a><a href="../../../gallery/">Gallery</a><a href="../../../credits/">Credits</a></nav>
+    <div class="tools">
+      <a class="btn" href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">GitHub</a>
+      <button class="btn" id="theme-toggle" type="button" aria-label="Toggle light or dark theme">Theme</button>
+    </div>
+  </div>
+</header>
+<main>
+  <div class="wrap">
+<nav class="crumbs ps-crumbs" aria-label="Breadcrumb"><a href="../../../">Home</a> <span aria-hidden="true">/</span> <a href="../../../skills/">Skills</a> <span aria-hidden="true">/</span> <a href="../../../skills/remotion-studio/">remotion-studio</a> <span aria-hidden="true">/</span> <span aria-current="page">The five phases in this repo</span></nav><header class="ps-head"><div class="ps-badges"><span class="badge plain">Reference</span> <span class="badge">remotion-studio</span></div><h1>The five phases in this repo</h1></header><div class="ps-doc"><article class="ps-article"><p><code>$VS</code> = <code>&lt;repo&gt;</code>. Slug: lowercase-kebab (<code>launch-teaser</code>). Paper trail: <code>$VS\projects\&lt;yyyy-mm-dd&gt;-&lt;slug&gt;\</code>. Composition id: PascalCase of the slug (<code>LaunchTeaser</code>), plus a format suffix for extra ratios (<code>LaunchTeaser916</code>).</p>
+<h2 id="phase-1-understand-and-plan-no-code">Phase 1: understand and plan (no code)</h2>
+<ol><li>Create the paper-trail folder. Follow the <code>motion-director</code> skill (or the staged prompts listed in <code>$VS\prompts\INDEX.md</code>):<ul><li><code>brief.md</code>: the 10 ingredients. Identify purpose, audience, platform, duration, aspect ratio, message, intended emotion. Ask concise questions only for critical gaps; otherwise assume and write the assumption down.</li><li><code>reference.md</code> if a reference was given.</li><li><code>directions.md</code>: three genuinely different directions, one recommended. <strong>Stop for the user&#39;s pick.</strong></li><li><code>storyboard.md</code>: scene table (first/last frame, focal point, exact text, animation, easing, transition, audio cue, purpose, link, repetition flag), hits table, design-system notes, assets, formats, build order.</li><li><code>review.md</code> Round 0: director review of the plan, fixes applied. <strong>Stop for approval.</strong></li></ul></li><li>Identify which assets are made in code and which need real images, video, fonts or audio. Missing ones are listed, not faked.</li></ol>
+<p>If the user explicitly says &quot;just build it&quot;, still write a short brief and storyboard (they take minutes) and say you skipped the approval stops at their request.</p>
+<h2 id="phase-2-design-for-quality">Phase 2: design for quality</h2>
+<ul><li>Map every storyboard element to tokens in <code>studio/src/lib/tokens.ts</code> and components in <code>studio/src/lib/</code> (titles, text reveals, captions, lower thirds, stats/charts, masks/transitions, backgrounds, audio helpers). Note it in <code>storyboard.md</code> under design-system notes.</li><li>New visual need? Prefer a parameter on an existing component. A genuinely new component gets a name, props (content, duration, delay, colour, size, movement) and a line in the notes; propose adding it to <code>src/lib/</code> and <code>DESIGN_SYSTEM.md</code> once it is approved in this video.</li><li>Principles: clear hierarchy and negative space, one focal point per scene, consistent type/spacing/colour/alignment, purposeful easing and duration, controlled stagger and layering, meaningful transitions, depth/texture/light only where justified, sound synced to events, readable text in safe margins for the platform.</li></ul>
+<h2 id="phase-3-implement-in-remotion-scene-1-only-first">Phase 3: implement in Remotion (scene 1 only first)</h2>
+<ol><li>Inspect the project: <code>studio/src/Root.tsx</code>, <code>studio/src/videos/_template/</code>, <code>studio/src/lib/</code>, the official skills. Do not rewrite working infrastructure.</li><li><code>studio/src/videos/&lt;slug&gt;/</code> = copy of <code>_template</code>. Inside: the composition, <code>scenes/Scene1.tsx...</code>, <code>timing.ts</code> (scene starts/durations in frames, derived from seconds once with <code>Math.round(s * fps)</code>), <code>hits.ts</code> (from the storyboard&#39;s hits table). Register the composition in <code>Root.tsx</code> with the brief&#39;s width, height, fps and <code>durationInFrames</code> computed from <code>timing.ts</code>.</li><li>Build <strong>only scene 1</strong> (or the scene the storyboard names as the quality probe). Focus on composition, typography, timing and motion quality.</li><li><code>npm run lint</code> (eslint + tsc) must pass.</li><li>Go to Phase 4 for that scene. Only after it passes review, build the other scenes (optionally with parallel scene-builder subagents, one file each), then inspect the whole film.</li></ol>
+<h2 id="phase-4-render-inspect-improve">Phase 4: render, inspect, improve</h2>
+<p>See <a href="../inspect-render/">inspect-render.md</a>. Loop: stills, look, fix, independent review, fix top defects, re-render, until the stop rule. Successful compilation is not proof of visual quality.</p>
+<h2 id="phase-5-final-delivery">Phase 5: final delivery</h2>
+<p>See <a href="../delivery/">delivery.md</a>: render at the specified resolution and fps, normalise loudness, ffprobe, poster frame, report, learnings.</p>
+<h2 id="revisions-after-delivery">Revisions after delivery</h2>
+<p>Small change (copy, colour, timing): edit, re-run stills for the affected frames plus scene boundaries, quick self-check, re-render, re-probe, update the report. Structural change: back to the storyboard first.</p>
+<h2 id="build-loop-additions-research-round">Build loop additions (research round)</h2>
+<p>Method and reasons: <code>~/.claude/skills/motion-studio/references/golden-scene.md</code>. In this repo:</p>
+<ol><li><strong>Start gate.</strong> Before any code show the beat map or line-to-visual map and 4 to 8 named stills (scene, timestamp). If you cannot render or view images here, say so first.</li><li><strong>Plan check, five lines</strong>, written into <code>notes.md</code> before each scene: what you will build, what you will not touch, the one thing most likely to go wrong, the stills you will show first, the acceptance criteria aimed at. For a risky scene a fresh subagent that did not write the plan lists its five weakest decisions before you render. Optional, skip for simple scenes. (Evidence: claimed by two builders.)</li><li><strong>Golden scene.</strong> After scene 1 passes review, name <code>studio/src/videos/&lt;slug&gt;/scenes/Scene01.tsx</code> the golden scene in <code>notes.md</code>. Scenes 2 to N (and parallel scene-builder subagents) get its source and the instruction &quot;same structure (beat mapping, stagger, entrance style), change only the content, list what you copied&quot;. Each scene still gets its own typographic action. (Evidence: claimed; standard few-shot principle.)</li><li><strong>Commit per approved scene.</strong> One local commit per approved scene (CLAUDE.md rule 6: local only, never push). On each revision pass show <code>git diff --stat</code>, name anything that changed outside the request, and re-render the previous approved stills to compare before and after. Log decisions in <code>notes.md</code>. (Evidence: first-hand experience.)</li><li><strong>Tunables.</strong> Expose a scene&#39;s numbers (counts, sizes, gravity, scale) through a zod <code>schema</code> on the component so Remotion Studio&#39;s props panel gives sliders; record the final values in <code>timing.ts</code> or the scene&#39;s constants. A count prop gives density variants of the same scene for free. (Evidence: one launch-video write-up; same idea natively in Remotion.)</li><li><strong>Glossary and acceptance criteria.</strong> <code>projects/&lt;slug&gt;/glossary.md</code> and <code>acceptance.md</code> (templates in <code>motion-director</code>); revision requests cite them.</li><li><strong>Real assets.</strong> For any product, import the real component or a real capture; draw UI from scratch only for abstract diagrams. (Evidence: opinion of several builders; one builder happily rendered the app&#39;s own components.)</li><li><strong>Asset spec and primitives (maybe-level).</strong> In the design phase list each asset (what, source, real or code-made) before anything is generated, and list the film&#39;s own reusable motion primitives before scenes. (Evidence: low confidence, one second-hand summary.)</li><li><strong>Parallel scene builders</strong> are told the film&#39;s banned list and the gotchas file; only the main session edits shared files.</li></ol><nav class="ps-prevnext" aria-label="Previous and next"><a class="ps-pn prev" href="../inspect-render/"><span class="ps-pn-dir">Previous</span><span class="ps-pn-title">Render, inspect, improve</span></a><span></span></nav></article><aside class="ps-side"><details class="ps-side-d" open><summary>On this page</summary><ul class="ps-toc"><li class="l2"><a href="#phase-1-understand-and-plan-no-code">Phase 1: understand and plan (no code)</a></li><li class="l2"><a href="#phase-2-design-for-quality">Phase 2: design for quality</a></li><li class="l2"><a href="#phase-3-implement-in-remotion-scene-1-only-first">Phase 3: implement in Remotion (scene 1 only first)</a></li><li class="l2"><a href="#phase-4-render-inspect-improve">Phase 4: render, inspect, improve</a></li><li class="l2"><a href="#phase-5-final-delivery">Phase 5: final delivery</a></li><li class="l2"><a href="#revisions-after-delivery">Revisions after delivery</a></li><li class="l2"><a href="#build-loop-additions-research-round">Build loop additions (research round)</a></li></ul></details><details class="ps-side-d" open><summary>In remotion-studio</summary><ul class="ps-sidelist"><li><a href="../">SKILL.md</a></li><li><a href="../delivery/">Final delivery</a></li><li><a href="../determinism/">Deterministic Remotion rules</a></li><li><a href="../inspect-render/">Render, inspect, improve</a></li><li class="on"><span aria-current="page">The five phases in this repo</span></li></ul></details><p class="ps-side-foot"><a href="https://github.com/AnnasMustafaDev/video-studio/blob/main/skills/remotion-studio/references/phases.md" rel="noopener noreferrer">View source on GitHub</a></p></aside></div><script>
+(function(){
+  var mq = window.matchMedia('(min-width: 981px)');
+  function sync(){ document.querySelectorAll('details.ps-side-d').forEach(function(d){ d.open = mq.matches; }); }
+  sync();
+  if (mq.addEventListener) mq.addEventListener('change', sync);
+  var links = [].slice.call(document.querySelectorAll('.ps-toc a'));
+  if (!links.length || !('IntersectionObserver' in window)) return;
+  var byId = {};
+  links.forEach(function(a){ byId[decodeURIComponent(a.getAttribute('href').slice(1))] = a; });
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (!e.isIntersecting) return;
+      links.forEach(function(a){ a.classList.remove('on'); });
+      var a = byId[e.target.id]; if (a) a.classList.add('on');
+    });
+  }, { rootMargin: '-70px 0px -70% 0px' });
+  Object.keys(byId).forEach(function(id){ var el = document.getElementById(id); if (el) io.observe(el); });
+})();
+</script>
+  </div>
+</main>
+<footer class="site">
+  <div class="wrap cols">
+    <div>
+      <strong>Video Studio</strong><br>
+      A personal studio for motion graphics and animated videos with Claude Code.
+    </div>
+    <div>
+      <a href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">Source on GitHub</a><br>
+      <a href="../../../credits/">Credits and licences</a>
+    </div>
+  </div>
+</footer>
+<script src="../../../assets/site.js" defer></script>
+</body>
+</html>

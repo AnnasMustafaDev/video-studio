@@ -1,6 +1,8 @@
 # Video Studio
 
-A personal studio for making motion graphics and animated videos with Claude Code: a Remotion project, a prompt library, Claude Code skills and an illustrated guide, all in one repo.
+A personal studio for making motion graphics and animated videos with Claude Code: a Remotion project, a prompt library, Claude Code skills, a shot library, research and an illustrated guide, all in one repo.
+
+**Website: https://annasmustafadev.github.io/video-studio/** (tour, guide, skills, prompts, studio components, techniques, shot library, research and a gallery of 73 Claude-made motion videos).
 
 The idea: Claude works as creative director, motion designer, animator and engineer, and you direct it stage by stage. You don't ask for a whole video in one shot. Every frame is rendered from code, and quality is judged on rendered frames, never on the code.
 
@@ -40,7 +42,10 @@ More recipes (launch teaser, YouTube explainer, Instagram reel, data story, UI d
 | [`studio/`](studio/) | Remotion 4 project (React, frame-based). Component library in `src/lib/` (titles, kinetic type, captions, lower thirds, counters, charts, transitions, backgrounds, sound cues), design tokens, [`DESIGN_SYSTEM.md`](studio/DESIGN_SYSTEM.md), a lock file for the official Remotion agent skills (`npx remotion skills add`), and a `_template` for new videos |
 | [`prompts/`](prompts/) | Prompt library. [`prompts/INDEX.md`](prompts/INDEX.md) says which prompt to use for which purpose, and in what order |
 | [`skills/`](skills/) | Claude Code skills (see below). Installed into `~/.claude/skills` with `node tools/install-skills.mjs` |
-| [`third_party/`](third_party/) | Vendored third-party skills, pinned to an upstream commit and never edited here (each has an `UPSTREAM.md` with source, licence and how to update). The same install script installs them |
+| [`third_party/`](third_party/) | Vendored third-party material (brag, video-shotcraft), pinned to an upstream commit and never edited here (each has an `UPSTREAM.md` with source, licence and how to update). The same install script installs them |
+| [`docs/`](docs/) | The source of the [website](https://annasmustafadev.github.io/video-studio/): a generator (`docs/_build/`) that builds every page from this repo. Rebuild with `node docs/_build/build.mjs` |
+| [`shot-library/`](shot-library/) | 51 curated motion shots with build notes for Remotion and the HTML engine and a taste verdict for each, adapted from [video-shotcraft](https://github.com/Vincentwei1021/video-shotcraft) (Apache-2.0). Open `shot-library/index.html` |
+| [`research/`](research/) | What the community's Claude-made motion videos teach: a gallery of 73 videos (`research/gallery/`) and 50 analysed findings with what landed in this studio and why (`research/findings/`) |
 | [`guide/index.html`](guide/index.html) | Self-contained illustrated guide: workflow, tools, setup, prompting, motion vocabulary, master prompt, staged prompts, references, design system, learning path. Open it in a browser |
 | [`learning/`](learning/) + [`prompts/learning/`](prompts/learning/) | A 7-day learning plan, with one ready prompt per day |
 | [`source/`](source/) | The notes this repo was built from |
@@ -55,6 +60,7 @@ More recipes (launch teaser, YouTube explainer, Instagram reel, data story, UI d
 | `motion-studio` | Voice-over-driven product films in a single HTML composition, where every cut lands on a spoken word |
 | `motion-review` | A strict, independent review of rendered frames: scores, top defects, a verdict. Best run as a subagent |
 | `prompt-motion-search` | Searching [prompt-motion.com](https://prompt-motion.com) for animations made with Claude, then turning a chosen prompt into a proper brief (credited, on demand) |
+| `shot-library` | Picking and parameterising a concrete shot for every scene of a storyboard from the curated library, with a taste check against the studio's house rules |
 | `brag`, `brag-slim` | **Third-party, MIT** ([latent-spaces/brag](https://github.com/latent-spaces/brag), vendored in [`third_party/brag/`](third_party/brag/UPSTREAM.md)). A quick 15 to 25 s launch video of a project you just built, in one command, written to `brag-output/` in that project. `brag-slim` needs no extra tools; full `brag` uses Hyperframes |
 
 ## Quick start
@@ -71,6 +77,8 @@ npx remotion skills add             # official Remotion agent skills (pinned in 
 npm run stills -- LibraryShowcase 50,130,245,350,449   # renders frames + a contact sheet
 npm run dev                                           # Remotion Studio preview
 ```
+
+The skills write this repo as `{{VIDEO_STUDIO}}`; the install script replaces it with the absolute path of your clone, so they work wherever you cloned it.
 
 Then, in a second terminal in the repo root, run `claude` and start with a brief:
 

@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>brag skill · Video Studio</title>
+<meta name="description" content="Turns a project into a short launch video with music, motion and share copy (full workflow).">
+<meta property="og:title" content="brag skill · Video Studio">
+<meta property="og:description" content="Turns a project into a short launch video with music, motion and share copy (full workflow).">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23eef3ff'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%233b6cf6'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../assets/site.css">
+<link rel="stylesheet" href="../../assets/panel-skills.css">
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="../../"><span class="dot"></span>Video Studio</a>
+    <nav class="main" aria-label="Main"><a href="../../">Home</a><a href="../../tour/">Tour</a><a href="../../guide/">Guide</a><a href="../../skills/" aria-current="page">Skills</a><a href="../../prompts/">Prompts</a><a href="../../studio/">Studio</a><a href="../../techniques/">Techniques</a><a href="../../shot-library/">Shot library</a><a href="../../research/">Research</a><a href="../../gallery/">Gallery</a><a href="../../credits/">Credits</a></nav>
+    <div class="tools">
+      <a class="btn" href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">GitHub</a>
+      <button class="btn" id="theme-toggle" type="button" aria-label="Toggle light or dark theme">Theme</button>
+    </div>
+  </div>
+</header>
+<main>
+  <div class="wrap">
+<nav class="crumbs ps-crumbs" aria-label="Breadcrumb"><a href="../../">Home</a> <span aria-hidden="true">/</span> <a href="../../skills/">Skills</a> <span aria-hidden="true">/</span> <span aria-current="page">brag</span></nav><header class="ps-head"><div class="ps-badges"><span class="badge">Launch video</span> <span class="badge warn">Third-party · MIT</span> </div><h1>/brag</h1><p class="lead ps-lead">Turns a project into a short launch video with music, motion and share copy (full workflow).</p></header><div class="callout warn"><div class="title">Vendored third-party skill</div><p>This skill is copied unchanged from <a href="https://github.com/latent-spaces/brag" rel="noopener noreferrer">its upstream project</a> (pinned at <code>669ab92</code>), licence: MIT (bundled music and sound effects carry their own licences, see Credits). This site renders its <code>SKILL.md</code> only. Its scripts, references and bundled assets are not rendered here; <a href="https://github.com/AnnasMustafaDev/video-studio/tree/main/third_party/brag/skills/brag" rel="noopener noreferrer">browse the files on GitHub</a>, or read the <a href="https://github.com/AnnasMustafaDev/video-studio/blob/main/third_party/brag/UPSTREAM.md" rel="noopener noreferrer">upstream notes</a> and the <a href="https://github.com/AnnasMustafaDev/video-studio/blob/main/third_party/brag/LICENSE" rel="noopener noreferrer">licence</a>. See also <a href="../../credits/">Credits</a>.</p></div><dl class="ps-info"><div><dt>Skill</dt><dd><code>brag</code></dd></div><div><dt>Trigger text</dt><dd><details class="ps-desc"><summary>Turn the current project website into a short, polished, shareable launch video using Hyperframes. Use when someone says &quot;/brag&quot;, &quot;let&#39;s brag about this&quot;, &quot;make a launch video&quot;, &quot;turn this into a video&quot;, or wants to...</summary><p>Turn the current project website into a short, polished, shareable launch video using Hyperframes. Use when someone says &quot;/brag&quot;, &quot;let&#39;s brag about this&quot;, &quot;make a launch video&quot;, &quot;turn this into a video&quot;, or wants to share what they built. Reads the project code directly — no live URL or screenshots needed.</p></details></dd></div><div><dt>Install</dt><dd><code>node tools/install-skills.mjs brag</code></dd></div><div><dt>Source</dt><dd><a href="https://github.com/AnnasMustafaDev/video-studio/tree/main/third_party/brag/skills/brag" rel="noopener noreferrer"><code>third_party/brag/skills/brag/</code></a></dd></div></dl><div class="ps-doc"><article class="ps-article"><p>You built it. Now let&#39;s brag about it.</p>
+<h2 id="invocation-dispatch-must-happen-first">Invocation dispatch (must happen first)</h2>
+<p><strong>Model check.</strong> If you are Claude Opus 5.5 and the invocation doesn&#39;t ask for the full workflow (<code>--full</code>, &quot;use the full brag&quot;) or for voiceover (<code>--voice</code>, which brag-slim doesn&#39;t do), switch to brag-slim: read <code>&lt;skill-dir&gt;/slim.md</code> (the /brag-slim skill, bundled here) and follow it for the rest of this run instead of this file. Pass along the user&#39;s input, and pass any other options (<code>--no-music</code>, <code>--title</code>, …) as plain-language direction. Tell the user in one line first, e.g. &quot;You&#39;re on Opus 5.5, so I&#39;m using /brag-slim: I build the whole video myself. Say &#39;use the full brag&#39; to switch back.&quot; If you are any other model, or can&#39;t tell which model you are, skip this check.</p>
+<p>Before inspecting the project, parse the complete <code>/brag</code> invocation. If the invocation contains <code>--voice</code>, set <code>voice.enabled = true</code>. Enable narration only for that run. Do not enable narration automatically and do not fall back to the normal no-voice workflow.</p>
+<p><code>/brag</code> turns the current project website or app into a short, polished, shareable launch video using Hyperframes. It is narrow, opinionated, and fun.</p>
+<h2 id="what-this-skill-does">What this skill does</h2>
+<ol><li>Reads the current project code to understand the app.</li><li>Plans a short brag concept specific to this project.</li><li>Scripts and storyboards the video.</li><li>Hands a focused composition brief to Hyperframes.</li><li>Validates, renders, and writes share copy.</li></ol>
+<h2 id="parsing-the-invocation">Parsing the invocation</h2>
+<p>The user may invoke with natural language or flags:</p>
+<pre><code>/brag
+/brag --tone chaotic
+/brag --tone polished --format vertical
+/brag this. Make it feel like a ridiculous startup launch.</code></pre>
+<p>Parse these options:</p>
+<table><thead><tr><th>Option</th><th>Values</th><th>Default</th></tr></thead><tbody><tr><td><code>--tone</code></td><td>preset or freeform description</td><td>inferred</td></tr><tr><td><code>--format</code></td><td><code>landscape</code>, <code>vertical</code>, <code>square</code></td><td><code>landscape</code></td></tr><tr><td><code>--duration</code></td><td>seconds</td><td>auto (15-25s)</td></tr><tr><td><code>--no-music</code></td><td>flag</td><td>music on</td></tr><tr><td><code>--no-sfx</code></td><td>flag</td><td>sfx on</td></tr><tr><td><code>--title</code></td><td>string</td><td>inferred from project</td></tr><tr><td><code>--voice</code></td><td>flag</td><td>narration off</td></tr></tbody></table>
+<p>Voice is opt-in. If <code>--voice</code> is present, use Kokoro via Hyperframes and do not add any provider-selection logic. The voice workflow is intentionally single-provider.</p>
+<p>Tone can be a preset (<code>default</code>, <code>polished</code>, <code>yc-parody</code>, <code>chaotic</code>, <code>deadpan</code>, <code>cinematic</code>, <code>app-store</code>) or a creative direction such as &quot;fake Series A launch from 2016&quot;, &quot;museum exhibit&quot;, or &quot;overproduced mobile game ad&quot;.</p>
+<p>When the user gives freeform tone direction, map it to the nearest preset for pacing and structure, but preserve the user&#39;s direction in the plan and composition brief.</p>
+<h2 id="narration-guidance">Narration guidance</h2>
+<p>When <code>--voice</code> is enabled, write narration that complements the visuals, does not simply read visible text, matches scene pacing, sounds natural and conversational, and moves smoothly between scenes. Keep the script concise and specific to the product so the voice feels like part of the edit rather than a separate narration track.</p>
+<hr>
+<h2 id="output-directory">Output directory</h2>
+<p>By default, output goes to <code>brag-output/</code>. To avoid overwriting previous runs, use a timestamped directory:</p>
+<pre><code>brag-output-2026-05-04-143022/</code></pre>
+<p>Use a timestamp when:</p>
+<ul><li>The user explicitly asks for a new run without overriding previous results</li><li>A <code>brag-output/</code> directory already exists in the project</li></ul>
+<p>Generate the timestamp at the start of the run (<code>YYYY-MM-DD-HHmmss</code>) and use it consistently for all output paths in that run: plan, brief, composition, render, and share copy.</p>
+<h2 id="skill-directory">Skill directory</h2>
+<p><code>&lt;skill-dir&gt;</code> is the directory containing this <code>SKILL.md</code>. Claude Code prints it as &quot;Base directory for this skill&quot; when the skill loads; for other agents it&#39;s wherever the skill was installed. Bundled assets are under <code>&lt;skill-dir&gt;/assets/</code> and scripts under <code>&lt;skill-dir&gt;/scripts/</code>. Don&#39;t guess an install path: a plugin install, a <code>~/.claude/skills/</code> copy, and this repo all put it somewhere different.</p>
+<hr>
+<h2 id="step-1-inspect-the-project">Step 1: Inspect the project</h2>
+<p><strong>Read:</strong> <a href="https://github.com/AnnasMustafaDev/video-studio/blob/main/third_party/brag/skills/brag/references/step-1-inspect.md" rel="noopener noreferrer">references/step-1-inspect.md</a></p>
+<p>Scan the project directory and extract the information needed to plan the brag video.</p>
+<p><strong>Gate:</strong> You can answer all 9 questions in the brag planning rubric.</p>
+<hr>
+<h2 id="step-2-plan-and-storyboard">Step 2: Plan and storyboard</h2>
+<p><strong>Read:</strong> <a href="https://github.com/AnnasMustafaDev/video-studio/blob/main/third_party/brag/skills/brag/references/step-2-plan.md" rel="noopener noreferrer">references/step-2-plan.md</a></p>
+<p>Write <code>&lt;output-dir&gt;/brag-plan.md</code> (where <code>&lt;output-dir&gt;</code> is <code>brag-output/</code> or the timestamped variant chosen above). Answer the planning rubric. Commit to a creative angle. Write the beat-by-beat storyboard including scenes, text, timing, transitions, and SFX cues.</p>
+<p>When music is selected, include a compact <code>Music cue guidance</code> section: read the bundled track&#39;s cue preset from <code>&lt;skill-dir&gt;/assets/music/cues/</code> if present, otherwise note cues will be detected at composition time (any track now supports beat sync — see <code>references/audio.md</code>). Cue metadata is optional timing guidance only: story, readability, pacing, and product clarity stay primary.</p>
+<p><strong>Gate:</strong> <code>&lt;output-dir&gt;/brag-plan.md</code> exists with a full storyboard. Scene durations sum to 15–25 seconds.</p>
+<hr>
+<h2 id="step-3-hand-off-to-hyperframes">Step 3: Hand off to Hyperframes</h2>
+<p><strong>Read:</strong> The Hyperframes skills — <code>hyperframes</code> (contract, <code>references/format.md</code>, <code>references/motion.md</code>, <code>references/look.md</code>), <code>hyperframes-cli</code>, <code>hyperframes-registry</code>, and <code>media-use</code> for audio. /brag is its own workflow: skip the <code>hyperframes</code> storyline step: don&#39;t read <code>references/types/*</code> or <code>references/story.md</code>, don&#39;t propose storylines, and don&#39;t write a <code>SPEC.md</code>. The brag plan and composition brief replace them, including the LOOK line <code>references/look.md</code> asks for. Also skip its <code>usage</code>, <code>history</code>, <code>feedback</code> and REVIEW.md steps; <code>check</code> is brag&#39;s gate. Do not route into its generic launch-video workflow. <strong>Read:</strong> <a href="https://github.com/AnnasMustafaDev/video-studio/blob/main/third_party/brag/skills/brag/references/step-3-compose.md" rel="noopener noreferrer">references/step-3-compose.md</a> <strong>Read:</strong> <a href="https://github.com/AnnasMustafaDev/video-studio/blob/main/third_party/brag/skills/brag/references/audio.md" rel="noopener noreferrer">references/audio.md</a></p>
+<p>Write the composition brief and use Hyperframes to create the video implementation in <code>&lt;output-dir&gt;/composition/</code>.</p>
+<p><code>/brag</code> owns the product angle, source material, storyboard, tone, format, audio selection, music cue guidance, and delivery expectations. Hyperframes owns the concrete composition structure, exact animation timing, animation mechanics, runtime choices, linting rules, and render workflow.</p>
+<p><strong>Gate:</strong> <code>npx hyperframes check</code> passes with zero errors inside <code>&lt;output-dir&gt;/composition/</code> (the single browser gate before render — see hyperframes-cli for what it audits).</p>
+<hr>
+<h2 id="step-4-validate-render-and-deliver">Step 4: Validate, render, and deliver</h2>
+<p><strong>Read:</strong> <a href="https://github.com/AnnasMustafaDev/video-studio/blob/main/third_party/brag/skills/brag/references/step-4-deliver.md" rel="noopener noreferrer">references/step-4-deliver.md</a></p>
+<p>Validate, preview, render to <code>&lt;output-dir&gt;/brag.mp4</code>, pick the best poster frame into <code>&lt;output-dir&gt;/brag.jpg</code>, bake that poster as the video&#39;s frame 0 so it&#39;s the idle thumbnail everywhere, and write <code>&lt;output-dir&gt;/share-copy.txt</code>.</p>
+<p><strong>Gate:</strong> <code>&lt;output-dir&gt;/brag.mp4</code> exists. A best-frame poster <code>&lt;output-dir&gt;/brag.jpg</code> is picked (not an arbitrary frame) and baked as frame 0 of <code>brag.mp4</code>. Share copy is written.</p>
+<hr>
+<h2 id="tone-system">Tone system</h2>
+<p>Seven tone presets ship with <code>/brag</code>. Each changes scripting energy, pacing, typography personality, and transition style. Presets are defaults, not limits.</p>
+<p>Full definitions: <a href="https://github.com/AnnasMustafaDev/video-studio/blob/main/third_party/brag/skills/brag/references/tones.md" rel="noopener noreferrer">references/tones.md</a></p>
+<table><thead><tr><th>Tone</th><th>Energy</th><th>One-liner</th></tr></thead><tbody><tr><td><code>default</code></td><td>Playful, clean, postable</td><td>The good-vibes default</td></tr><tr><td><code>polished</code></td><td>Serious, elegant</td><td>For projects that are not jokes</td></tr><tr><td><code>yc-parody</code></td><td>Deadpan startup energy</td><td>Fake seriousness applied to absurd projects</td></tr><tr><td><code>chaotic</code></td><td>Fast, loud, aggressive</td><td>Over-the-top and unhinged</td></tr><tr><td><code>deadpan</code></td><td>Calm, dry, understated</td><td>The joke is that nothing is a joke</td></tr><tr><td><code>cinematic</code></td><td>Dramatic, trailer-scale</td><td>Big motion, bigger claims</td></tr><tr><td><code>app-store</code></td><td>Smooth, feature-card clean</td><td>Corporate but not boring</td></tr></tbody></table>
+<p>Always allow a freeform creative direction to refine or override the preset.</p>
+<hr>
+<h2 id="creative-laws">Creative laws</h2>
+<p>These apply to every brag video regardless of tone.</p>
+<p><strong>Short.</strong> 15–25 seconds. Not one second more without a reason. This holds whether or not narration is on; narration does not extend the window.</p>
+<p><strong>Readable.</strong> Keep the pace high through motion and cuts, never by flashing text. Every line a viewer must read holds long enough to read it (short label ~0.8s settled; a sentence ~0.3s per word). Fast-in, then hold — never fast-in, then gone.</p>
+<p><strong>Specific.</strong> The video must feel like it was made for this exact project, not any project.</p>
+<p><strong>Show the thing.</strong> At least one scene must display actual UI, copy, or a key visual from the product. No abstract filler.</p>
+<p><strong>No generic SaaS language.</strong> &quot;Streamline your workflow&quot; is banned. Use the project&#39;s actual copy and claims.</p>
+<p><strong>The hook is everything.</strong> The first 2 seconds determine whether someone keeps watching. Plan the hook before anything else.</p>
+<p><strong>Funny earns its place.</strong> Humor should come from the project&#39;s absurdity, not from trying to be funny.</p>
+<p><strong>Pattern:</strong></p>
+<pre><code>Hook (2-3s) → Reveal (2-4s) → 2-3 sharp highlights (5-12s) → Punchline/outro (2-4s)</code></pre>
+<p>Adapt this. Not every project needs exactly 3 highlights. The pattern is a starting shape, not a template.</p></article><aside class="ps-side"><details class="ps-side-d" open><summary>On this page</summary><ul class="ps-toc"><li class="l2"><a href="#invocation-dispatch-must-happen-first">Invocation dispatch (must happen first)</a></li><li class="l2"><a href="#what-this-skill-does">What this skill does</a></li><li class="l2"><a href="#parsing-the-invocation">Parsing the invocation</a></li><li class="l2"><a href="#narration-guidance">Narration guidance</a></li><li class="l2"><a href="#output-directory">Output directory</a></li><li class="l2"><a href="#skill-directory">Skill directory</a></li><li class="l2"><a href="#step-1-inspect-the-project">Step 1: Inspect the project</a></li><li class="l2"><a href="#step-2-plan-and-storyboard">Step 2: Plan and storyboard</a></li><li class="l2"><a href="#step-3-hand-off-to-hyperframes">Step 3: Hand off to Hyperframes</a></li><li class="l2"><a href="#step-4-validate-render-and-deliver">Step 4: Validate, render, and deliver</a></li><li class="l2"><a href="#tone-system">Tone system</a></li><li class="l2"><a href="#creative-laws">Creative laws</a></li></ul></details><p class="ps-side-foot"><a href="../../skills/">All skills</a></p></aside></div><script>
+(function(){
+  var mq = window.matchMedia('(min-width: 981px)');
+  function sync(){ document.querySelectorAll('details.ps-side-d').forEach(function(d){ d.open = mq.matches; }); }
+  sync();
+  if (mq.addEventListener) mq.addEventListener('change', sync);
+  var links = [].slice.call(document.querySelectorAll('.ps-toc a'));
+  if (!links.length || !('IntersectionObserver' in window)) return;
+  var byId = {};
+  links.forEach(function(a){ byId[decodeURIComponent(a.getAttribute('href').slice(1))] = a; });
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (!e.isIntersecting) return;
+      links.forEach(function(a){ a.classList.remove('on'); });
+      var a = byId[e.target.id]; if (a) a.classList.add('on');
+    });
+  }, { rootMargin: '-70px 0px -70% 0px' });
+  Object.keys(byId).forEach(function(id){ var el = document.getElementById(id); if (el) io.observe(el); });
+})();
+</script>
+  </div>
+</main>
+<footer class="site">
+  <div class="wrap cols">
+    <div>
+      <strong>Video Studio</strong><br>
+      A personal studio for motion graphics and animated videos with Claude Code.
+    </div>
+    <div>
+      <a href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">Source on GitHub</a><br>
+      <a href="../../credits/">Credits and licences</a>
+    </div>
+  </div>
+</footer>
+<script src="../../assets/site.js" defer></script>
+</body>
+</html>

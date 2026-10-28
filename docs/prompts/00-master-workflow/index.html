@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>00 · Motion Graphics Director: master workflow · Video Studio</title>
+<meta name="description" content="Turn Claude into a small motion-design studio that plans, builds, inspects and delivers one video in five phases.">
+<meta property="og:title" content="00 · Motion Graphics Director: master workflow · Video Studio">
+<meta property="og:description" content="Turn Claude into a small motion-design studio that plans, builds, inspects and delivers one video in five phases.">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23eef3ff'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%233b6cf6'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../assets/site.css">
+<link rel="stylesheet" href="../../assets/panel-skills.css">
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="../../"><span class="dot"></span>Video Studio</a>
+    <nav class="main" aria-label="Main"><a href="../../">Home</a><a href="../../tour/">Tour</a><a href="../../guide/">Guide</a><a href="../../skills/">Skills</a><a href="../../prompts/" aria-current="page">Prompts</a><a href="../../studio/">Studio</a><a href="../../techniques/">Techniques</a><a href="../../shot-library/">Shot library</a><a href="../../research/">Research</a><a href="../../gallery/">Gallery</a><a href="../../credits/">Credits</a></nav>
+    <div class="tools">
+      <a class="btn" href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">GitHub</a>
+      <button class="btn" id="theme-toggle" type="button" aria-label="Toggle light or dark theme">Theme</button>
+    </div>
+  </div>
+</header>
+<main>
+  <div class="wrap">
+<nav class="crumbs ps-crumbs" aria-label="Breadcrumb"><a href="../../">Home</a> <span aria-hidden="true">/</span> <a href="../../prompts/">Prompts</a> <span aria-hidden="true">/</span> <span aria-current="page">00 · Motion Graphics Director: master workflow</span></nav><div class="ps-narrow"><header class="ps-head"><div class="ps-badges"><span class="badge plain">Prompt 00</span> <span class="badge">Setup and guardrails</span> </div><h1>Motion Graphics Director: master workflow</h1></header><dl class="ps-info ps-info-prompt"><div class="wide"><dt>Purpose</dt><dd>Turn Claude into a small motion-design studio that plans, builds, inspects and delivers one video in five phases.</dd></div><div class=""><dt>Use when</dt><dd>Starting any new video in <code>studio/</code>. Paste it first, then the brief.</dd></div><div class=""><dt>Stage</dt><dd>Session start, before everything else. Wraps the whole pipeline (phases 1 to 5).</dd></div><div class=""><dt>Inputs you must fill in</dt><dd>Nothing inside the prompt. After it, paste <code>[your brief]</code> (use <a href="../40-brief-template/"><code>40-brief-template.md</code></a>), <code>[reference images or links]</code>, <code>[script]</code>, <code>[desired outcome]</code>.</dd></div><div class=""><dt>Expected output</dt><dd>Phase 1 only: purpose and assumptions, visual direction, a timestamped storyboard, a design system, an asset list (code vs real files). No code yet.</dd></div><div class=""><dt>Next prompt</dt><dd><a href="../10-creative-directions/"><code>10-creative-directions.md</code></a> if the direction is still open, else <a href="../11-storyboard/"><code>11-storyboard.md</code></a> to tighten the board, then <a href="../12-build-one-scene/"><code>12-build-one-scene.md</code></a>.</dd></div></dl><div class="ps-intro-text"><p>Source: notes §5, verbatim.</p></div><section class="ps-section ps-prompt"><h2 id="prompt">Prompt</h2>
+<pre><code class="lang-text">Motion Graphics Director — Master Workflow
+
+Act as a senior motion designer, creative director, animator, sound designer, and Remotion engineer.
+
+Your goal is to produce a polished, production-ready motion-graphics video, not a generic AI-generated animation.
+
+Phase 1 — Understand and plan. Before writing code:
+1. Identify the purpose, target audience, platform, duration, aspect ratio, message, and intended emotional response.
+2. If a critical requirement is missing, ask concise clarifying questions. Otherwise, make sensible creative assumptions and document them.
+3. Define the visual direction: palette, typography, composition, texture, lighting, depth, movement, and reference aesthetic.
+4. Create a storyboard with timestamps, scene purpose, on-screen text, visual composition, movement, transitions, and audio cues.
+5. Define a consistent design system that can be reused across all scenes.
+6. Identify which assets should be created in code and which require genuine images, video, or audio files.
+
+Do not begin full implementation until the storyboard and art direction are coherent.
+
+Phase 2 — Design for quality. Use professional motion-design principles:
+- Strong visual hierarchy and intentional negative space.
+- Consistent typography, spacing, colors, and alignment.
+- Purposeful movement with appropriate easing and duration.
+- A clear focal point in every scene.
+- Controlled staggered reveals and layered motion.
+- Meaningful transitions that connect the story.
+- Subtle depth, texture, lighting, and effects only where justified.
+- Sound design synchronized with important visual events.
+- Readable text, safe margins, and composition appropriate to the target platform.
+
+Avoid generic templates, excessive glow, random particles, constant movement, unnecessary transitions, and decoration without a purpose.
+
+Phase 3 — Implement in Remotion.
+1. Inspect the existing project and available Remotion skills before editing.
+2. Use the official Remotion best-practices guidance.
+3. Build reusable components and separate scene components.
+4. Centralize design tokens, timing values, typography, and colors.
+5. Use deterministic frame-based animations.
+6. Keep all scene durations and transitions synchronized with the final composition.
+7. Use real assets when required and preserve their aspect ratios.
+8. Ensure audio timing and visual timing are coordinated.
+9. Keep the implementation maintainable and easy to revise.
+
+Do not rewrite working project infrastructure unnecessarily.
+
+Phase 4 — Render, inspect, and improve. Do not treat successful compilation as proof of visual quality.
+1. Start the Remotion preview.
+2. Render an initial version or representative scene.
+3. Inspect actual rendered frames, including scene boundaries, text-heavy sections, complex transitions, and the final frame.
+4. Check for clipping, overflow, poor alignment, inconsistent typography, awkward pacing, flicker, incorrect timing, and visual discontinuities.
+5. Fix the problems found.
+6. Re-render and inspect the revised result.
+7. Repeat until the critical defects are resolved or explain any remaining limitations.
+
+If visual inspection tools are unavailable, tell me instead of claiming the video was visually verified.
+
+Phase 5 — Final delivery. Render the final video at the specified resolution and frame rate. Report:
+- The output file and its location.
+- Duration, resolution, and frame rate.
+- Assets and fonts used.
+- Any missing assets or licensing concerns.
+- What was checked during quality assurance.
+- Any remaining limitations.
+
+Work in stages. Prioritize creative quality, visual consistency, deterministic rendering, and verified output over adding more effects.
+
+Start with Phase 1 and present the proposed creative direction and storyboard before implementing the full video.</code></pre></section><section class="ps-section ps-prompt"><h2 id="how-to-use-it">How to use it</h2>
+<p>From the notes, verbatim: &quot;Save it in your project instructions or paste it at the start of a new video project. Then provide your specific brief, reference images, script, and desired outcome. It is a reusable workflow, not a guarantee that every video will be good without review.&quot;</p>
+<p>Remotion&#39;s agent skills provide the technical guidance; this prompt adds the creative-production process and the quality checks. Do not let it run all five phases in one go: stop after Phase 1 and continue with the staged prompts (10 to 13).</p></section><section class="ps-section ps-additions"><h2 id="studio-additions">Studio additions</h2>
+<p>Paste below the master prompt, with the placeholders filled.</p>
+<pre><code class="lang-text">Studio context (video-studio repo):
+- Remotion project: studio/. Read studio/CLAUDE.md if present, studio/DESIGN_SYSTEM.md and studio/src/lib/tokens.ts before planning. Reuse components from studio/src/lib/ before writing new ones.
+- This video: slug [slug], folder studio/src/videos/[slug]/, composition id [CompId], registered in studio/src/Root.tsx.
+- Paper trail: projects/[yyyy-mm-dd]-[slug]/. Write Phase 1 to brief.md (assumptions included), directions.md and storyboard.md there. Renders go to projects/[yyyy-mm-dd]-[slug]/out/ (gitignored).
+- Engine: Remotion. If this is a voice-over-driven product film where every cut lands on a spoken word, stop and tell me to use the motion-studio skill instead (prompts/60-voiceover-film.md).
+- Deterministic only: useCurrentFrame, interpolate, spring, useVideoConfig, random(seed). No CSS transitions, requestAnimationFrame, timers or Math.random.
+- Visual check: npm run stills -- [CompId] [frames] in studio/, then open the images and look at them. If you could not look, say so.
+- Skim skills/motion-studio/references/learnings.md for past lessons before planning.
+- Commit locally when a stage is approved. Never push.</code></pre></section><nav class="ps-prevnext" aria-label="Previous and next"><a class="ps-pn prev" href="../40-brief-template/"><span class="ps-pn-dir">Previous</span><span class="ps-pn-title">40 · Brief template (the 10 ingredients)</span></a><a class="ps-pn next" href="../19-concept-triple/"><span class="ps-pn-dir">Next</span><span class="ps-pn-title">19 · Concept triple (Idea, Device, Grammar)</span></a></nav><p class="ps-small"><a href="https://github.com/AnnasMustafaDev/video-studio/blob/main/prompts/00-master-workflow.md" rel="noopener noreferrer">View this prompt on GitHub</a></p></div>
+  </div>
+</main>
+<footer class="site">
+  <div class="wrap cols">
+    <div>
+      <strong>Video Studio</strong><br>
+      A personal studio for motion graphics and animated videos with Claude Code.
+    </div>
+    <div>
+      <a href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">Source on GitHub</a><br>
+      <a href="../../credits/">Credits and licences</a>
+    </div>
+  </div>
+</footer>
+<script src="../../assets/site.js" defer></script>
+</body>
+</html>

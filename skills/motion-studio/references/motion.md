@@ -61,8 +61,10 @@ const tw = (t, a, b, ease) => ease(Math.min(1, Math.max(0, (t - a) / (b - a))));
 | Rise and settle | Bringing in the main surface | translateY 160 px → 0 and scale 0.94 → 1 on a spring |
 | Content swap with blur | Caption or label changes | exit blur 6 px in 0.26 s, enter from 8 px blur |
 | Hard cut on the beat | Contrast, energy | Only on a downbeat, hidden in a motion peak; max three per film |
+| Velocity handoff | Momentum across a cut (pans, pushes, whips) | Exit accelerates to 25 to 40 px/frame at 60 fps, entry starts 30 to 55 and decays about 0.93 per frame ([transitions.md](transitions.md)) |
+| Hidden cut | A cut that should read as one take | Occluder sweeps across and the cut hides inside it; light-leak burn; line carry ([transitions.md](transitions.md)) |
 
-Banned: cross-dissolves between unrelated shots, wipes and star transitions, zooms that go in and straight out.
+Banned: cross-dissolves between unrelated shots, wipes and star transitions, zooms that go in and straight out. More recipes (velocity-matched cut, occluder, light-leak, line carry, "X becomes Y" morph vocabulary): [transitions.md](transitions.md).
 
 ## Pacing
 
@@ -72,7 +74,7 @@ Banned: cross-dissolves between unrelated shots, wipes and star transitions, zoo
 
 ## Motion blur
 
-Render 4 subframes per output frame centred on the frame time and average them:
+Render 4 subframes per output frame centred on the frame time and average them (8 for fast moves with a shutter of about 0.7 of a frame, see [gotchas.md](gotchas.md)):
 `ffmpeg ... -vf "tmix=frames=4,select='not(mod(n+1\,4))',setpts=N/(60*TB)"` with the page seeked at `t + (j − 1.5)/(fps·4)`.
 
 ## Gotchas
@@ -80,3 +82,37 @@ Render 4 subframes per output frame centred on the frame time and average them:
 - Never set opacity or filter on a `preserve-3d` element; fade a wrapper instead.
 - Text inside a morphing container needs its own enter and exit timing or old and new text overlap.
 - A seek-based renderer must not depend on state carried between frames. Compute everything from `t`.
+
+## Measure motion, do not guess
+
+When a move "pauses then snaps", stop retrying eased variants. Sample the timing function (a pure function of frame) and plot value and velocity over the move: `inspect.mjs plot` (see `skills/motion-review`), or in a scratch script. Look for a zero-velocity run in the middle of a move, kinks, and false overshoot; then fix the cause and plot again.
+Why: in one production write-up five plausible fixes failed over about an hour; a velocity plot showed zero velocity for 16 percent of the move in 30 seconds. The cause was a bob wave covering only the rise phase, not the element's whole lifetime. Evidence: one detailed first-hand article with numbers (F-A3, F-B5).
+
+**Buoyant bob.** A rising element keeps drifting through its peak instead of freezing: a cubic ease plus a small sine bob whose span is the **whole lifetime** of the element, not just the rise. Helper: see `studio/src/lib/motion.ts` (`buoyant()`). Use for floating cards and badges, not for UI that should feel mechanical.
+
+## Camera speed as a table
+
+For any glide, write the camera language as speed shares of cruise at timestamps and integrate to position, instead of position keys:
+
+| t (s) | Share of cruise |
+|---|---|
+| 0 | 0 |
+| 0.6 | 0.5 |
+| 1.6 | 1.0 |
+| 1.6 until the ease-out | held 0.94 to 1.1 |
+| 8.3 | 0.12 (easing out) |
+
+(Example from a 3D fly-over prompt; your numbers differ.) Interpolate with smoothstep and integrate analytically (see learnings: speed-curve camera). Zoom runs in log space; rise and dive are separate eased passes. Each scene starts at the zoom the last one ended on.
+Check: `inspect.mjs flow` on a 30 fps draft. Speed must never dip and zoom must not turn into zoom-in during a flight; a surge or a stop that stills cannot show shows up as a dip in the flow plot.
+Why: the table makes the brief's camera language reviewable and flow measurement catches "no surges, no stops". Evidence: precise in the prompt, film posted; flow-test results not shown (F-B4). Integrated speed curves are already in learnings; the new part is the table and the test.
+
+## Rhythm and type-sync recipes
+
+Why: cheap, deterministic, look authored rather than templated. Evidence: documented with demos; parameters tuned on placeholder material (F-A16).
+
+- **Karaoke fill** (voice-led films, type hooks): each word fills left to right with a soft edge at speaking rate; current word in accent, finished word in ink; a pointer underline on the active word; word times from the voice; 4 to 10 frames of gap for breath. Studio fit: yes.
+- **Weight pump** (type hooks): a variable-font weight envelope on the beat (about 250 to 900); glyphs set in slots laid out at the heaviest weight so the line never reflows; beats must be spaced wider than the decay window. Studio fit: yes. Remember learnings: set `font-weight` on the glyphs too, not just the measurement.
+- **Frame-rate shift** (optional spice): a mover steps every 3 frames (about 69 px per step, a different pose each step), then switches in one frame to every-frame motion with hard overshoot; the change of cadence is the highlight. Under 30 px per step it reads as dropped frames, and any tween on the switch kills it.
+- **Trailer bumper** (optional spice): three framings of 9 frames each, zero transitions, each pushing in 1 to 4 percent so it is not a slideshow, then 6 frames of black, then the title.
+
+Transition recipes (velocity-matched cut, occluder, impact slam, light-leak, line carry, "X becomes Y") are in [transitions.md](transitions.md). Failure-derived checks (8 subframes for fast moves, minimum fade length) are in [gotchas.md](gotchas.md).

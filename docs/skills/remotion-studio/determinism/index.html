@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Deterministic Remotion rules (remotion-studio) · Video Studio</title>
+<meta name="description" content="Remotion renders frames out of order, in parallel tabs. Anything that depends on wall-clock time, render order or hidden state makes frames disagree, flicker or differ...">
+<meta property="og:title" content="Deterministic Remotion rules (remotion-studio) · Video Studio">
+<meta property="og:description" content="Remotion renders frames out of order, in parallel tabs. Anything that depends on wall-clock time, render order or hidden state makes frames disagree, flicker or differ...">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23eef3ff'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%233b6cf6'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../../assets/site.css">
+<link rel="stylesheet" href="../../../assets/panel-skills.css">
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="../../../"><span class="dot"></span>Video Studio</a>
+    <nav class="main" aria-label="Main"><a href="../../../">Home</a><a href="../../../tour/">Tour</a><a href="../../../guide/">Guide</a><a href="../../../skills/" aria-current="page">Skills</a><a href="../../../prompts/">Prompts</a><a href="../../../studio/">Studio</a><a href="../../../techniques/">Techniques</a><a href="../../../shot-library/">Shot library</a><a href="../../../research/">Research</a><a href="../../../gallery/">Gallery</a><a href="../../../credits/">Credits</a></nav>
+    <div class="tools">
+      <a class="btn" href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">GitHub</a>
+      <button class="btn" id="theme-toggle" type="button" aria-label="Toggle light or dark theme">Theme</button>
+    </div>
+  </div>
+</header>
+<main>
+  <div class="wrap">
+<nav class="crumbs ps-crumbs" aria-label="Breadcrumb"><a href="../../../">Home</a> <span aria-hidden="true">/</span> <a href="../../../skills/">Skills</a> <span aria-hidden="true">/</span> <a href="../../../skills/remotion-studio/">remotion-studio</a> <span aria-hidden="true">/</span> <span aria-current="page">Deterministic Remotion rules</span></nav><header class="ps-head"><div class="ps-badges"><span class="badge plain">Reference</span> <span class="badge">remotion-studio</span></div><h1>Deterministic Remotion rules</h1></header><div class="ps-doc"><article class="ps-article"><p>Remotion renders frames out of order, in parallel tabs. Anything that depends on wall-clock time, render order or hidden state makes frames disagree, flicker or differ between preview and render. Every animation must produce the same image whenever the same frame is rendered. The official skill in <code>studio/.claude/skills/</code> is the API reference; these are the rules this studio enforces.</p>
+<h2 id="use">Use</h2>
+<ul><li><code>useCurrentFrame()</code> (local to the enclosing <code>&lt;Sequence&gt;</code>), <code>useVideoConfig()</code> for <code>fps</code>, <code>width</code>, <code>height</code>, <code>durationInFrames</code>.</li><li><code>interpolate(frame, [a, b], [from, to], { extrapolateLeft: &#39;clamp&#39;, extrapolateRight: &#39;clamp&#39;, easing })</code>. Always clamp unless you want extrapolation.</li><li><code>spring({ frame, fps, config, delay, durationInFrames })</code> for entrances; use the presets in <code>tokens.ts</code>. Damping high (e.g. 200) for no overshoot; lower damping for a small, intentional overshoot.</li><li><code>Easing.bezier(...)</code> / <code>Easing.out(Easing.cubic)</code> for eased tweens; linear only when mechanical on purpose (progress bars, tickers).</li><li><code>&lt;Sequence from durationInFrames premountFor&gt;</code> and <code>&lt;Series&gt;</code>; <code>@remotion/transitions</code> <code>&lt;TransitionSeries&gt;</code> for scene transitions. Remember: transitions overlap scenes, so total duration = sum of sequences minus sum of transition lengths. Compute it, don&#39;t guess.</li><li><code>random(&#39;seed-string&#39;)</code> for any variation; same seed, same value.</li><li><code>staticFile()</code> for files in <code>studio/public/</code>; <code>&lt;Img&gt;</code>, and the video/audio components named in the official skill (this project ships <code>@remotion/media</code>), so frames wait for assets.</li><li>Fonts through <code>@remotion/google-fonts</code> <code>loadFont()</code> or local fonts as the official fonts guide says, so text never renders in a fallback face on early frames.</li><li><code>delayRender</code> / <code>continueRender</code> only for genuinely async data, always with a timeout and error path.</li></ul>
+<h2 id="never">Never</h2>
+<ul><li>CSS <code>transition</code>, <code>animation</code>, <code>@keyframes</code>; <code>requestAnimationFrame</code>, <code>setTimeout</code>, <code>setInterval</code>; <code>Date.now()</code>, <code>performance.now()</code>; <code>Math.random()</code>.</li><li>Animation state in <code>useState</code> / <code>useEffect</code> / refs that accumulates across frames.</li><li><code>&lt;img&gt;</code>, <code>&lt;video&gt;</code>, <code>&lt;audio&gt;</code> HTML tags for media in the composition.</li><li><code>will-change</code> on text that is scaled (blurry text).</li><li>Hard-coded colours, font sizes, durations or easings in scenes: take them from <code>tokens.ts</code> / <code>timing.ts</code>.</li></ul>
+<h2 id="timing-as-data">Timing as data</h2>
+<ul><li><code>timing.ts</code> per video: scene starts and lengths in frames, derived once from the storyboard&#39;s seconds. Scenes read their offsets from it; nothing else hard-codes a frame number that another file depends on.</li><li><code>hits.ts</code>: <code>[{ frame, label, sfx, volume }]</code>, a one-to-one copy of the storyboard&#39;s hits table. The composition renders each SFX in a <code>&lt;Sequence from={frame - peakOffset}&gt;</code> so the sound&#39;s peak (not its start) lands on the hit. Export the same list as JSON (seconds) for <code>inspect.mjs sync</code>. No SFX anywhere else.</li><li>Voice-over driven pieces: measure word times (Whisper) and store them as data; place changes ~0.1 s before the word. If every cut must land on spoken words with live HTML review, use the <code>motion-studio</code> HTML engine instead.</li></ul>
+<h2 id="check-before-rendering">Check before rendering</h2>
+<ul><li><code>npm run lint</code> passes (eslint with the Remotion config catches several of the above).</li><li>Render the same frame twice (two stills runs) when something looks unstable: identical images, or there is hidden state.</li><li>Search the video folder for banned APIs: <code>Math.random</code>, <code>Date.now</code>, <code>setTimeout</code>, <code>requestAnimationFrame</code>, <code>transition:</code>, <code>@keyframes</code>.</li></ul>
+<h2 id="frame-arithmetic-traps">Frame arithmetic traps</h2>
+<p>Failure-derived from a 44-shot explainer (evidence: real rework). Full list with reasons: <code>~/.claude/skills/motion-studio/references/gotchas.md</code>. The ones that bite Remotion:</p>
+<ul><li><code>interpolate</code> or <code>spring</code> returning 0 at the shot&#39;s first frame leaves it empty: start soft (25 to 57 percent) or start on a settled frame.</li><li>An exit that ends at 40 to 57 percent opacity pops at a hard cut: finish the fade (<code>1 - (n/N)^1.5</code>) or end on a cut frame. A fade under 0.3 s reads as a pop.</li><li>First elements start on the shot&#39;s first frame, not when the caption starts. Do not wrap an already ramping component in a second fade.</li><li>Keyframe tables start with the off-screen value at shot start. Slide-ins from below over about 120 px cross the caption band.</li><li><code>TransitionSeries</code> overlaps change durations: recompute the sum before hard-coding any frame after a transition.</li><li>Do not change words after frame numbers are hard-coded; derive from <code>timing.ts</code>.</li><li>Fast moves need 8 motion-blur subframes (render the frame at sub-offsets and blend); 4 ghosts on floods, wipes and drags.</li><li>Helpers: see <code>studio/src/lib/motion.ts</code> (<code>buoyant()</code>, and exit and entry ramps) and <code>studio/src/lib/transitions.tsx</code> (velocity-matched cut); check any move with <code>inspect.mjs plot</code> and glides or cuts with <code>inspect.mjs flow</code>.</li></ul><nav class="ps-prevnext" aria-label="Previous and next"><a class="ps-pn prev" href="../delivery/"><span class="ps-pn-dir">Previous</span><span class="ps-pn-title">Final delivery</span></a><a class="ps-pn next" href="../inspect-render/"><span class="ps-pn-dir">Next</span><span class="ps-pn-title">Render, inspect, improve</span></a></nav></article><aside class="ps-side"><details class="ps-side-d" open><summary>On this page</summary><ul class="ps-toc"><li class="l2"><a href="#use">Use</a></li><li class="l2"><a href="#never">Never</a></li><li class="l2"><a href="#timing-as-data">Timing as data</a></li><li class="l2"><a href="#check-before-rendering">Check before rendering</a></li><li class="l2"><a href="#frame-arithmetic-traps">Frame arithmetic traps</a></li></ul></details><details class="ps-side-d" open><summary>In remotion-studio</summary><ul class="ps-sidelist"><li><a href="../">SKILL.md</a></li><li><a href="../delivery/">Final delivery</a></li><li class="on"><span aria-current="page">Deterministic Remotion rules</span></li><li><a href="../inspect-render/">Render, inspect, improve</a></li><li><a href="../phases/">The five phases in this repo</a></li></ul></details><p class="ps-side-foot"><a href="https://github.com/AnnasMustafaDev/video-studio/blob/main/skills/remotion-studio/references/determinism.md" rel="noopener noreferrer">View source on GitHub</a></p></aside></div><script>
+(function(){
+  var mq = window.matchMedia('(min-width: 981px)');
+  function sync(){ document.querySelectorAll('details.ps-side-d').forEach(function(d){ d.open = mq.matches; }); }
+  sync();
+  if (mq.addEventListener) mq.addEventListener('change', sync);
+  var links = [].slice.call(document.querySelectorAll('.ps-toc a'));
+  if (!links.length || !('IntersectionObserver' in window)) return;
+  var byId = {};
+  links.forEach(function(a){ byId[decodeURIComponent(a.getAttribute('href').slice(1))] = a; });
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (!e.isIntersecting) return;
+      links.forEach(function(a){ a.classList.remove('on'); });
+      var a = byId[e.target.id]; if (a) a.classList.add('on');
+    });
+  }, { rootMargin: '-70px 0px -70% 0px' });
+  Object.keys(byId).forEach(function(id){ var el = document.getElementById(id); if (el) io.observe(el); });
+})();
+</script>
+  </div>
+</main>
+<footer class="site">
+  <div class="wrap cols">
+    <div>
+      <strong>Video Studio</strong><br>
+      A personal studio for motion graphics and animated videos with Claude Code.
+    </div>
+    <div>
+      <a href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">Source on GitHub</a><br>
+      <a href="../../../credits/">Credits and licences</a>
+    </div>
+  </div>
+</footer>
+<script src="../../../assets/site.js" defer></script>
+</body>
+</html>

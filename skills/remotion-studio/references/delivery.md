@@ -2,7 +2,7 @@
 
 ## 1. Render
 
-From `C:\Users\Annas Mustafa\Documents\me\video-studio\studio`, at the brief's resolution and fps (they come from the composition registration):
+From `{{VIDEO_STUDIO}}\studio`, at the brief's resolution and fps (they come from the composition registration):
 
 ```
 npx remotion render <CompId> ../projects/<yyyy-mm-dd>-<slug>/out/<slug>_<h>p<fps>.mp4 --codec=h264 --crf=16
@@ -57,4 +57,12 @@ Next improvements I would make: <the review's open defects, concrete>
 
 ## 5. Learnings
 
-Append technique-only lessons (no client, product or app names) to `C:\Users\Annas Mustafa\Documents\me\video-studio\skills\motion-studio\references\learnings.md` under the right heading, then re-run `node C:\Users\Annas Mustafa\Documents\me\video-studio\tools\install-skills.mjs` so the installed skills carry them. If a component proved itself, propose adding it to `studio/src/lib/` and `DESIGN_SYSTEM.md`.
+Append technique-only lessons (no client, product or app names) to `{{VIDEO_STUDIO}}\skills\motion-studio\references\learnings.md` under the right heading, then re-run `node {{VIDEO_STUDIO}}\tools\install-skills.mjs` so the installed skills carry them. If a component proved itself, propose adding it to `studio/src/lib/` and `DESIGN_SYSTEM.md`.
+
+## If embedding on a web page
+
+H.264 High, `yuv420p`, `-movflags +faststart`; markup `muted playsinline autoplay loop` with `preload="metadata"`; serve with byte-range support; rename the file on every re-export so browsers forget a cached failure; `-tune grain` only if dark gradients band; check the size in the network panel (a short loop can be under 1 MB); set a poster. (Evidence: first-hand debug of a clip that showed black in one browser; the author's profile diagnosis was replaced by the standard causes.)
+
+## Alpha export (maybe-level, test before relying)
+
+For overlays and stingers over live footage: `--codec=prores --prores-profile=4444` with `yuva444p10le`, or VP9 WebM with alpha, and a transparent composition background. Run one test render and open it in the target editor before promising it. (Evidence: claimed by two sources, not tested here.)

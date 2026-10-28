@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Render, inspect, fix: the review loop (motion-studio) · Video Studio</title>
+<meta name="description" content="Do not treat a successful build or render as proof of quality. Judge the actual frames, and say so honestly when you could not.">
+<meta property="og:title" content="Render, inspect, fix: the review loop (motion-studio) · Video Studio">
+<meta property="og:description" content="Do not treat a successful build or render as proof of quality. Judge the actual frames, and say so honestly when you could not.">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23eef3ff'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%233b6cf6'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../../assets/site.css">
+<link rel="stylesheet" href="../../../assets/panel-skills.css">
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="../../../"><span class="dot"></span>Video Studio</a>
+    <nav class="main" aria-label="Main"><a href="../../../">Home</a><a href="../../../tour/">Tour</a><a href="../../../guide/">Guide</a><a href="../../../skills/" aria-current="page">Skills</a><a href="../../../prompts/">Prompts</a><a href="../../../studio/">Studio</a><a href="../../../techniques/">Techniques</a><a href="../../../shot-library/">Shot library</a><a href="../../../research/">Research</a><a href="../../../gallery/">Gallery</a><a href="../../../credits/">Credits</a></nav>
+    <div class="tools">
+      <a class="btn" href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">GitHub</a>
+      <button class="btn" id="theme-toggle" type="button" aria-label="Toggle light or dark theme">Theme</button>
+    </div>
+  </div>
+</header>
+<main>
+  <div class="wrap">
+<nav class="crumbs ps-crumbs" aria-label="Breadcrumb"><a href="../../../">Home</a> <span aria-hidden="true">/</span> <a href="../../../skills/">Skills</a> <span aria-hidden="true">/</span> <a href="../../../skills/motion-studio/">motion-studio</a> <span aria-hidden="true">/</span> <span aria-current="page">Render, inspect, fix: the review loop</span></nav><header class="ps-head"><div class="ps-badges"><span class="badge plain">Reference</span> <span class="badge">motion-studio</span></div><h1>Render, inspect, fix: the review loop</h1></header><div class="ps-doc"><article class="ps-article"><p>Do not treat a successful build or render as proof of quality. Judge the actual frames, and say so honestly when you could not.</p>
+<p><code>$R</code> = <code>~/.claude/skills/motion-review</code> (tools/inspect.mjs, needs ffmpeg).</p>
+<h2 id="1-stills-at-the-frames-that-can-fail">1. Stills at the frames that can fail</h2>
+<p><code>node tools/render.mjs preview &lt;t1,t2,...&gt;</code> writes <code>shots/preview_*.png</code> and <code>shots/preview_sheet.png</code>. Pick: frame 0, every settled state, mid-transition moments, the densest caption, every hit, scene boundaries, the end card, the last frame. Then phone-size pages:</p>
+<pre><code>node $R/tools/inspect.mjs tile shots</code></pre>
+<p>Open the sheet and the phone pages. Fix what is clipped, cramped, off-word, misaligned, unreadable at phone size, or where an overlay lags the camera. Re-render the same times. Look again.</p>
+<h2 id="2-motion-needs-motion">2. Motion needs motion</h2>
+<p>Stills cannot show easing, pacing or transitions. For a section: <code>node tools/render.mjs video out/work/draft.mp4 blur=1 &lt;from&gt;-&lt;to&gt;</code> (fast, no motion blur), then:</p>
+<pre><code>node $R/tools/inspect.mjs sheet out/work/draft.mp4 --every 0.25
+node $R/tools/inspect.mjs strip out/work/draft.mp4 &lt;a&gt; &lt;b&gt; --n 8 --name &lt;cut&gt;</code></pre>
+<p>A cut&#39;s first frame shows the new image, never a blank or flash; a flood covers all corners at its peak; a whip shows both shots.</p>
+<h2 id="3-sound-against-picture">3. Sound against picture</h2>
+<p>After <code>node tools/mix.mjs</code> and a mux of the draft: <code>node $R/tools/inspect.mjs sync &lt;draft-with-audio.mp4&gt; build/comp_timing.json</code> reports each SFX cue&#39;s offset (±40 ms passes) and draws <code>sync_wave.png</code>. The cue list in <code>main.js</code> mirrors the storyboard&#39;s hits table; nothing else adds SFX, so sound cannot drift from picture.</p>
+<h2 id="4-scored-rounds-with-a-stop-rule">4. Scored rounds with a stop rule</h2>
+<p>Spawn a fresh reviewer per round (<code>$R/agent.md</code>). It scores typography, hierarchy, spacing, timing, easing, transitions, consistency, pacing and sound sync 1 to 10 with frame evidence, lists the top 5 defects with concrete fixes and a verdict, and appends to <code>projects/&lt;slug&gt;/review.md</code>.</p>
+<ul><li>Fix defects 1 to 3 at least; re-render; new reviewer, next round.</li><li><strong>READY:</strong> every judged score ≥ 8, no blocking check failed, ≥ 2 rounds (≥ 3 for films over 30 s or showcase pieces).</li><li><strong>Ask the user</strong> when the minimum score stalls for two rounds or after 6 rounds: that is a direction problem, not polish.</li><li>No new effects unless they fix a listed defect.</li></ul>
+<h2 id="5-honest-reporting">5. Honest reporting</h2>
+<p>State what you looked at. If images could not be viewed or the render failed, write &quot;not visually verified&quot; in the reply and in <code>notes.md</code>, with the reason and the commands that would produce the evidence.</p><nav class="ps-prevnext" aria-label="Previous and next"><a class="ps-pn prev" href="../reference-analysis/"><span class="ps-pn-dir">Previous</span><span class="ps-pn-title">Using a visual reference</span></a><a class="ps-pn next" href="../three-d/"><span class="ps-pn-dir">Next</span><span class="ps-pn-title">3D (three.js): rarely the right call</span></a></nav></article><aside class="ps-side"><details class="ps-side-d" open><summary>On this page</summary><ul class="ps-toc"><li class="l2"><a href="#1-stills-at-the-frames-that-can-fail">1. Stills at the frames that can fail</a></li><li class="l2"><a href="#2-motion-needs-motion">2. Motion needs motion</a></li><li class="l2"><a href="#3-sound-against-picture">3. Sound against picture</a></li><li class="l2"><a href="#4-scored-rounds-with-a-stop-rule">4. Scored rounds with a stop rule</a></li><li class="l2"><a href="#5-honest-reporting">5. Honest reporting</a></li></ul></details><details class="ps-side-d" open><summary>In motion-studio</summary><ul class="ps-sidelist"><li><a href="../">SKILL.md</a></li><li><a href="../audio/">Music, sound effects, loudness</a></li><li><a href="../banned-effects/">Banned effects: a list per film</a></li><li><a href="../capture/">Capturing a real app</a></li><li><a href="../delivery/">Final delivery (Phase 5)</a></li><li><a href="../design-system/">A reusable motion-design system</a></li><li><a href="../design/">Visual design</a></li><li><a href="../direction/">Direction: brief, story, script, captions</a></li><li><a href="../engine/">Engine: composition, live player, renderer</a></li><li><a href="../formats/">Formats and delivery</a></li><li><a href="../golden-scene/">Build loop: golden scene, plan check, commits, acceptance criteria</a></li><li><a href="../gotchas/">Gotchas catalogue</a></li><li><a href="../learnings/">Learnings log</a></li><li><a href="../motion/">Motion</a></li><li><a href="../qa/">QA checklists</a></li><li><a href="../reference-analysis/">Using a visual reference</a></li><li class="on"><span aria-current="page">Render, inspect, fix: the review loop</span></li><li><a href="../three-d/">3D (three.js): rarely the right call</a></li><li><a href="../transitions/">Transitions: &quot;X becomes Y&quot;, velocity handoff, hidden cuts</a></li><li><a href="../vocabulary/">Vocabulary → recipes in this engine</a></li><li><a href="../voice/">Voice-over</a></li><li><a href="../workflow/">Staged workflow</a></li></ul></details><p class="ps-side-foot"><a href="https://github.com/AnnasMustafaDev/video-studio/blob/main/skills/motion-studio/references/review.md" rel="noopener noreferrer">View source on GitHub</a></p></aside></div><script>
+(function(){
+  var mq = window.matchMedia('(min-width: 981px)');
+  function sync(){ document.querySelectorAll('details.ps-side-d').forEach(function(d){ d.open = mq.matches; }); }
+  sync();
+  if (mq.addEventListener) mq.addEventListener('change', sync);
+  var links = [].slice.call(document.querySelectorAll('.ps-toc a'));
+  if (!links.length || !('IntersectionObserver' in window)) return;
+  var byId = {};
+  links.forEach(function(a){ byId[decodeURIComponent(a.getAttribute('href').slice(1))] = a; });
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (!e.isIntersecting) return;
+      links.forEach(function(a){ a.classList.remove('on'); });
+      var a = byId[e.target.id]; if (a) a.classList.add('on');
+    });
+  }, { rootMargin: '-70px 0px -70% 0px' });
+  Object.keys(byId).forEach(function(id){ var el = document.getElementById(id); if (el) io.observe(el); });
+})();
+</script>
+  </div>
+</main>
+<footer class="site">
+  <div class="wrap cols">
+    <div>
+      <strong>Video Studio</strong><br>
+      A personal studio for motion graphics and animated videos with Claude Code.
+    </div>
+    <div>
+      <a href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">Source on GitHub</a><br>
+      <a href="../../../credits/">Credits and licences</a>
+    </div>
+  </div>
+</footer>
+<script src="../../../assets/site.js" defer></script>
+</body>
+</html>

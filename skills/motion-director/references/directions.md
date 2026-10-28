@@ -37,3 +37,17 @@ End with: which direction is strongest **for this purpose and audience** and why
 ## Subagent option
 
 Spawn three subagents in one message, one per angle, each given the brief and this file, each returning one direction in the table above. You then check they are really different, tighten them to the same level of detail, and write the recommendation.
+
+## Idea, Device, Grammar (put these on every direction)
+
+Add three rows to each direction: **Idea** (what the viewer should believe, 8 words or fewer), **Device** (one object carried through every shot, ending as the mark if it can) and **Grammar** (a rule the form obeys, for example it opens and closes on the same tick). Fill them from a list of real specifics (facts, real UI, real numbers), not from a look.
+Kill tests before a direction is written up: ownership, deletion (remove the device: does it still work?), specificity, "could a competitor's film say this?". Directions that differ only in palette fail the existing difference test and these.
+Cheap tells to avoid: a borrowed prop for an idea, a demo with no cause, a recycled end card, the device dropping out at a seam.
+Why: stops style posing as idea. Evidence: doc-level with four worked concepts; strength of the resulting films only claimed.
+
+## Hook options beyond the felt moment
+
+- **A story with a breaking point:** one quantity builds over N steps and fails visibly at step N (five glasses fill with risk, the last overflows). Single screen, loopable, input to visible transformation to output. Evidence: two builders found it the one reliably interesting pattern (claimed).
+- **Music-led films:** beat map first (BPM, beats, beats before the drop, ranges); the drop is the anchor.
+- **Real assets:** a real capture or the real component beats redrawn UI.
+Pacing reference numbers and the full rules: `motion-studio/references/direction.md`.

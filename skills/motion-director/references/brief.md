@@ -31,3 +31,12 @@ It works because it has a visual system, a sequence of events, concrete timing a
 - **Proof:** real numbers with their source. None? Then the visuals that imply data are marked illustrative.
 - **Call to action:** one action, one label, one place.
 - **Engine:** Remotion (default: type, UI, diagrams, data, explainers, templates), the motion-studio HTML engine (every cut on a spoken word of a voice-over), or flag After Effects / Blender for compositing or real 3D.
+
+## The tagged skeleton, banned list, glossary
+
+The 10 ingredients stay the checklist. The written brief is laid out as fixed tags so the builder cannot quietly reinterpret it: **inputs** (what to ask the user, with defaults), **direction** (concept triple, look, and a **Banned for this film** line), **structure** (beat map or timed scenes, every hand-off written "X becomes Y"), **build** (numbered engineering rules), **gotchas** (lines from `motion-studio/references/gotchas.md` that apply) and **start** (the gate: beat map and 4 to 8 named stills before any code). Template: [../templates/brief.md](../templates/brief.md).
+Why: it turns a film into a contract and puts the approval stop before code; the same skeleton recurs in five finished films by two authors (evidence: pattern shown, result quality not checked). Credit the author when a rule from the research is cited in a brief.
+
+- **Banned list:** seed from `motion-studio/references/banned-effects.md`, add 3 to 6 bans specific to this direction. Why: bans remove the model's defaults (fade, glow, particle burst). Evidence: shown in finished films.
+- **Glossary and acceptance criteria:** define "punchy", "premium", "smooth" in frames and px once ([../templates/glossary.md](../templates/glossary.md)); state measurable outcomes ([../templates/acceptance.md](../templates/acceptance.md)). Why: "make it better" fails; exact CSS values were misread. Evidence: claimed by two builders.
+- **Reference clause:** study a reference for smoothness, timing, shot durations, fonts and elements; borrow techniques and change the design so it looks like our own. Measure shot durations per scene and say what is borrowed versus changed.

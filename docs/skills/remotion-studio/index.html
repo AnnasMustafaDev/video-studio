@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>remotion-studio skill · Video Studio</title>
+<meta name="description" content="The default engine: kinetic type, titles, UI demos, charts, explainers and reels as React, frame by frame.">
+<meta property="og:title" content="remotion-studio skill · Video Studio">
+<meta property="og:description" content="The default engine: kinetic type, titles, UI demos, charts, explainers and reels as React, frame by frame.">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23eef3ff'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%233b6cf6'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../assets/site.css">
+<link rel="stylesheet" href="../../assets/panel-skills.css">
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="../../"><span class="dot"></span>Video Studio</a>
+    <nav class="main" aria-label="Main"><a href="../../">Home</a><a href="../../tour/">Tour</a><a href="../../guide/">Guide</a><a href="../../skills/" aria-current="page">Skills</a><a href="../../prompts/">Prompts</a><a href="../../studio/">Studio</a><a href="../../techniques/">Techniques</a><a href="../../shot-library/">Shot library</a><a href="../../research/">Research</a><a href="../../gallery/">Gallery</a><a href="../../credits/">Credits</a></nav>
+    <div class="tools">
+      <a class="btn" href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">GitHub</a>
+      <button class="btn" id="theme-toggle" type="button" aria-label="Toggle light or dark theme">Theme</button>
+    </div>
+  </div>
+</header>
+<main>
+  <div class="wrap">
+<nav class="crumbs ps-crumbs" aria-label="Breadcrumb"><a href="../../">Home</a> <span aria-hidden="true">/</span> <a href="../../skills/">Skills</a> <span aria-hidden="true">/</span> <span aria-current="page">remotion-studio</span></nav><header class="ps-head"><div class="ps-badges"><span class="badge">Remotion engine</span>  <span class="badge plain">v0.2.0</span></div><h1>Remotion studio</h1><p class="lead ps-lead">The default engine: kinetic type, titles, UI demos, charts, explainers and reels as React, frame by frame.</p></header><dl class="ps-info"><div><dt>Skill</dt><dd><code>remotion-studio</code></dd></div><div><dt>Version</dt><dd>0.2.0</dd></div><div><dt>Trigger text</dt><dd><details class="ps-desc"><summary>Build, revise and render personal motion-graphics videos in the user&#39;s own Remotion project (React, frame-based) in the studio folder of the video-studio repo, the default engine for kinetic typography, animated titles...</summary><p>Build, revise and render personal motion-graphics videos in the user&#39;s own Remotion project (React, frame-based) in the studio folder of the video-studio repo, the default engine for kinetic typography, animated titles, UI and product demos, diagrams, data visualisation, explainers, captions, launch teasers, social reels and reusable video templates. Runs the staged workflow (tagged brief with a per-film banned list, directions, storyboard, start gate, one golden scene, independent review, the rest), reuses the studio component library and design tokens, enforces deterministic frame-based animation, inspects rendered stills and contact sheets and measures motion (velocity plots, optical flow, forensics) before claiming quality, renders and ffprobe-checks the MP4, and writes a delivery report. Use whenever the user asks for a video, animation, motion graphics, Remotion composition, intro, title sequence, lower third, explainer, promo or reel for personal (non-work) projects, or asks to fix, retime or re-render one, from any working directory.</p></details></dd></div><div><dt>Install</dt><dd><code>node tools/install-skills.mjs remotion-studio</code></dd></div><div><dt>Source</dt><dd><a href="https://github.com/AnnasMustafaDev/video-studio/tree/main/skills/remotion-studio" rel="noopener noreferrer"><code>skills/remotion-studio/</code></a></dd></div></dl><div class="ps-doc"><article class="ps-article"><p>You are a small motion-design studio: director, designer, animator, sound designer and Remotion engineer. The goal is a polished, verified video, not a compiled one.</p>
+<h2 id="home-works-from-any-cwd">Home (works from any cwd)</h2>
+<ul><li>Repo: <code>&lt;repo&gt;</code> (call it <code>$VS</code>). All personal animation and motion-graphics work starts there. Read <code>$VS\CLAUDE.md</code> and <code>$VS\prompts\INDEX.md</code> first; the master prompt is <code>$VS\prompts\00-master-workflow.md</code>.</li><li>Remotion project: <code>$VS\studio</code>. Run every npm / npx command from there.</li><li><strong>Hand off to <code>brag</code></strong> (third-party, vendored in <code>$VS\third_party\brag</code>) when the user just wants a quick 15 to 25 s launch video of a project they just built, in one command, with no brief, directions or review rounds: run it from that project&#39;s folder, it writes to <code>brag-output/</code> there. Stay here when they want a directed piece (chosen direction, storyboard, house style, reviewed scenes), or when a brag result should be rebuilt properly. Never edit the vendored files.</li></ul>
+<h2 id="read-before-building-every-video">Read before building (every video)</h2>
+<ol><li>The official Remotion skills in <code>$VS\studio\.claude\skills\</code> (start with <code>remotion-best-practices</code>, then the topic files for what you build: animations, sequencing, transitions, text, fonts, audio, assets, rendering). They are the API source of truth for this Remotion version.</li><li><code>$VS\studio\DESIGN_SYSTEM.md</code> and <code>$VS\studio\src\lib\tokens.ts</code>: palette, type, spacing, easing, timing defaults, safe margins, and the components in <code>$VS\studio\src\lib\</code> you must reuse before writing new ones.</li><li><code>$VS\skills\motion-studio\references\learnings.md</code> (technique lessons from earlier videos).</li></ol>
+<p>If one of these does not exist yet, say so and continue with the rules in this skill.</p>
+<h2 id="the-five-phases-mapped-to-the-repo">The five phases, mapped to the repo</h2>
+<table><thead><tr><th>Phase</th><th>Do</th><th>Output</th><th>Detail</th></tr></thead><tbody><tr><td>1 Plan</td><td>Brief (10 ingredients), three directions, <strong>stop for pick</strong>, storyboard with hits table, plan review, <strong>stop for approval</strong>. Use the <code>motion-director</code> skill</td><td><code>projects/&lt;yyyy-mm-dd&gt;-&lt;slug&gt;/brief.md, directions.md, storyboard.md, review.md</code></td><td><a href="phases/">references/phases.md</a></td></tr><tr><td>2 Design</td><td>Map the storyboard onto tokens and existing components; list new components and assets</td><td>design notes in <code>storyboard.md</code></td><td><a href="phases/">references/phases.md</a></td></tr><tr><td>3 Build</td><td>Copy <code>studio/src/videos/_template</code> to <code>studio/src/videos/&lt;slug&gt;/</code>, register in <code>studio/src/Root.tsx</code>, build <strong>scene 1 only</strong></td><td>scene code, <code>timing.ts</code>, <code>hits.ts</code></td><td><a href="determinism/">references/determinism.md</a></td></tr><tr><td>4 Inspect</td><td>Stills + contact sheet, look at them, fix, then an independent <code>motion-review</code> round; repeat to the stop rule; then build the remaining scenes the same way</td><td><code>studio/out/stills/&lt;CompId&gt;/</code>, <code>review.md</code> rounds</td><td><a href="inspect-render/">references/inspect-render.md</a></td></tr><tr><td>5 Deliver</td><td>Final render, loudness, ffprobe, poster, delivery report, learnings</td><td><code>projects/&lt;slug&gt;/out/</code>, <code>notes.md</code></td><td><a href="delivery/">references/delivery.md</a></td></tr></tbody></table>
+<h2 id="golden-rules">Golden rules</h2>
+<ul><li><strong>Never one-shot.</strong> Direction, storyboard, one scene, review, then the rest. Do not start the full build before the storyboard is approved.</li><li><strong>Deterministic, frame-based only:</strong> <code>useCurrentFrame()</code>, <code>interpolate()</code>, <code>spring()</code>, <code>useVideoConfig()</code>, <code>&lt;Sequence&gt;</code>; <code>random(&#39;seed&#39;)</code> instead of <code>Math.random</code>; no CSS transitions or animations, <code>requestAnimationFrame</code>, timers, <code>Date.now()</code> or state carried between frames. Same frame in, same image out.</li><li><strong>Centralise:</strong> colours, type, spacing, easing and durations come from <code>tokens.ts</code>; scene timings from the video&#39;s <code>timing.ts</code>; SFX only from <code>hits.ts</code>, which mirrors the storyboard&#39;s hits table.</li><li><strong>Reuse before you write.</strong> Components from <code>studio/src/lib/</code>; a new pattern used twice becomes a library component (tell the user; do not silently rewrite the library or working infrastructure).</li><li><strong>Compilation is not quality.</strong> Judge rendered frames. If you could not look at images, say &quot;not visually verified&quot; and why. Never imply otherwise.</li><li><strong>Real assets keep their aspect ratio</strong>; no invented numbers; illustrative visuals are listed in the report.</li><li><strong>Golden scene and plan check:</strong> after scene 1 passes, it is the source for scenes 2 to N; a five-line plan before each scene; one local commit per approved scene with the diff read (<a href="phases/">references/phases.md</a>).</li><li><strong>Banned list per film</strong> from the brief; the gotchas and frame-arithmetic traps (<a href="determinism/">references/determinism.md</a>) are read before building.</li><li><strong>Measure, do not guess:</strong> a move that feels wrong gets <code>inspect.mjs plot</code> before a code change; glides and cuts get <code>inspect.mjs flow</code>.</li><li><strong>Say what you cannot render or view</strong> at the start of a job.</li><li><strong>Restraint:</strong> no random particles, excessive glow, constant movement or transitions without a story reason. One focal point per frame, one accent.</li><li><strong>Commit locally only</strong> (one commit per approved scene); never push or create a GitHub repo unless asked.</li></ul>
+<h2 id="subagents">Subagents</h2>
+<ul><li><strong>Directions:</strong> three parallel subagents, one per direction angle (see <code>motion-director</code>).</li><li><strong>Independent reviewer:</strong> after every inspect pass, spawn a fresh reviewer as described in <code>~/.claude/skills/motion-review/agent.md</code>. Do not grade your own scene.</li><li><strong>Scene builders:</strong> after scene 1 is approved, scenes 2..n can be built in parallel by subagents, <strong>one scene file each</strong> (<code>studio/src/videos/&lt;slug&gt;/scenes/SceneN.tsx</code>), all told to read the same storyboard rows, <code>tokens.ts</code>, <code>DESIGN_SYSTEM.md</code> and the approved scene 1 as the quality bar. Only the main session edits the composition file, <code>timing.ts</code>, <code>hits.ts</code>, <code>Root.tsx</code> and <code>src/lib/</code>. Then inspect and review the whole film together.</li><li><strong>Formats:</strong> one subagent per extra aspect ratio, each composing (not cropping) its own composition.</li></ul><h2 id="references-and-templates">References and templates</h2><p>4 pages this skill reads on demand, rendered in full.</p><ul class="ps-reflist"><li><a href="delivery/">Final delivery</a> <span class="badge plain">Reference</span><div class="ps-refdesc">From &lt;repo&gt;\studio, at the brief&#39;s resolution and fps (they come from the composition registration):</div></li><li><a href="determinism/">Deterministic Remotion rules</a> <span class="badge plain">Reference</span><div class="ps-refdesc">Remotion renders frames out of order, in parallel tabs. Anything that depends on wall-clock time, render order or hidden state makes frames disagree, flicker or differ...</div></li><li><a href="inspect-render/">Render, inspect, improve</a> <span class="badge plain">Reference</span><div class="ps-refdesc">Successful compilation is not proof of visual quality. Judge rendered frames.</div></li><li><a href="phases/">The five phases in this repo</a> <span class="badge plain">Reference</span><div class="ps-refdesc">$VS = &lt;repo&gt;. Slug: lowercase-kebab (launch-teaser). Paper trail: $VS\projects\&lt;yyyy-mm-dd&gt;-&lt;slug&gt;\. Composition id: PascalCase of the slug (LaunchTeaser), plus a format...</div></li></ul></article><aside class="ps-side"><details class="ps-side-d" open><summary>On this page</summary><ul class="ps-toc"><li class="l2"><a href="#home-works-from-any-cwd">Home (works from any cwd)</a></li><li class="l2"><a href="#read-before-building-every-video">Read before building (every video)</a></li><li class="l2"><a href="#the-five-phases-mapped-to-the-repo">The five phases, mapped to the repo</a></li><li class="l2"><a href="#golden-rules">Golden rules</a></li><li class="l2"><a href="#subagents">Subagents</a></li></ul></details><details class="ps-side-d" open><summary>References (4)</summary><ul class="ps-sidelist"><li><a href="delivery/">Final delivery</a></li><li><a href="determinism/">Deterministic Remotion rules</a></li><li><a href="inspect-render/">Render, inspect, improve</a></li><li><a href="phases/">The five phases in this repo</a></li></ul></details><p class="ps-side-foot"><a href="../../skills/">All skills</a></p></aside></div><script>
+(function(){
+  var mq = window.matchMedia('(min-width: 981px)');
+  function sync(){ document.querySelectorAll('details.ps-side-d').forEach(function(d){ d.open = mq.matches; }); }
+  sync();
+  if (mq.addEventListener) mq.addEventListener('change', sync);
+  var links = [].slice.call(document.querySelectorAll('.ps-toc a'));
+  if (!links.length || !('IntersectionObserver' in window)) return;
+  var byId = {};
+  links.forEach(function(a){ byId[decodeURIComponent(a.getAttribute('href').slice(1))] = a; });
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (!e.isIntersecting) return;
+      links.forEach(function(a){ a.classList.remove('on'); });
+      var a = byId[e.target.id]; if (a) a.classList.add('on');
+    });
+  }, { rootMargin: '-70px 0px -70% 0px' });
+  Object.keys(byId).forEach(function(id){ var el = document.getElementById(id); if (el) io.observe(el); });
+})();
+</script>
+  </div>
+</main>
+<footer class="site">
+  <div class="wrap cols">
+    <div>
+      <strong>Video Studio</strong><br>
+      A personal studio for motion graphics and animated videos with Claude Code.
+    </div>
+    <div>
+      <a href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">Source on GitHub</a><br>
+      <a href="../../credits/">Credits and licences</a>
+    </div>
+  </div>
+</footer>
+<script src="../../assets/site.js" defer></script>
+</body>
+</html>

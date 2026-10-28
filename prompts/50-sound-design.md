@@ -7,6 +7,7 @@
 | **Stage** | Finishing, after `13` on the full film, before `51` and `53`. |
 | **Inputs you must fill in** | `[CompId]`, `[music file or "compose/choose one"]` and its licence, `[VO file or none]`, `[mood and tempo]`, `[delivery: web/social -14 LUFS or presentation -16]`. |
 | **Expected output** | A cue sheet (frame, sound, level, reason), audio wired into the composition, ducking under VO, a measured mix at the target loudness, and a list of every audio asset with its licence. |
+| **Why this exists** | Cues derived from the same constants as the picture retime with it, and restraint (silence, a hit cap) fights busy mixes. Evidence: documented methods with stated tolerances (cinetic, shotcraft), the authors' own measurements; not verified by watching. Findings F-A8, F-A9, F-A15. |
 | **Next prompt** | `51-captions-subtitles.md` if needed, else `53-final-render-delivery.md`. |
 
 ## Prompt
@@ -26,6 +27,11 @@ Do a sound design pass on [CompId]. The picture is locked; do not change visual 
 
 6. Report every audio file used, its source and licence. Flag anything unlicensed or unclear.
 
+7. Derive, do not hand-place: compute each cue frame from the same constants and spring functions the picture uses (the contact frame of a spring, the 50 percent frame of a pop-in, the velocity peak of a whip). Retime the animation and the sound retimes with it. Verify with the sync waveform check afterwards.
+8. Restraint and silence: one soft sound per text fragment, near-silence while it is read, one big hit for the one reveal. Spotlight a key claim with a short dropout in the music (a few frames to half a second of hole, then the beat returns on the next visual event) instead of another effect. A calm film may be effects-only.
+9. Beat-hit cap (music-led films): beat sync does not mean pulsing the whole picture. At most 3 full-frame or camera-layer impacts per film, at least 16 beats apart; every other hit lands on the hero element only.
+10. Grid acceptance (track you did not write): fit a straight line to the detected beats, report the residual (accept up to about 15 ms), test half-time and double-time against where the kicks fall, keep float seconds until the last step into frames, and after render measure cut error (target 3 frames or less). Details in 75.
+
 Use deterministic timing: all audio placement in frames, derived from the same constants as the visuals so cues move with the edit.
 ```
 
@@ -37,3 +43,5 @@ Remotion does not normalise loudness: render the audio (npx remotion render [Com
 If there is no licensed music, say so; the motion-studio skill can compose a bed in code (skills/motion-studio/references/audio.md) and synthesise whoosh, pop and click with ffmpeg.
 Write the cue sheet and loudness numbers to projects/[yyyy-mm-dd]-[slug]/notes.md.
 ```
+
+Sources: derived cues, silence recipes and the cap after Leonxlnx's cinetic (`sound.md`, `craft-rules.md`) and Vincentwei1021's video-shotcraft (`music-beat-sync.md`, `aesthetic-rules.md`). Our wording; the specific numbers are those authors' claims, so check them on the sync waveform.

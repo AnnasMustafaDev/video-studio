@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Motion (motion-studio) · Video Studio</title>
+<meta name="description" content="Every animation answers one question: what does it communicate? Hierarchy, story, feedback or a state change. If you cannot say it in a sentence, cut it.">
+<meta property="og:title" content="Motion (motion-studio) · Video Studio">
+<meta property="og:description" content="Every animation answers one question: what does it communicate? Hierarchy, story, feedback or a state change. If you cannot say it in a sentence, cut it.">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23eef3ff'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%233b6cf6'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../../assets/site.css">
+<link rel="stylesheet" href="../../../assets/panel-skills.css">
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="../../../"><span class="dot"></span>Video Studio</a>
+    <nav class="main" aria-label="Main"><a href="../../../">Home</a><a href="../../../tour/">Tour</a><a href="../../../guide/">Guide</a><a href="../../../skills/" aria-current="page">Skills</a><a href="../../../prompts/">Prompts</a><a href="../../../studio/">Studio</a><a href="../../../techniques/">Techniques</a><a href="../../../shot-library/">Shot library</a><a href="../../../research/">Research</a><a href="../../../gallery/">Gallery</a><a href="../../../credits/">Credits</a></nav>
+    <div class="tools">
+      <a class="btn" href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">GitHub</a>
+      <button class="btn" id="theme-toggle" type="button" aria-label="Toggle light or dark theme">Theme</button>
+    </div>
+  </div>
+</header>
+<main>
+  <div class="wrap">
+<nav class="crumbs ps-crumbs" aria-label="Breadcrumb"><a href="../../../">Home</a> <span aria-hidden="true">/</span> <a href="../../../skills/">Skills</a> <span aria-hidden="true">/</span> <a href="../../../skills/motion-studio/">motion-studio</a> <span aria-hidden="true">/</span> <span aria-current="page">Motion</span></nav><header class="ps-head"><div class="ps-badges"><span class="badge plain">Reference</span> <span class="badge">motion-studio</span></div><h1>Motion</h1></header><div class="ps-doc"><article class="ps-article"><p>Every animation answers one question: what does it communicate? Hierarchy, story, feedback or a state change. If you cannot say it in a sentence, cut it.</p>
+<h2 id="easing-and-springs">Easing and springs</h2>
+<ul><li>Closed-form spring for entrances: damping ratio ζ 0.8 to 0.9, ω about 9 (0.5 to 0.7 s). At most a tiny overshoot. No bouncy easing.</li><li>GSAP names that match: <code>expo.out</code> for entrances (0.5 s), <code>power2.in</code> for exits (0.26 s), <code>power3.inOut</code> for rules and wipes.</li><li>Enter moving, leave accelerating. Exits are faster than entrances.</li><li>Stagger 40 to 80 ms between items, or put each item on its spoken word.</li></ul>
+<pre><code class="lang-js">function spring(z, w) { // normalised so it ends exactly at 1
+  const wd = w * Math.sqrt(1 - z * z);
+  const raw = (t) =&gt; 1 - Math.exp(-z * w * t) * (Math.cos(wd * t) + ((z * w) / wd) * Math.sin(wd * t));
+  const end = raw(1);
+  return (t) =&gt; (t &lt;= 0 ? 0 : t &gt;= 1 ? 1 : raw(t) / end);
+}
+const tw = (t, a, b, ease) =&gt; ease(Math.min(1, Math.max(0, (t - a) / (b - a))));</code></pre>
+<h2 id="kinetic-type">Kinetic type</h2>
+<ul><li>Word enter: rise 0.42 em out of an 8 px blur, opacity 0 → 1, 0.5 s <code>expo.out</code>, starting 60 ms before the spoken word.</li><li>Caption exit (content swap): opacity 0, y −14 px, blur 6 px, 0.26 s <code>power2.in</code>; the next caption starts right after.</li><li>A reference line under a number fades up 0.25 s after the last word.</li><li>Hook lines stack (each phrase on its own line); the last word of the hook can carry the accent.</li><li>Never put <code>will-change</code> on text the camera scales (blurry text).</li></ul>
+<h2 id="camera-for-screen-content">Camera (for screen content)</h2>
+<ul><li><strong>Keys with holds</strong>: a list of <code>{t, scale, focusX, focusY, ease}</code>. Between two moves there is always a hold. The camera only moves when a spoken word motivates it; never idle drift.</li><li><strong>Screen-recorder zoom</strong>: zoom the content inside a fixed window frame (frame stays, content scales), focus point in recorded CSS pixels, clamp so no edge shows.</li><li><strong>Interpolate zoom in log space</strong> (<code>exp(lerp(log a, log b, u))</code>) so the speed feels constant.</li><li>One named move per shot: push in to the composer, pull back to the conversation. Never zoom in and straight back out.</li><li>Typical scales: 1.0 whole screen, 1.4 to 1.6 a panel or table, 1.8 to 2.1 a button or field.</li><li>Keys must stay in time order; when hold times derive from word timings, clamp with <code>Math.max(previous)</code>.</li><li>Update the camera at the start of each frame: overlays (spotlight, cursor, labels) are projected from it.</li></ul>
+<h2 id="spotlight">Spotlight</h2>
+<ul><li>Dim everything but the region (box-shadow <code>0 0 0 3000px rgba(dark, 0.42)</code>), 3 px accent outline, radius 12, padding 8 px.</li><li>Rects in recorded CSS px, mapped through the camera every frame.</li><li><strong>Liquid move</strong>: when the spotlight jumps from one row to the next, the edge in the direction of travel leads (0.30 s) and the trailing edge follows (0.42 s, starting 0.1 s later), so the highlight stretches and settles.</li><li>Fade in 0.3 s; when a spot hands over to the next one directly, glide instead of blinking.</li></ul>
+<h2 id="cursor">Cursor</h2>
+<ul><li>SVG arrow with a soft drop shadow, constant screen size.</li><li>Appears 1.15 s before the click, glides in 0.9 s with <code>inOut</code>, tilts up to 12° toward its travel direction and straightens on arrival.</li><li>Press: scale −15 % for about 80 ms at the click; an accent ring expands from 0.3× to 1.3× and fades over 0.5 s.</li><li>Leaves 0.3 to 0.55 s after the click. Keep it inside the frame at every zoom and off the key text of the final state.</li><li>Every UI change after a click happens 80 to 150 ms after the press.</li></ul>
+<h2 id="transitions-with-meaning">Transitions with meaning</h2>
+<table><thead><tr><th>Transition</th><th>Use it for</th><th>Recipe</th></tr></thead><tbody><tr><td>Flood and contract</td><td>A change of world (problem → solution, product → end card)</td><td>A circle clip grows from the last element (a full stop, a document) past the corners in 0.35 to 0.5 s; the next scene is underneath</td></tr><tr><td>Shared element</td><td>Continuity: the thing named becomes the next scene</td><td>A file card scales into the full document; a chain lifts away while the window rises in its place</td></tr><tr><td>Rise and settle</td><td>Bringing in the main surface</td><td>translateY 160 px → 0 and scale 0.94 → 1 on a spring</td></tr><tr><td>Content swap with blur</td><td>Caption or label changes</td><td>exit blur 6 px in 0.26 s, enter from 8 px blur</td></tr><tr><td>Hard cut on the beat</td><td>Contrast, energy</td><td>Only on a downbeat, hidden in a motion peak; max three per film</td></tr><tr><td>Velocity handoff</td><td>Momentum across a cut (pans, pushes, whips)</td><td>Exit accelerates to 25 to 40 px/frame at 60 fps, entry starts 30 to 55 and decays about 0.93 per frame (<a href="../transitions/">transitions.md</a>)</td></tr><tr><td>Hidden cut</td><td>A cut that should read as one take</td><td>Occluder sweeps across and the cut hides inside it; light-leak burn; line carry (<a href="../transitions/">transitions.md</a>)</td></tr></tbody></table>
+<p>Banned: cross-dissolves between unrelated shots, wipes and star transitions, zooms that go in and straight out. More recipes (velocity-matched cut, occluder, light-leak, line carry, &quot;X becomes Y&quot; morph vocabulary): <a href="../transitions/">transitions.md</a>.</p>
+<h2 id="pacing">Pacing</h2>
+<ul><li>Hold important frames: a number or the CTA needs 1.5 to 2 s of stillness.</li><li>Alternate long and short beats so it breathes; cut on the beat grid of the music.</li><li>Reserve showpieces (a big reveal, a flood) for two or three moments.</li></ul>
+<h2 id="motion-blur">Motion blur</h2>
+<p>Render 4 subframes per output frame centred on the frame time and average them (8 for fast moves with a shutter of about 0.7 of a frame, see <a href="../gotchas/">gotchas.md</a>): <code>ffmpeg ... -vf &quot;tmix=frames=4,select=&#39;not(mod(n+1\,4))&#39;,setpts=N/(60*TB)&quot;</code> with the page seeked at <code>t + (j − 1.5)/(fps·4)</code>.</p>
+<h2 id="gotchas">Gotchas</h2>
+<ul><li>Never set opacity or filter on a <code>preserve-3d</code> element; fade a wrapper instead.</li><li>Text inside a morphing container needs its own enter and exit timing or old and new text overlap.</li><li>A seek-based renderer must not depend on state carried between frames. Compute everything from <code>t</code>.</li></ul>
+<h2 id="measure-motion-do-not-guess">Measure motion, do not guess</h2>
+<p>When a move &quot;pauses then snaps&quot;, stop retrying eased variants. Sample the timing function (a pure function of frame) and plot value and velocity over the move: <code>inspect.mjs plot</code> (see <code>skills/motion-review</code>), or in a scratch script. Look for a zero-velocity run in the middle of a move, kinks, and false overshoot; then fix the cause and plot again. Why: in one production write-up five plausible fixes failed over about an hour; a velocity plot showed zero velocity for 16 percent of the move in 30 seconds. The cause was a bob wave covering only the rise phase, not the element&#39;s whole lifetime. Evidence: one detailed first-hand article with numbers (F-A3, F-B5).</p>
+<p><strong>Buoyant bob.</strong> A rising element keeps drifting through its peak instead of freezing: a cubic ease plus a small sine bob whose span is the <strong>whole lifetime</strong> of the element, not just the rise. Helper: see <code>studio/src/lib/motion.ts</code> (<code>buoyant()</code>). Use for floating cards and badges, not for UI that should feel mechanical.</p>
+<h2 id="camera-speed-as-a-table">Camera speed as a table</h2>
+<p>For any glide, write the camera language as speed shares of cruise at timestamps and integrate to position, instead of position keys:</p>
+<table><thead><tr><th>t (s)</th><th>Share of cruise</th></tr></thead><tbody><tr><td>0</td><td>0</td></tr><tr><td>0.6</td><td>0.5</td></tr><tr><td>1.6</td><td>1.0</td></tr><tr><td>1.6 until the ease-out</td><td>held 0.94 to 1.1</td></tr><tr><td>8.3</td><td>0.12 (easing out)</td></tr></tbody></table>
+<p>(Example from a 3D fly-over prompt; your numbers differ.) Interpolate with smoothstep and integrate analytically (see learnings: speed-curve camera). Zoom runs in log space; rise and dive are separate eased passes. Each scene starts at the zoom the last one ended on. Check: <code>inspect.mjs flow</code> on a 30 fps draft. Speed must never dip and zoom must not turn into zoom-in during a flight; a surge or a stop that stills cannot show shows up as a dip in the flow plot. Why: the table makes the brief&#39;s camera language reviewable and flow measurement catches &quot;no surges, no stops&quot;. Evidence: precise in the prompt, film posted; flow-test results not shown (F-B4). Integrated speed curves are already in learnings; the new part is the table and the test.</p>
+<h2 id="rhythm-and-type-sync-recipes">Rhythm and type-sync recipes</h2>
+<p>Why: cheap, deterministic, look authored rather than templated. Evidence: documented with demos; parameters tuned on placeholder material (F-A16).</p>
+<ul><li><strong>Karaoke fill</strong> (voice-led films, type hooks): each word fills left to right with a soft edge at speaking rate; current word in accent, finished word in ink; a pointer underline on the active word; word times from the voice; 4 to 10 frames of gap for breath. Studio fit: yes.</li><li><strong>Weight pump</strong> (type hooks): a variable-font weight envelope on the beat (about 250 to 900); glyphs set in slots laid out at the heaviest weight so the line never reflows; beats must be spaced wider than the decay window. Studio fit: yes. Remember learnings: set <code>font-weight</code> on the glyphs too, not just the measurement.</li><li><strong>Frame-rate shift</strong> (optional spice): a mover steps every 3 frames (about 69 px per step, a different pose each step), then switches in one frame to every-frame motion with hard overshoot; the change of cadence is the highlight. Under 30 px per step it reads as dropped frames, and any tween on the switch kills it.</li><li><strong>Trailer bumper</strong> (optional spice): three framings of 9 frames each, zero transitions, each pushing in 1 to 4 percent so it is not a slideshow, then 6 frames of black, then the title.</li></ul>
+<p>Transition recipes (velocity-matched cut, occluder, impact slam, light-leak, line carry, &quot;X becomes Y&quot;) are in <a href="../transitions/">transitions.md</a>. Failure-derived checks (8 subframes for fast moves, minimum fade length) are in <a href="../gotchas/">gotchas.md</a>.</p><nav class="ps-prevnext" aria-label="Previous and next"><a class="ps-pn prev" href="../learnings/"><span class="ps-pn-dir">Previous</span><span class="ps-pn-title">Learnings log</span></a><a class="ps-pn next" href="../qa/"><span class="ps-pn-dir">Next</span><span class="ps-pn-title">QA checklists</span></a></nav></article><aside class="ps-side"><details class="ps-side-d" open><summary>On this page</summary><ul class="ps-toc"><li class="l2"><a href="#easing-and-springs">Easing and springs</a></li><li class="l2"><a href="#kinetic-type">Kinetic type</a></li><li class="l2"><a href="#camera-for-screen-content">Camera (for screen content)</a></li><li class="l2"><a href="#spotlight">Spotlight</a></li><li class="l2"><a href="#cursor">Cursor</a></li><li class="l2"><a href="#transitions-with-meaning">Transitions with meaning</a></li><li class="l2"><a href="#pacing">Pacing</a></li><li class="l2"><a href="#motion-blur">Motion blur</a></li><li class="l2"><a href="#gotchas">Gotchas</a></li><li class="l2"><a href="#measure-motion-do-not-guess">Measure motion, do not guess</a></li><li class="l2"><a href="#camera-speed-as-a-table">Camera speed as a table</a></li><li class="l2"><a href="#rhythm-and-type-sync-recipes">Rhythm and type-sync recipes</a></li></ul></details><details class="ps-side-d" open><summary>In motion-studio</summary><ul class="ps-sidelist"><li><a href="../">SKILL.md</a></li><li><a href="../audio/">Music, sound effects, loudness</a></li><li><a href="../banned-effects/">Banned effects: a list per film</a></li><li><a href="../capture/">Capturing a real app</a></li><li><a href="../delivery/">Final delivery (Phase 5)</a></li><li><a href="../design-system/">A reusable motion-design system</a></li><li><a href="../design/">Visual design</a></li><li><a href="../direction/">Direction: brief, story, script, captions</a></li><li><a href="../engine/">Engine: composition, live player, renderer</a></li><li><a href="../formats/">Formats and delivery</a></li><li><a href="../golden-scene/">Build loop: golden scene, plan check, commits, acceptance criteria</a></li><li><a href="../gotchas/">Gotchas catalogue</a></li><li><a href="../learnings/">Learnings log</a></li><li class="on"><span aria-current="page">Motion</span></li><li><a href="../qa/">QA checklists</a></li><li><a href="../reference-analysis/">Using a visual reference</a></li><li><a href="../review/">Render, inspect, fix: the review loop</a></li><li><a href="../three-d/">3D (three.js): rarely the right call</a></li><li><a href="../transitions/">Transitions: &quot;X becomes Y&quot;, velocity handoff, hidden cuts</a></li><li><a href="../vocabulary/">Vocabulary → recipes in this engine</a></li><li><a href="../voice/">Voice-over</a></li><li><a href="../workflow/">Staged workflow</a></li></ul></details><p class="ps-side-foot"><a href="https://github.com/AnnasMustafaDev/video-studio/blob/main/skills/motion-studio/references/motion.md" rel="noopener noreferrer">View source on GitHub</a></p></aside></div><script>
+(function(){
+  var mq = window.matchMedia('(min-width: 981px)');
+  function sync(){ document.querySelectorAll('details.ps-side-d').forEach(function(d){ d.open = mq.matches; }); }
+  sync();
+  if (mq.addEventListener) mq.addEventListener('change', sync);
+  var links = [].slice.call(document.querySelectorAll('.ps-toc a'));
+  if (!links.length || !('IntersectionObserver' in window)) return;
+  var byId = {};
+  links.forEach(function(a){ byId[decodeURIComponent(a.getAttribute('href').slice(1))] = a; });
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (!e.isIntersecting) return;
+      links.forEach(function(a){ a.classList.remove('on'); });
+      var a = byId[e.target.id]; if (a) a.classList.add('on');
+    });
+  }, { rootMargin: '-70px 0px -70% 0px' });
+  Object.keys(byId).forEach(function(id){ var el = document.getElementById(id); if (el) io.observe(el); });
+})();
+</script>
+  </div>
+</main>
+<footer class="site">
+  <div class="wrap cols">
+    <div>
+      <strong>Video Studio</strong><br>
+      A personal studio for motion graphics and animated videos with Claude Code.
+    </div>
+    <div>
+      <a href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">Source on GitHub</a><br>
+      <a href="../../../credits/">Credits and licences</a>
+    </div>
+  </div>
+</footer>
+<script src="../../../assets/site.js" defer></script>
+</body>
+</html>

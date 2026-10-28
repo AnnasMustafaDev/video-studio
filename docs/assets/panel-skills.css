@@ -1,0 +1,136 @@
+/* Skills and Prompts panels. Extends site.css; class names are prefixed ps-. */
+
+.ps-crumbs { margin-bottom: 1.2em; }
+.ps-head { margin: 0 0 1.4em; }
+.ps-head h1 { font-size: clamp(1.8rem, 4.2vw, 2.6rem); margin-bottom: 0.3em; overflow-wrap: anywhere; }
+.ps-lead { font-size: clamp(1.02rem, 2vw, 1.2rem); color: var(--ink-2); max-width: 66ch; margin: 0; }
+.ps-badges { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-bottom: 0.7em; }
+.ps-head .ps-badges { margin-bottom: 0.9em; }
+.ps-small { font-size: 0.9rem; color: var(--muted); }
+.ps-small p { margin-bottom: 0.6em; }
+.ps-count { color: var(--muted); font-size: 0.9rem; align-self: center; white-space: nowrap; }
+.ps-h2-first { margin-top: 0; font-size: 1.25rem; }
+
+/* Intro blocks */
+.ps-intro { background: var(--bg-2); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 24px 12px; margin: 0 0 2em; }
+.ps-intro-cols { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 28px; }
+.ps-intro pre { margin-bottom: 0.8em; }
+.ps-anatomy { display: flex; flex-wrap: wrap; gap: 6px; list-style: none; padding: 0; margin: 0 0 1em; }
+.ps-anatomy li { margin: 0; padding: 3px 11px; border-radius: 999px; background: var(--bg); border: 1px solid var(--line); font-size: 0.88rem; font-weight: 600; color: var(--ink-2); }
+.ps-steps { margin-bottom: 0.6em; }
+
+/* Cards and grids */
+.ps-grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+.ps-card h3 { overflow-wrap: anywhere; }
+.ps-card .ps-badges { margin-bottom: 4px; }
+.ps-group { margin: 0 0 1.6em; }
+.ps-group > h3 { margin: 1.6em 0 0.15em; font-size: 1.15rem; }
+.ps-group .ps-hint { color: var(--muted); font-size: 0.92rem; margin: 0; }
+.ps-group .grid { margin-top: 0.7em; }
+.ps-n { display: inline-block; font-size: 0.78rem; font-weight: 700; color: var(--muted); background: var(--code-bg); border-radius: 999px; padding: 1px 9px; vertical-align: middle; margin-left: 4px; }
+
+/* Tables */
+.ps-table, .ps-tablewrap table { margin-bottom: 1.4em; }
+.ps-tablewrap { margin: 0 0 1.2em; }
+.ps-table td:first-child { min-width: 14em; }
+
+/* Jump nav */
+.ps-jump { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 1.2em; }
+.ps-jump a { text-decoration: none; font-weight: 600; font-size: 0.9rem; color: var(--ink-2); border: 1px solid var(--line); background: var(--bg); padding: 5px 13px; border-radius: 999px; }
+.ps-jump a:hover { border-color: var(--accent); color: var(--accent); }
+
+/* Pipeline lanes */
+.ps-lanes { list-style: none; margin: 1em 0 0.8em; padding: 0; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+.ps-lane { display: grid; grid-template-columns: 150px 1fr; margin: 0; border-bottom: 1px solid var(--line); }
+.ps-lane:last-child { border-bottom: 0; }
+.ps-lane-h { background: var(--bg-2); padding: 12px 16px; font-weight: 700; display: flex; flex-direction: column; gap: 2px; }
+.ps-lane-h small { font-weight: 500; color: var(--muted); font-size: 0.78rem; line-height: 1.3; }
+.ps-lane-c { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 4px; padding: 10px 14px; }
+.ps-chip { display: inline-flex; gap: 6px; align-items: baseline; text-decoration: none; color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 4px 10px; font-size: 0.88rem; line-height: 1.35; }
+.ps-chip b { color: var(--accent); font-variant-numeric: tabular-nums; }
+.ps-chip:hover { border-color: var(--accent); background: var(--accent-soft); }
+.ps-arr { color: var(--muted); padding: 0 2px; }
+.ps-raw { margin: 0 0 1.2em; }
+.ps-raw summary { cursor: pointer; color: var(--ink-2); font-size: 0.9rem; font-weight: 600; margin-bottom: 0.6em; }
+.ps-raw pre { font-size: 0.78rem; }
+
+/* Recipes */
+.ps-recipes { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 14px; margin: 1em 0 2em; }
+.ps-recipe { border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 18px 4px; background: var(--bg); box-shadow: var(--shadow); }
+.ps-recipe h3 { margin: 0 0 0.4em; font-size: 1.02rem; }
+.ps-recipe p { font-size: 0.93rem; color: var(--ink-2); line-height: 1.75; }
+.ps-recipe a { font-weight: 700; }
+
+/* Info box (skill frontmatter, prompt header) */
+.ps-info { display: grid; grid-template-columns: 1fr; gap: 0; border: 1px solid var(--line); border-radius: var(--radius); background: var(--bg-2); margin: 0 0 2em; overflow: hidden; }
+.ps-info > div { display: grid; grid-template-columns: 150px 1fr; gap: 14px; padding: 10px 18px; border-bottom: 1px solid var(--line); }
+.ps-info > div:last-child { border-bottom: 0; }
+.ps-info dt { font-weight: 700; font-size: 0.86rem; color: var(--muted); padding-top: 0.12em; }
+.ps-info dd { margin: 0; min-width: 0; overflow-wrap: anywhere; font-size: 0.96rem; }
+.ps-info-prompt > div.wide dd { font-size: 1.08rem; font-weight: 600; color: var(--ink); }
+
+/* Doc layout: article + sticky side */
+.ps-doc { display: grid; grid-template-columns: minmax(0, 1fr) 260px; gap: 48px; align-items: start; }
+.ps-article { min-width: 0; max-width: 72ch; }
+.ps-article > :first-child { margin-top: 0; }
+.ps-article h2 { scroll-margin-top: 80px; }
+.ps-article h3, .ps-article h4 { scroll-margin-top: 80px; }
+.ps-article pre { padding-top: 38px; font-size: 0.84rem; }
+.ps-article pre code { white-space: pre; }
+.ps-article table { font-size: 0.9rem; }
+.ps-side { position: sticky; top: 78px; max-height: calc(100vh - 96px); overflow-y: auto; font-size: 0.9rem; padding-bottom: 12px; }
+.ps-side details { border: 1px solid var(--line); border-radius: 12px; background: var(--bg-2); padding: 8px 14px; margin: 0 0 12px; }
+.ps-side summary { cursor: pointer; font-weight: 700; padding: 3px 0; }
+.ps-side ul { list-style: none; margin: 6px 0 4px; padding: 0; }
+.ps-side li { margin: 0; }
+.ps-side li a, .ps-side li > span { display: block; padding: 3px 8px; margin: 0 -8px; border-radius: 6px; color: var(--ink-2); text-decoration: none; line-height: 1.35; }
+.ps-side li a:hover { background: var(--accent-soft); color: var(--ink); }
+.ps-side li.on > span, .ps-toc a.on { background: var(--accent-soft); color: var(--accent); font-weight: 700; }
+.ps-toc .l3 a { padding-left: 20px; font-size: 0.86rem; }
+.ps-side-foot { font-size: 0.85rem; margin: 0; padding: 0 4px; }
+.ps-reflist { list-style: none; padding: 0; margin: 0 0 1em; display: grid; gap: 10px; }
+.ps-reflist li { margin: 0; border: 1px solid var(--line); border-radius: 12px; padding: 10px 14px; background: var(--bg); }
+.ps-reflist a { font-weight: 700; }
+.ps-refdesc { color: var(--ink-2); font-size: 0.9rem; margin-top: 2px; }
+
+/* Prompt pages */
+.ps-narrow { max-width: 780px; }
+.ps-intro-text { color: var(--ink-2); margin-bottom: 1.4em; }
+.ps-section h2 { font-size: 1.35rem; margin-top: 1.8em; scroll-margin-top: 80px; }
+.ps-section pre { padding-top: 40px; font-size: 0.86rem; }
+.ps-prompt pre code { white-space: pre-wrap; overflow-wrap: anywhere; }
+.ps-prompt > h2:first-child::before { content: "Paste-ready"; display: block; color: var(--accent); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 4px; }
+.ps-additions { border-top: 1px dashed var(--line); margin-top: 2em; padding-top: 0.2em; }
+.ps-additions pre code { white-space: pre-wrap; overflow-wrap: anywhere; }
+.ps-additions > h2:first-child::before { content: "Repo-specific, paste after the prompt"; display: block; color: var(--muted); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 4px; }
+
+/* Previous / next */
+.ps-prevnext { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 2.4em 0 1.2em; }
+.ps-pn { display: flex; flex-direction: column; gap: 2px; border: 1px solid var(--line); border-radius: 12px; padding: 12px 16px; text-decoration: none; color: var(--ink); background: var(--bg); min-width: 0; }
+.ps-pn:hover { border-color: var(--accent); }
+.ps-pn.next { text-align: right; grid-column: 2; }
+.ps-pn-dir { font-size: 0.78rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
+.ps-pn-title { font-weight: 600; overflow-wrap: anywhere; }
+
+@media (max-width: 980px) {
+  .ps-doc { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+  .ps-side { position: static; max-height: none; order: -1; overflow: visible; }
+  .ps-side details { margin-bottom: 8px; }
+  .ps-side ul { max-height: 16em; overflow-y: auto; }
+}
+@media (max-width: 860px) { .ps-intro-cols { grid-template-columns: minmax(0, 1fr); gap: 6px; } }
+@media (max-width: 720px) {
+  .ps-intro { padding: 18px 16px 8px; }
+  .ps-intro-cols { grid-template-columns: 1fr; gap: 6px; }
+  .ps-lane { grid-template-columns: 1fr; }
+  .ps-lane-h { flex-direction: row; align-items: baseline; gap: 10px; padding: 8px 14px; }
+  .ps-info > div { grid-template-columns: 1fr; gap: 2px; padding: 10px 14px; }
+  .ps-recipes { grid-template-columns: 1fr; }
+  .ps-prevnext { grid-template-columns: 1fr; }
+  .ps-pn.next { grid-column: 1; text-align: left; }
+  .ps-grid { grid-template-columns: 1fr; }
+}
+
+.ps-desc summary { cursor: pointer; color: var(--ink-2); }
+.ps-desc summary::marker { color: var(--accent); }
+.ps-desc p { margin: 0.6em 0 0; color: var(--ink-2); }

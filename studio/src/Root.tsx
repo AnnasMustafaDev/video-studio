@@ -3,6 +3,8 @@ import { LibraryShowcase } from "./videos/library-showcase/LibraryShowcase";
 import { ShowcaseVertical } from "./videos/library-showcase/ShowcaseVertical";
 import { SHOWCASE_DURATION } from "./videos/library-showcase/timeline";
 import { Template } from "./videos/_template/Template";
+import { TechniquesDemo } from "./videos/techniques-demo/TechniquesDemo";
+import { TECHNIQUES_DURATION } from "./videos/techniques-demo/timeline";
 
 export const RemotionRoot: React.FC = () => {
   return (
@@ -23,6 +25,14 @@ export const RemotionRoot: React.FC = () => {
           fps={30}
           width={1080}
           height={1920}
+        />
+        <Composition
+          id="TechniquesDemo"
+          component={TechniquesDemo}
+          durationInFrames={TECHNIQUES_DURATION}
+          fps={30}
+          width={1920}
+          height={1080}
         />
       </Folder>
       <Folder name="Templates">

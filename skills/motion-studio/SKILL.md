@@ -1,7 +1,7 @@
 ---
 name: motion-studio
-description: "Personal motion-graphics studio for voice-over-driven product films made in code: one HTML composition where every cut, caption and camera move lands on a spoken word (local Kokoro TTS + Whisper word times), reviewed live in an HTML player with the real mix, rendered frame-exact to MP4 only on approval. Covers the staged workflow (brief, three directions, storyboard, one scene, scored review, the rest), direction and hooks, design, motion vocabulary, springs, camera, spotlight, cursor, screen capture, music and SFX from a hits table, formats, render-inspect-fix QA with contact and phone sheets, and a delivery report. Use for narrated product demos, feature films, launch films and walkthroughs where the voice sets the pace, or when the user names motion-studio or the HTML engine. For other motion graphics (kinetic type, titles, diagrams, data viz, explainers, reels, templates) use remotion-studio; for planning only use motion-director; for critique use motion-review."
-version: 0.2.0
+description: "Personal motion-graphics studio for voice-over-driven product films made in code: one HTML composition where every cut, caption and camera move lands on a spoken word (local Kokoro TTS + Whisper word times), reviewed live in an HTML player with the real mix, rendered frame-exact to MP4 only on approval. Covers the staged workflow (tagged brief with a per-film banned list, three directions, storyboard, start gate, one golden scene, scored review, the rest), direction and hooks, design, motion vocabulary, springs, camera, spotlight, cursor, screen capture, music and SFX from a hits table, formats, render-inspect-fix QA with contact and phone sheets, measured checks (velocity plots, optical flow, forensics) and a delivery report. Use for narrated product demos, feature films, launch films and walkthroughs where the voice sets the pace, or when the user names motion-studio or the HTML engine. For other motion graphics (kinetic type, titles, diagrams, data viz, explainers, reels, templates) use remotion-studio; for planning only use motion-director; for critique use motion-review."
+version: 0.3.0
 ---
 
 # Motion Studio
@@ -10,7 +10,7 @@ You are director, motion designer and editor. Story first, effects second. Every
 
 ## Home
 
-All personal animation and motion-graphics work lives in `C:\Users\Annas Mustafa\Documents\me\video-studio` (this skill's canonical source is `skills/motion-studio` there). Start there: read `CLAUDE.md` and `prompts/INDEX.md`. Paper trail per video: `projects/<yyyy-mm-dd>-<slug>/`.
+All personal animation and motion-graphics work lives in `{{VIDEO_STUDIO}}` (this skill's canonical source is `skills/motion-studio` there). Start there: read `CLAUDE.md` and `prompts/INDEX.md`. Paper trail per video: `projects/<yyyy-mm-dd>-<slug>/`.
 
 ## Which engine (decide first)
 
@@ -32,6 +32,10 @@ Planning only: `motion-director`. Review only: `motion-review`.
 | [references/design.md](references/design.md) | The look: type, colour, layout, UI framing, end card |
 | [references/design-system.md](references/design-system.md) | Tokens and reusable pieces across films |
 | [references/vocabulary.md](references/vocabulary.md) | Turning motion terms into this engine's recipes |
+| [references/banned-effects.md](references/banned-effects.md) | Writing the brief's per-film banned list; cheap concept tells |
+| [references/transitions.md](references/transitions.md) | Storyboard transitions ("X becomes Y"), velocity-matched cut, hidden cuts |
+| [references/golden-scene.md](references/golden-scene.md) | Plan check, golden scene, commit per scene, acceptance criteria, start gate |
+| [references/gotchas.md](references/gotchas.md) | Before the first draft: render, layout, frame-arithmetic traps, taste precedents |
 | [references/motion.md](references/motion.md) | Springs, kinetic type, camera, spotlight, cursor, transitions |
 | [references/engine.md](references/engine.md) | Composition, live player, rendering |
 | [references/voice.md](references/voice.md) | Voice-over generation and word timing |
@@ -67,6 +71,10 @@ Planning only: `motion-director`. Review only: `motion-review`.
 - **Motion must be motivated**; springs not linear, tiny overshoot at most; the camera holds between moves and moves only on a spoken beat.
 - **One accent, one radius scale, one type family.** Tokens, not one-off values.
 - **Sound from the hits table only**, placed by peak; music on the beat grid, ducked; -14 LUFS, -1 dBTP.
+- **Banned list per film** in the brief, checked by the reviewer; every transition reads "X becomes Y".
+- **Start gate:** show the beat map or line-to-visual map and 4 to 8 named stills before any code; after scene 1 passes, it is the golden scene for the rest.
+- **Measure, do not guess:** a move that feels wrong gets a velocity plot (`inspect.mjs plot`) before a code change; glides get `inspect.mjs flow`.
+- **Say what you cannot render or view** at the start, then say it again in the report.
 - **Review live, render once.** No em dashes in on-screen text or subtitles.
 
 ## Subagents

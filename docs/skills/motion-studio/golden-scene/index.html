@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Build loop: golden scene, plan check, commits, acceptance criteria (motion-studio) · Video Studio</title>
+<meta name="description" content="Engine-agnostic method for building scenes 2 to N without style drift or regressions. Remotion specifics are in ~/.claude/skills/remotion-studio/references/phases.md.">
+<meta property="og:title" content="Build loop: golden scene, plan check, commits, acceptance criteria (motion-studio) · Video Studio">
+<meta property="og:description" content="Engine-agnostic method for building scenes 2 to N without style drift or regressions. Remotion specifics are in ~/.claude/skills/remotion-studio/references/phases.md.">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23eef3ff'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%233b6cf6'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../../assets/site.css">
+<link rel="stylesheet" href="../../../assets/panel-skills.css">
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="../../../"><span class="dot"></span>Video Studio</a>
+    <nav class="main" aria-label="Main"><a href="../../../">Home</a><a href="../../../tour/">Tour</a><a href="../../../guide/">Guide</a><a href="../../../skills/" aria-current="page">Skills</a><a href="../../../prompts/">Prompts</a><a href="../../../studio/">Studio</a><a href="../../../techniques/">Techniques</a><a href="../../../shot-library/">Shot library</a><a href="../../../research/">Research</a><a href="../../../gallery/">Gallery</a><a href="../../../credits/">Credits</a></nav>
+    <div class="tools">
+      <a class="btn" href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">GitHub</a>
+      <button class="btn" id="theme-toggle" type="button" aria-label="Toggle light or dark theme">Theme</button>
+    </div>
+  </div>
+</header>
+<main>
+  <div class="wrap">
+<nav class="crumbs ps-crumbs" aria-label="Breadcrumb"><a href="../../../">Home</a> <span aria-hidden="true">/</span> <a href="../../../skills/">Skills</a> <span aria-hidden="true">/</span> <a href="../../../skills/motion-studio/">motion-studio</a> <span aria-hidden="true">/</span> <span aria-current="page">Build loop: golden scene, plan check, commits, acceptance criteria</span></nav><header class="ps-head"><div class="ps-badges"><span class="badge plain">Reference</span> <span class="badge">motion-studio</span></div><h1>Build loop: golden scene, plan check, commits, acceptance criteria</h1></header><div class="ps-doc"><article class="ps-article"><p>Engine-agnostic method for building scenes 2 to N without style drift or regressions. Remotion specifics are in <code>~/.claude/skills/remotion-studio/references/phases.md</code>.</p>
+<h2 id="1-plan-check-before-code-five-lines">1. Plan check before code (five lines)</h2>
+<p>Before coding scene N the builder writes, in <code>notes.md</code>: what it will build, what it will not touch, the one thing most likely to go wrong, the stills it will show first, and the acceptance criteria it is aiming at (section 4). Why: it catches misreadings while they cost a sentence. Evidence: claimed by two builders (F-C7); cheap to test. For a risky scene (new technique, dense, a hard transition) a fresh subagent that did not write the plan lists its five weakest decisions and the cheapest check for each, before anything renders. Optional: skip for simple scenes.</p>
+<h2 id="2-the-golden-scene">2. The golden scene</h2>
+<p>After scene 1 passes review it is the <strong>golden scene</strong>: the working example for scenes 2 to N and for the next film of the same type. The builder is given its source (not a description) and told: &quot;Build scene N in the same structure (beat mapping, stagger, entrance style), change only the content, and list what you copied.&quot; Why: text-only prompts yield generic fades and slide-ups; showing a working component makes the model follow the pattern. It is the standard few-shot principle. Evidence: only claimed (F-C1), costs almost nothing to test. Rules: one golden scene per film, named in <code>notes.md</code> with its path; each scene still gets its own typographic action (learnings: one entrance curve reused becomes a template), so &quot;same structure&quot; means timing mapping and code shape, not the same move. A scene that proves itself twice is promoted to the library.</p>
+<h2 id="3-commit-per-approved-scene-read-the-diff">3. Commit per approved scene, read the diff</h2>
+<ul><li>One local commit per approved scene (never push). The commit is the rollback point.</li><li>On every revision pass: show <code>git diff --stat</code>, name anything that changed outside the request, re-render the previous approved stills of that scene and compare before and after.</li><li>Keep a decision log in <code>notes.md</code> (&quot;scene 3 hold is 45 f because of the voice line&quot;) so a long session does not depend on memory.</li></ul>
+<p>Why: an &quot;improvement&quot; sometimes removes something that was right; a scene rebuilt from scratch on day two and removing one scene shifting all later timing were the reported failures. Evidence: first-hand experience (F-C2), not measured.</p>
+<h2 id="4-acceptance-criteria-and-glossary">4. Acceptance criteria and glossary</h2>
+<ul><li>State outcomes with thresholds, checkable on a still: &quot;title block no closer than 120 px to any edge&quot;, &quot;focal point alone for at least 45 frames&quot;, &quot;headroom under 20 percent&quot;. The builder picks the values and reports which it chose.</li><li>Before the first revision round, define every vague word in motion terms once per film in <code>glossary.md</code> (&quot;punchy = entrances at most 10 frames, one scale event per scene, hard cut into the next&quot;). Revision prompts cite the glossary, so round 3 means what round 1 meant.</li><li>Templates: <code>~/.claude/skills/motion-director/templates/acceptance.md</code> and <code>glossary.md</code>.</li></ul>
+<p>Why: exact CSS values were misread and &quot;make it better&quot; did not work for two independent builders. Evidence: claimed, consistent (F-C6).</p>
+<h2 id="5-start-gate">5. Start gate</h2>
+<p>Before any code on a new film: show the beat map (music-led) or the line-to-visual map (voice-led) and N named stills (4 to 8, scene and timestamp). Build only after that. If you cannot run code or view images here, say so first and do not describe results you have not seen. Why: the approval stop is cheapest before code. Evidence: the same gate recurs in five finished films by two authors (F-B1); capability line only claimed (F-B14).</p><nav class="ps-prevnext" aria-label="Previous and next"><a class="ps-pn prev" href="../formats/"><span class="ps-pn-dir">Previous</span><span class="ps-pn-title">Formats and delivery</span></a><a class="ps-pn next" href="../gotchas/"><span class="ps-pn-dir">Next</span><span class="ps-pn-title">Gotchas catalogue</span></a></nav></article><aside class="ps-side"><details class="ps-side-d" open><summary>On this page</summary><ul class="ps-toc"><li class="l2"><a href="#1-plan-check-before-code-five-lines">1. Plan check before code (five lines)</a></li><li class="l2"><a href="#2-the-golden-scene">2. The golden scene</a></li><li class="l2"><a href="#3-commit-per-approved-scene-read-the-diff">3. Commit per approved scene, read the diff</a></li><li class="l2"><a href="#4-acceptance-criteria-and-glossary">4. Acceptance criteria and glossary</a></li><li class="l2"><a href="#5-start-gate">5. Start gate</a></li></ul></details><details class="ps-side-d" open><summary>In motion-studio</summary><ul class="ps-sidelist"><li><a href="../">SKILL.md</a></li><li><a href="../audio/">Music, sound effects, loudness</a></li><li><a href="../banned-effects/">Banned effects: a list per film</a></li><li><a href="../capture/">Capturing a real app</a></li><li><a href="../delivery/">Final delivery (Phase 5)</a></li><li><a href="../design-system/">A reusable motion-design system</a></li><li><a href="../design/">Visual design</a></li><li><a href="../direction/">Direction: brief, story, script, captions</a></li><li><a href="../engine/">Engine: composition, live player, renderer</a></li><li><a href="../formats/">Formats and delivery</a></li><li class="on"><span aria-current="page">Build loop: golden scene, plan check, commits, acceptance criteria</span></li><li><a href="../gotchas/">Gotchas catalogue</a></li><li><a href="../learnings/">Learnings log</a></li><li><a href="../motion/">Motion</a></li><li><a href="../qa/">QA checklists</a></li><li><a href="../reference-analysis/">Using a visual reference</a></li><li><a href="../review/">Render, inspect, fix: the review loop</a></li><li><a href="../three-d/">3D (three.js): rarely the right call</a></li><li><a href="../transitions/">Transitions: &quot;X becomes Y&quot;, velocity handoff, hidden cuts</a></li><li><a href="../vocabulary/">Vocabulary → recipes in this engine</a></li><li><a href="../voice/">Voice-over</a></li><li><a href="../workflow/">Staged workflow</a></li></ul></details><p class="ps-side-foot"><a href="https://github.com/AnnasMustafaDev/video-studio/blob/main/skills/motion-studio/references/golden-scene.md" rel="noopener noreferrer">View source on GitHub</a></p></aside></div><script>
+(function(){
+  var mq = window.matchMedia('(min-width: 981px)');
+  function sync(){ document.querySelectorAll('details.ps-side-d').forEach(function(d){ d.open = mq.matches; }); }
+  sync();
+  if (mq.addEventListener) mq.addEventListener('change', sync);
+  var links = [].slice.call(document.querySelectorAll('.ps-toc a'));
+  if (!links.length || !('IntersectionObserver' in window)) return;
+  var byId = {};
+  links.forEach(function(a){ byId[decodeURIComponent(a.getAttribute('href').slice(1))] = a; });
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (!e.isIntersecting) return;
+      links.forEach(function(a){ a.classList.remove('on'); });
+      var a = byId[e.target.id]; if (a) a.classList.add('on');
+    });
+  }, { rootMargin: '-70px 0px -70% 0px' });
+  Object.keys(byId).forEach(function(id){ var el = document.getElementById(id); if (el) io.observe(el); });
+})();
+</script>
+  </div>
+</main>
+<footer class="site">
+  <div class="wrap cols">
+    <div>
+      <strong>Video Studio</strong><br>
+      A personal studio for motion graphics and animated videos with Claude Code.
+    </div>
+    <div>
+      <a href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">Source on GitHub</a><br>
+      <a href="../../../credits/">Credits and licences</a>
+    </div>
+  </div>
+</footer>
+<script src="../../../assets/site.js" defer></script>
+</body>
+</html>

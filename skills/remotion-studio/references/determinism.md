@@ -33,3 +33,16 @@ Remotion renders frames out of order, in parallel tabs. Anything that depends on
 - `npm run lint` passes (eslint with the Remotion config catches several of the above).
 - Render the same frame twice (two stills runs) when something looks unstable: identical images, or there is hidden state.
 - Search the video folder for banned APIs: `Math.random`, `Date.now`, `setTimeout`, `requestAnimationFrame`, `transition:`, `@keyframes`.
+
+## Frame arithmetic traps
+
+Failure-derived from a 44-shot explainer (evidence: real rework). Full list with reasons: `~/.claude/skills/motion-studio/references/gotchas.md`. The ones that bite Remotion:
+
+- `interpolate` or `spring` returning 0 at the shot's first frame leaves it empty: start soft (25 to 57 percent) or start on a settled frame.
+- An exit that ends at 40 to 57 percent opacity pops at a hard cut: finish the fade (`1 - (n/N)^1.5`) or end on a cut frame. A fade under 0.3 s reads as a pop.
+- First elements start on the shot's first frame, not when the caption starts. Do not wrap an already ramping component in a second fade.
+- Keyframe tables start with the off-screen value at shot start. Slide-ins from below over about 120 px cross the caption band.
+- `TransitionSeries` overlaps change durations: recompute the sum before hard-coding any frame after a transition.
+- Do not change words after frame numbers are hard-coded; derive from `timing.ts`.
+- Fast moves need 8 motion-blur subframes (render the frame at sub-offsets and blend); 4 ghosts on floods, wipes and drags.
+- Helpers: see `studio/src/lib/motion.ts` (`buoyant()`, and exit and entry ramps) and `studio/src/lib/transitions.tsx` (velocity-matched cut); check any move with `inspect.mjs plot` and glides or cuts with `inspect.mjs flow`.

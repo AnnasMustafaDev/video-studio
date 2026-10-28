@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>10 · Creative directions · Video Studio</title>
+<meta name="description" content="Get three genuinely different visual directions and a recommendation before any storyboard or code.">
+<meta property="og:title" content="10 · Creative directions · Video Studio">
+<meta property="og:description" content="Get three genuinely different visual directions and a recommendation before any storyboard or code.">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23eef3ff'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%233b6cf6'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../assets/site.css">
+<link rel="stylesheet" href="../../assets/panel-skills.css">
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="../../"><span class="dot"></span>Video Studio</a>
+    <nav class="main" aria-label="Main"><a href="../../">Home</a><a href="../../tour/">Tour</a><a href="../../guide/">Guide</a><a href="../../skills/">Skills</a><a href="../../prompts/" aria-current="page">Prompts</a><a href="../../studio/">Studio</a><a href="../../techniques/">Techniques</a><a href="../../shot-library/">Shot library</a><a href="../../research/">Research</a><a href="../../gallery/">Gallery</a><a href="../../credits/">Credits</a></nav>
+    <div class="tools">
+      <a class="btn" href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">GitHub</a>
+      <button class="btn" id="theme-toggle" type="button" aria-label="Toggle light or dark theme">Theme</button>
+    </div>
+  </div>
+</header>
+<main>
+  <div class="wrap">
+<nav class="crumbs ps-crumbs" aria-label="Breadcrumb"><a href="../../">Home</a> <span aria-hidden="true">/</span> <a href="../../prompts/">Prompts</a> <span aria-hidden="true">/</span> <span aria-current="page">10 · Creative directions</span></nav><div class="ps-narrow"><header class="ps-head"><div class="ps-badges"><span class="badge plain">Prompt 10</span> <span class="badge">Staged build</span> </div><h1>Creative directions</h1></header><dl class="ps-info ps-info-prompt"><div class="wide"><dt>Purpose</dt><dd>Get three genuinely different visual directions and a recommendation before any storyboard or code.</dd></div><div class=""><dt>Use when</dt><dd>The look is not decided yet. Skip it when a reference (<a href="../20-reference-analysis/"><code>20</code></a>) or the design system (<a href="../30-design-system/"><code>30</code></a>) already fixes the look.</dd></div><div class=""><dt>Stage</dt><dd>Staged prompt 1 of 4. Creative direction.</dd></div><div class=""><dt>Inputs you must fill in</dt><dd><code>[topic]</code>, and edit the duration if it is not 20 seconds. Optional: brief, audience, platform, references.</dd></div><div class=""><dt>Expected output</dt><dd>Three directions, each with visual language, palette, typography, pacing, animation style, transitions and audio direction, plus which is strongest and why. No code.</dd></div><div class=""><dt>Next prompt</dt><dd>Pick one (or mix), then <a href="../11-storyboard/"><code>11-storyboard.md</code></a>.</dd></div></dl><div class="ps-intro-text"><p>Source: notes §6, prompt 1, verbatim.</p></div><section class="ps-section ps-prompt"><h2 id="prompt">Prompt</h2>
+<pre><code class="lang-text">I want a 20-second premium motion-graphics video about [topic]. Generate three genuinely different creative directions. For each, describe the visual language, palette, typography, pacing, animation style, transitions, and audio direction. Explain which direction is strongest and why. Do not write code yet.</code></pre></section><section class="ps-section ps-additions"><h2 id="studio-additions">Studio additions</h2>
+<pre><code class="lang-text">Format: [16:9 1920x1080 | 9:16 1080x1920 | 1:1 1080x1080], [30|60] fps. Audience: [audience]. The one thing to remember: [message].
+&quot;Genuinely different&quot; means different composition logic and motion language, not three palettes on the same layout. At least one direction must stay inside the existing tokens in studio/src/lib/tokens.ts; say which. For each direction add: the hook in the first 2 seconds, one sentence on what could go wrong, and whether it needs assets Remotion cannot make (footage, 3D, photos).
+Write the result to projects/[yyyy-mm-dd]-[slug]/directions.md.</code></pre></section><nav class="ps-prevnext" aria-label="Previous and next"><a class="ps-pn prev" href="../20-reference-analysis/"><span class="ps-pn-dir">Previous</span><span class="ps-pn-title">20 · Reference analysis</span></a><a class="ps-pn next" href="../11-storyboard/"><span class="ps-pn-dir">Next</span><span class="ps-pn-title">11 · Storyboard</span></a></nav><p class="ps-small"><a href="https://github.com/AnnasMustafaDev/video-studio/blob/main/prompts/10-creative-directions.md" rel="noopener noreferrer">View this prompt on GitHub</a></p></div>
+  </div>
+</main>
+<footer class="site">
+  <div class="wrap cols">
+    <div>
+      <strong>Video Studio</strong><br>
+      A personal studio for motion graphics and animated videos with Claude Code.
+    </div>
+    <div>
+      <a href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">Source on GitHub</a><br>
+      <a href="../../credits/">Credits and licences</a>
+    </div>
+  </div>
+</footer>
+<script src="../../assets/site.js" defer></script>
+</body>
+</html>

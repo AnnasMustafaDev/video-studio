@@ -31,3 +31,18 @@ bed (music under everything), sting (short musical accent), riser (builds into a
 ## Frame-based reminder (for whoever builds it)
 
 Every animation is a pure function of the frame: in Remotion `useCurrentFrame()`, `interpolate()`, `spring()`, `useVideoConfig()`; no CSS transitions, `requestAnimationFrame`, timers or unseeded randomness. Same frame in, same image out.
+
+## Added terms (research round)
+
+| Term | What it is | Prompt terms |
+|---|---|---|
+| **X becomes Y** | The storyboard form of a transition: outgoing object, carried content, incoming object | iris, accordion squeeze, flood-and-contract, line carry, label carry |
+| **Velocity-matched cut** | Cut at the fastest frame; the next shot starts at that speed and brakes | exit ramp, entry decay, momentum across the cut |
+| **Occluder cut** | A soft foreground object covers the screen and the cut hides inside it | hidden cut, no-cut transition |
+| **Light-leak burn** | A wash ramps up, the cut hides at the peak, it recedes faster; the old picture washes out | leak, burn (tint with the accent, no flare) |
+| **Fragment chain** | Copy as 1 to 4 word pieces, build mode (append, newest in accent) or replace mode | fragment, build, replace, one giant keyword |
+| **Karaoke fill, weight pump** | Word fills at speaking rate; variable-font weight pulses on the beat | word fill, weight envelope |
+| **Earned stillness** | One hold on the key claim, then the biggest spike; spend it once | hold, drop-out, silence hole |
+| **Golden scene** | An approved scene used as the working example for the rest | reference scene |
+
+Named moves written in the card format (intent, core motion, parameters with what happens if wrong, pitfalls) belong to the shot library: `skills/shot-library`. Draw 3 to 5 moves from it when a film risks repeating the familiar fade-up, push-in and end card.

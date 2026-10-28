@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>75 · Music-led beat map · Video Studio</title>
+<meta name="description" content="Plan a music-driven piece beats-first, so sync is a property of the plan and the loop closes.">
+<meta property="og:title" content="75 · Music-led beat map · Video Studio">
+<meta property="og:description" content="Plan a music-driven piece beats-first, so sync is a property of the plan and the loop closes.">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23eef3ff'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%233b6cf6'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../assets/site.css">
+<link rel="stylesheet" href="../../assets/panel-skills.css">
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="../../"><span class="dot"></span>Video Studio</a>
+    <nav class="main" aria-label="Main"><a href="../../">Home</a><a href="../../tour/">Tour</a><a href="../../guide/">Guide</a><a href="../../skills/">Skills</a><a href="../../prompts/" aria-current="page">Prompts</a><a href="../../studio/">Studio</a><a href="../../techniques/">Techniques</a><a href="../../shot-library/">Shot library</a><a href="../../research/">Research</a><a href="../../gallery/">Gallery</a><a href="../../credits/">Credits</a></nav>
+    <div class="tools">
+      <a class="btn" href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">GitHub</a>
+      <button class="btn" id="theme-toggle" type="button" aria-label="Toggle light or dark theme">Theme</button>
+    </div>
+  </div>
+</header>
+<main>
+  <div class="wrap">
+<nav class="crumbs ps-crumbs" aria-label="Breadcrumb"><a href="../../">Home</a> <span aria-hidden="true">/</span> <a href="../../prompts/">Prompts</a> <span aria-hidden="true">/</span> <span aria-current="page">75 · Music-led beat map</span></nav><div class="ps-narrow"><header class="ps-head"><div class="ps-badges"><span class="badge plain">Prompt 75</span> <span class="badge">Process and review</span> <span class="badge ok">Shown in films</span></div><h1>Music-led beat map</h1></header><dl class="ps-info ps-info-prompt"><div class="wide"><dt>Purpose</dt><dd>Plan a music-driven piece beats-first, so sync is a property of the plan and the loop closes.</dd></div><div class=""><dt>Use when</dt><dd>Showreels, loops and reels where the track sets the pace. Not for voice-led films (use <a href="../60-voiceover-film/"><code>60</code></a>).</dd></div><div class=""><dt>Stage</dt><dd>Storyboard variant, between <a href="../40-brief-template/"><code>40</code></a>/<a href="../00-master-workflow/"><code>00</code></a> and <a href="../11-storyboard/"><code>11</code></a>.</dd></div><div class=""><dt>Inputs you must fill in</dt><dd><code>[track file or &quot;compose one&quot;]</code>, <code>[BPM]</code>, <code>[total beats or bars]</code>, <code>[beats before the drop the song starts]</code>, <code>[loop: yes/no]</code>.</dd></div><div class=""><dt>Expected output</dt><dd>A beat map table shown to you before any code, grid acceptance numbers, and a loop plan.</dd></div><div class=""><dt>Why this exists</dt><dd>Four finished films were planned in beat ranges with the song&#39;s drop as an anchor, and a measured grid-acceptance step exists in a public repo. Evidence: shown in finished films for the beat map; sync quality not verified by us; the acceptance numbers are the author&#39;s claim. Findings F-B8, F-B9, F-A9.</dd></div><div class=""><dt>Next prompt</dt><dd><a href="../11-storyboard/"><code>11-storyboard.md</code></a> (use the beat map as its time axis), then <a href="../12-build-one-scene/"><code>12</code></a>.</dd></div></dl><section class="ps-section ps-prompt"><h2 id="prompt">Prompt</h2>
+<pre><code class="lang-text">Plan [slug] as a music-led piece. Show me only the beat map first; no code.
+
+1. Grid: [BPM] BPM, [N] beats ([bars] bars). If the track is not ours, detect the beats, fit a straight line to the beat times by least squares, report the residual (accept up to about 15 ms), and check half-time and double-time against where the kicks land. Keep float seconds until the last step into frames.
+2. Beat map table: beat or beat range, bar, event on screen, sound. The song starts [k] beats before its drop; the biggest visual event lands on the drop; a quiet breakdown carries any hold.
+3. Rule &quot;no dead time&quot;: the page is never empty between beats, but it is not constantly moving either. Only one element moves on most beats; full-frame or camera impacts at most 3 in the whole film, at least 16 beats apart.
+4. Loop (if yes): the last frame equals the first, including accent, type and cursor position AND cursor velocity. The opening word or object returns on the beat when the loop restarts. Plan a loop-twice draft and a first-vs-last frame diff.
+5. After render, measure cut error against the grid (target 3 frames or less) and report any cut that misses.</code></pre></section><section class="ps-section ps-additions"><h2 id="studio-additions">Studio additions</h2>
+<pre><code class="lang-text">Save the table to projects/[yyyy-mm-dd]-[slug]/storyboard.md. Use studio/src/lib/Sfx.tsx and a cues.ts derived from the beat constants (see 50). Sources: beat-map structure after @twoclipping and @ultimaxbt on prompt-motion.com; grid method and impact cap after Vincentwei1021&#39;s video-shotcraft (music-beat-sync.md). Our wording.</code></pre></section><nav class="ps-prevnext" aria-label="Previous and next"><a class="ps-pn prev" href="../11-storyboard/"><span class="ps-pn-dir">Previous</span><span class="ps-pn-title">11 · Storyboard</span></a><a class="ps-pn next" href="../17-pick-shots-from-library/"><span class="ps-pn-dir">Next</span><span class="ps-pn-title">17 · Pick shots from the library</span></a></nav><p class="ps-small"><a href="https://github.com/AnnasMustafaDev/video-studio/blob/main/prompts/75-music-led-beat-map.md" rel="noopener noreferrer">View this prompt on GitHub</a></p></div>
+  </div>
+</main>
+<footer class="site">
+  <div class="wrap cols">
+    <div>
+      <strong>Video Studio</strong><br>
+      A personal studio for motion graphics and animated videos with Claude Code.
+    </div>
+    <div>
+      <a href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">Source on GitHub</a><br>
+      <a href="../../credits/">Credits and licences</a>
+    </div>
+  </div>
+</footer>
+<script src="../../assets/site.js" defer></script>
+</body>
+</html>

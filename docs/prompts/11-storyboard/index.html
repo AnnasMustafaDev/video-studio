@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>11 · Storyboard · Video Studio</title>
+<meta name="description" content="Turn the chosen direction into a timed, frame-specific storyboard with a narrative arc.">
+<meta property="og:title" content="11 · Storyboard · Video Studio">
+<meta property="og:description" content="Turn the chosen direction into a timed, frame-specific storyboard with a narrative arc.">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23eef3ff'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%233b6cf6'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../assets/site.css">
+<link rel="stylesheet" href="../../assets/panel-skills.css">
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="../../"><span class="dot"></span>Video Studio</a>
+    <nav class="main" aria-label="Main"><a href="../../">Home</a><a href="../../tour/">Tour</a><a href="../../guide/">Guide</a><a href="../../skills/">Skills</a><a href="../../prompts/" aria-current="page">Prompts</a><a href="../../studio/">Studio</a><a href="../../techniques/">Techniques</a><a href="../../shot-library/">Shot library</a><a href="../../research/">Research</a><a href="../../gallery/">Gallery</a><a href="../../credits/">Credits</a></nav>
+    <div class="tools">
+      <a class="btn" href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">GitHub</a>
+      <button class="btn" id="theme-toggle" type="button" aria-label="Toggle light or dark theme">Theme</button>
+    </div>
+  </div>
+</header>
+<main>
+  <div class="wrap">
+<nav class="crumbs ps-crumbs" aria-label="Breadcrumb"><a href="../../">Home</a> <span aria-hidden="true">/</span> <a href="../../prompts/">Prompts</a> <span aria-hidden="true">/</span> <span aria-current="page">11 · Storyboard</span></nav><div class="ps-narrow"><header class="ps-head"><div class="ps-badges"><span class="badge plain">Prompt 11</span> <span class="badge">Staged build</span> <span class="badge ok">Shown in films</span></div><h1>Storyboard</h1></header><dl class="ps-info ps-info-prompt"><div class="wide"><dt>Purpose</dt><dd>Turn the chosen direction into a timed, frame-specific storyboard with a narrative arc.</dd></div><div class=""><dt>Use when</dt><dd>A direction is chosen (from <a href="../10-creative-directions/"><code>10</code></a>, <a href="../20-reference-analysis/"><code>20</code></a> or your own brief).</dd></div><div class=""><dt>Stage</dt><dd>Staged prompt 2 of 4. Script and storyboard.</dd></div><div class=""><dt>Inputs you must fill in</dt><dd>Which direction was chosen (name it, or paste it), any changes you want to it.</dd></div><div class=""><dt>Expected output</dt><dd>A scene table: timestamps, purpose, first frame, final frame, focal point, exact text, animation, easing, transition, audio cues, link to the next scene, plus flags on repetitive scenes.</dd></div><div class=""><dt>Why this exists</dt><dd>A transition column that must name the carried element, plus colour flow and density tags, makes storyboards checkable on a contact sheet. Evidence: the &quot;X becomes Y&quot; rule is shown in two finished films; colour-flow and density come from a public repo spec, only claimed to work. Findings F-B3, F-C9.</dd></div><div class=""><dt>Next prompt</dt><dd>Approve or edit, then <a href="../12-build-one-scene/"><code>12-build-one-scene.md</code></a>.</dd></div></dl><div class="ps-intro-text"><p>Source: notes §6, prompt 2, verbatim.</p></div><section class="ps-section ps-prompt"><h2 id="prompt">Prompt</h2>
+<pre><code class="lang-text">Turn the chosen direction into a storyboard with timestamps and a clear narrative arc. For every scene, specify the first frame, final frame, focal point, exact text, animation, easing, transition, and audio cues. Include the purpose of each scene and how it connects to the next. Flag any scene that is visually repetitive.</code></pre></section><section class="ps-section ps-additions"><h2 id="studio-additions">Studio additions</h2>
+<pre><code class="lang-text">Chosen direction: [direction name or paste]. Changes: [changes].
+Give timings in seconds and in frames at [fps] fps. Scene durations must add up exactly to the composition length, accounting for transition overlaps (TransitionSeries overlaps shorten the total).
+Holds: any number or call to action stays still for at least 1.5 to 2 s. On-screen text: at most 5 words per beat unless the scene is a title.
+Add a column &quot;stills to check&quot; with 2 to 4 frame numbers per scene (settled state, transition midpoint, last frame); prompt 13 will use them.
+Transition column rule (UI, product and diagram pieces): write every hand-off as &quot;X becomes Y&quot;, naming the element that carries across and what it carries (label, words, colour). &quot;Cut&quot; and &quot;fade&quot; are not allowed as the whole answer; a hard cut is fine only when subject, scale, direction or material continues across it, and you say which. For type-only pieces a plain cut onto a settled page may stay, marked as chosen. Check later: does the last frame of scene N already contain what scene N+1 grows from?
+Colour flow: add a small table (scene, time, dominant colour, mood). Still one accent per frame.
+Density: tag each scene sparse, medium or dense. Dense scenes are rare and deliberate; flag dead air (a static screen under a voice) and effect soup.
+Real footage or captures: list places where a real screen recording or screenshot replaces drawn UI.
+Optional for music-led films: see 75 for the beat map first.
+Write it to projects/[yyyy-mm-dd]-[slug]/storyboard.md as a Markdown table. No code yet.
+
+Sources: &quot;A becomes B&quot; rule from the prompt-motion.com briefs of @twoclipping and @ultimaxbt; colour-flow, density and anti-pattern names after u/VanCliefMedia&#39;s public Animation-Workflow repo. Our wording.</code></pre></section><nav class="ps-prevnext" aria-label="Previous and next"><a class="ps-pn prev" href="../10-creative-directions/"><span class="ps-pn-dir">Previous</span><span class="ps-pn-title">10 · Creative directions</span></a><a class="ps-pn next" href="../75-music-led-beat-map/"><span class="ps-pn-dir">Next</span><span class="ps-pn-title">75 · Music-led beat map</span></a></nav><p class="ps-small"><a href="https://github.com/AnnasMustafaDev/video-studio/blob/main/prompts/11-storyboard.md" rel="noopener noreferrer">View this prompt on GitHub</a></p></div>
+  </div>
+</main>
+<footer class="site">
+  <div class="wrap cols">
+    <div>
+      <strong>Video Studio</strong><br>
+      A personal studio for motion graphics and animated videos with Claude Code.
+    </div>
+    <div>
+      <a href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">Source on GitHub</a><br>
+      <a href="../../credits/">Credits and licences</a>
+    </div>
+  </div>
+</footer>
+<script src="../../assets/site.js" defer></script>
+</body>
+</html>

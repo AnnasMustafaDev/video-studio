@@ -81,6 +81,52 @@ export const space = {
 
 export const radius = { s: 8, m: 16, l: 28 } as const;
 
+/**
+ * Video-native type ramp (F-A5). Sizes are percent of the composition WIDTH (vw), so a
+ * hero word can be as large as the frame allows instead of collapsing into a web page layout.
+ * The px `type` scale above stays for reading text; use this ramp for hero moments.
+ * Atoms (colours, families) are sacred, composition is free, numbers come from the script.
+ *
+ * At 1920 wide: wordmark 576 px, stat 346 px, display 269 px, claim 125 px, reading 61 px.
+ */
+export const frameRamp = {
+  /** One giant keyword or wordmark, one per film. */
+  wordmark: 30,
+  /** Big numeral that is the whole point of a scene. */
+  stat: 18,
+  /** One or two words filling the frame. */
+  display: 14,
+  /** A claim line (6 to 9 vw in the source ramp; 6.5 so a five-word line fits the safe area). */
+  claim: 6.5,
+  /** Reading text on a hero frame. */
+  reading: 3.2,
+  /** Chrome labels (ticks, units, metadata). Exactly the floor. */
+  label: 1.4,
+} as const;
+
+export type FrameStep = keyof typeof frameRamp;
+
+/** Smallest allowed text, in vw (1.4 vw = 27 px at 1920). Chrome labels may sit at it; nothing may go below. */
+export const TEXT_FLOOR_VW = 1.4;
+
+/** Percent-of-width to px for a composition `width`. */
+export const vw = (width: number, percent: number) => (width * percent) / 100;
+
+/**
+ * Style for a ramp step at a given composition width, text floor enforced.
+ * Large steps are tighter and heavier; `label` is the mono chrome size.
+ */
+export const frameType = (width: number, step: FrameStep) => {
+  const fontSize = Math.max(vw(width, frameRamp[step]), vw(width, TEXT_FLOOR_VW));
+  const big = frameRamp[step] >= frameRamp.display;
+  return {
+    fontSize,
+    lineHeight: big ? 0.95 : step === "claim" ? 1.05 : 1.25,
+    letterSpacing: big ? "-0.045em" : step === "claim" ? "-0.03em" : "-0.01em",
+    fontWeight: big ? 600 : step === "label" ? 500 : step === "claim" ? 600 : 400,
+  } as const;
+};
+
 export type Format = "16:9" | "9:16" | "1:1";
 
 export type Insets = {

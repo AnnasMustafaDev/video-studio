@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>53 · Final render and delivery report · Video Studio</title>
+<meta name="description" content="Render the approved video at spec, verify the files, and write the Phase 5 delivery report.">
+<meta property="og:title" content="53 · Final render and delivery report · Video Studio">
+<meta property="og:description" content="Render the approved video at spec, verify the files, and write the Phase 5 delivery report.">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23eef3ff'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%233b6cf6'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../assets/site.css">
+<link rel="stylesheet" href="../../assets/panel-skills.css">
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="../../"><span class="dot"></span>Video Studio</a>
+    <nav class="main" aria-label="Main"><a href="../../">Home</a><a href="../../tour/">Tour</a><a href="../../guide/">Guide</a><a href="../../skills/">Skills</a><a href="../../prompts/" aria-current="page">Prompts</a><a href="../../studio/">Studio</a><a href="../../techniques/">Techniques</a><a href="../../shot-library/">Shot library</a><a href="../../research/">Research</a><a href="../../gallery/">Gallery</a><a href="../../credits/">Credits</a></nav>
+    <div class="tools">
+      <a class="btn" href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">GitHub</a>
+      <button class="btn" id="theme-toggle" type="button" aria-label="Toggle light or dark theme">Theme</button>
+    </div>
+  </div>
+</header>
+<main>
+  <div class="wrap">
+<nav class="crumbs ps-crumbs" aria-label="Breadcrumb"><a href="../../">Home</a> <span aria-hidden="true">/</span> <a href="../../prompts/">Prompts</a> <span aria-hidden="true">/</span> <span aria-current="page">53 · Final render and delivery report</span></nav><div class="ps-narrow"><header class="ps-head"><div class="ps-badges"><span class="badge plain">Prompt 53</span> <span class="badge">Finishing</span> <span class="badge ">Documented</span></div><h1>Final render and delivery report</h1></header><dl class="ps-info ps-info-prompt"><div class="wide"><dt>Purpose</dt><dd>Render the approved video at spec, verify the files, and write the Phase 5 delivery report.</dd></div><div class=""><dt>Use when</dt><dd>You approved the cut (picture, sound, captions, formats). Only then.</dd></div><div class=""><dt>Stage</dt><dd>Final delivery (master phase 5).</dd></div><div class=""><dt>Inputs you must fill in</dt><dd><code>[CompId(s)]</code>, <code>[resolution]</code>, <code>[fps]</code>, <code>[codec/container, default H.264 MP4]</code>, <code>[loudness target]</code>, <code>[output names]</code>.</dd></div><div class=""><dt>Expected output</dt><dd>Final files in <code>projects/&lt;date&gt;-&lt;slug&gt;/out/</code>, ffprobe and loudness measurements, a poster frame, and the delivery report covering every Phase 5 item.</dd></div><div class=""><dt>Why this exists</dt><dd>Contact sheets hide frozen stretches, one-frame pops and loop seams that measurement finds; embedding on a web page has its own failure set. Evidence: forensics reported to catch real defects in three public repos (not run by us); the embed list is one builder&#39;s first-hand debugging. Findings F-A1, F-C12.</dd></div><div class=""><dt>Next prompt</dt><dd><a href="../31-componentize-project/"><code>31-componentize-project.md</code></a>, then <a href="../70-post-mortem/"><code>70-post-mortem.md</code></a>.</dd></div></dl><section class="ps-section ps-prompt"><h2 id="prompt">Prompt</h2>
+<pre><code class="lang-text">Render the final version of [CompId(s)]. I approved the cut; do not change creative content now. If you find a defect, stop and tell me instead of fixing it silently.
+
+Pre-flight (check and report each):
+- Every scene reviewed on rendered frames, last review clean.
+- Fonts load before frame 0; no fallback font visible on frame 0 or the final frame.
+- All assets exist, aspect ratios preserved, none are placeholders.
+- Composition duration equals the storyboard; final frame is the intended end card.
+- Animation is deterministic (no timers, CSS transitions or unseeded random).
+
+Render at [resolution], [fps] fps, [codec, default H.264, yuv420p, AAC audio], high quality (CRF around 15 to 18). Then:
+- ffprobe the output: duration, resolution, frame rate, codec, pixel format, audio stream present.
+- Measure loudness with ffmpeg ebur128; target [-14 LUFS integrated, true peak at or below -1 dBTP]. If off, apply loudnorm on the audio and remux without re-encoding the video.
+- Spot-check the rendered file (not the preview): extract frames at each scene boundary and the final frame from the MP4 and look at them.
+- Pixel forensics on the rendered MP4 (not the preview), with intent declared. List designed moments first (a flash cut, a planned freeze) with a reason each, then measure on a small copy (for example 320x180, mean grey change between frames): the longest dead stretch per shot (under about 0.35 counts as still) and the settle time before each exit; one-frame pops; ghost frames next to cuts; judder; banding in dark gradients; for loops, the pixel difference between the last and first frame. Report every flag as intended or defect. Do not fix silently.
+- Export a poster frame PNG (usually the end card or the strongest still).
+
+Delivery report:
+- The output file(s) and their location.
+- Duration, resolution, and frame rate.
+- Assets and fonts used.
+- Any missing assets or licensing concerns.
+- What was checked during quality assurance.
+- Any remaining limitations.
+Also list which visuals or numbers are illustrative rather than real, and the .srt files if any.
+
+Delivery checklist if the file goes on a web page: H.264 High profile, pixel format yuv420p, -movflags +faststart, muted playsinline autoplay, preload=&quot;metadata&quot;, server supports byte ranges, a new filename per export (browsers cache a failed load), -tune grain only if dark gradients band, and check the file size in the network panel against a budget. A black video in Safari is usually the pixel format, missing faststart or no range support, not the profile.</code></pre>
+<p>The six report bullets are the notes&#39; Phase 5 list, verbatim.</p></section><section class="ps-section ps-additions"><h2 id="studio-additions">Studio additions</h2>
+<pre><code class="lang-text">Render from studio/: npx remotion render [CompId] ../projects/[yyyy-mm-dd]-[slug]/out/[slug]_[WxH]_[fps].mp4 --codec=h264 --crf=16 (repeat per format composition). Poster: npx remotion still [CompId] ../projects/[yyyy-mm-dd]-[slug]/out/[slug]_poster.png --frame=[frame]. Extract check frames from the MP4 with ffmpeg -ss [t] -i [file] -frames:v 1 [png] and look at them; if you could not view them, say so.
+Write the report to projects/[yyyy-mm-dd]-[slug]/notes.md under &quot;Delivery&quot;. out/ is gitignored; commit the code and the paper trail locally. Do not push.</code></pre>
+<p>Sources: forensics after Leonxlnx/cinetic, echris6/motion-video-kit and Vincentwei1021/anything2explainer; web-embed list after u/Vitalic7 (r/ClaudeAI) with the diagnosis corrected. Our wording.</p></section><nav class="ps-prevnext" aria-label="Previous and next"><a class="ps-pn prev" href="../52-recompose-formats/"><span class="ps-pn-dir">Previous</span><span class="ps-pn-title">52 · Recompose for 9:16 and 1:1</span></a><a class="ps-pn next" href="../31-componentize-project/"><span class="ps-pn-dir">Next</span><span class="ps-pn-title">31 · Turn this video into reusable components</span></a></nav><p class="ps-small"><a href="https://github.com/AnnasMustafaDev/video-studio/blob/main/prompts/53-final-render-delivery.md" rel="noopener noreferrer">View this prompt on GitHub</a></p></div>
+  </div>
+</main>
+<footer class="site">
+  <div class="wrap cols">
+    <div>
+      <strong>Video Studio</strong><br>
+      A personal studio for motion graphics and animated videos with Claude Code.
+    </div>
+    <div>
+      <a href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">Source on GitHub</a><br>
+      <a href="../../credits/">Credits and licences</a>
+    </div>
+  </div>
+</footer>
+<script src="../../assets/site.js" defer></script>
+</body>
+</html>

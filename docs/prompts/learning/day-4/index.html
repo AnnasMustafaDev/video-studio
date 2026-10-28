@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Day 4 · Data visualization · Video Studio</title>
+<meta name="description" content="Practise visual hierarchy and information design by animating one real insight.">
+<meta property="og:title" content="Day 4 · Data visualization · Video Studio">
+<meta property="og:description" content="Practise visual hierarchy and information design by animating one real insight.">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23eef3ff'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%233b6cf6'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../../assets/site.css">
+<link rel="stylesheet" href="../../../assets/panel-skills.css">
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="../../../"><span class="dot"></span>Video Studio</a>
+    <nav class="main" aria-label="Main"><a href="../../../">Home</a><a href="../../../tour/">Tour</a><a href="../../../guide/">Guide</a><a href="../../../skills/">Skills</a><a href="../../../prompts/" aria-current="page">Prompts</a><a href="../../../studio/">Studio</a><a href="../../../techniques/">Techniques</a><a href="../../../shot-library/">Shot library</a><a href="../../../research/">Research</a><a href="../../../gallery/">Gallery</a><a href="../../../credits/">Credits</a></nav>
+    <div class="tools">
+      <a class="btn" href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">GitHub</a>
+      <button class="btn" id="theme-toggle" type="button" aria-label="Toggle light or dark theme">Theme</button>
+    </div>
+  </div>
+</header>
+<main>
+  <div class="wrap">
+<nav class="crumbs ps-crumbs" aria-label="Breadcrumb"><a href="../../../">Home</a> <span aria-hidden="true">/</span> <a href="../../../prompts/">Prompts</a> <span aria-hidden="true">/</span> <a href="../../../prompts/#learning-plan">Learning plan</a> <span aria-hidden="true">/</span> <span aria-current="page">Day 4 · Data visualization</span></nav><div class="ps-narrow"><header class="ps-head"><div class="ps-badges"><span class="badge plain">Day 4</span> <span class="badge">Learning plan</span> </div><h1>Data visualization</h1></header><dl class="ps-info ps-info-prompt"><div class="wide"><dt>Purpose</dt><dd>Practise visual hierarchy and information design by animating one real insight.</dd></div><div class=""><dt>Use when</dt><dd>Day 4 of the 7-day plan. Main skill: visual hierarchy and information design.</dd></div><div class=""><dt>Stage</dt><dd>Learning. A short run of <a href="../../62-data-visualization/"><code>62-data-visualization.md</code></a>.</dd></div><div class=""><dt>Inputs you must fill in</dt><dd><code>[small real dataset, 3 to 8 values]</code>, <code>[source]</code>, <code>[the insight]</code>.</dd></div><div class=""><dt>Expected output</dt><dd>Insight headline, chart choice, a 10 to 12 s reveal, a muted-vs-accent comparison, files in <code>learning/day-4/</code>.</dd></div><div class=""><dt>Next prompt</dt><dd><a href="../../13-quality-review/"><code>13-quality-review.md</code></a>, <a href="../../70-post-mortem/"><code>70-post-mortem.md</code></a> (short), then <a href="../day-5/"><code>day-5.md</code></a>.</dd></div></dl><section class="ps-section ps-prompt"><h2 id="prompt">Prompt</h2>
+<pre><code class="lang-text">Learning day 4: a data visualization, 10 to 12 seconds, 16:9, 30 fps. The goal is visual hierarchy and information design.
+
+Data: [3 to 8 real values with labels and units]. Source: [source]. Insight: [insight].
+
+1. Write the insight as a headline of at most 8 words. Choose the chart form and justify it in one sentence.
+2. Reveal: context first (baseline, labels), then data (bars grow from zero, counters land on the true value), then the highlight (insight in the accent colour, the rest muted), then a 2 s hold on the conclusion with the source line visible.
+3. Build two versions of the final frame: (a) every bar the same colour, (b) one accent bar and the rest muted. Render both and explain what the eye does in each.
+4. Render stills at the end of each reveal step and compare every displayed number with the data.
+5. Teach me: three hierarchy tools you used (size, colour, position, motion order) and where.</code></pre></section><section class="ps-section ps-additions"><h2 id="studio-additions">Studio additions</h2>
+<pre><code class="lang-text">Composition Day4Data in studio/src/videos/day-4/, data in studio/src/videos/day-4/data.ts. Stills: npm run stills -- Day4Data [frames]. Save brief, prompt, storyboard and notes to learning/day-4/. If you could not view the stills, say so.</code></pre></section><nav class="ps-prevnext" aria-label="Previous and next"><a class="ps-pn prev" href="../day-3/"><span class="ps-pn-dir">Previous</span><span class="ps-pn-title">Animated product UI demo</span></a><a class="ps-pn next" href="../day-5/"><span class="ps-pn-dir">Next</span><span class="ps-pn-title">15-second product teaser</span></a></nav><p class="ps-small"><a href="https://github.com/AnnasMustafaDev/video-studio/blob/main/prompts/learning/day-4.md" rel="noopener noreferrer">View this prompt on GitHub</a></p></div>
+  </div>
+</main>
+<footer class="site">
+  <div class="wrap cols">
+    <div>
+      <strong>Video Studio</strong><br>
+      A personal studio for motion graphics and animated videos with Claude Code.
+    </div>
+    <div>
+      <a href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">Source on GitHub</a><br>
+      <a href="../../../credits/">Credits and licences</a>
+    </div>
+  </div>
+</footer>
+<script src="../../../assets/site.js" defer></script>
+</body>
+</html>

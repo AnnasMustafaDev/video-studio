@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Formats and delivery (motion-studio) · Video Studio</title>
+<meta name="description" content="Caption pages that split on natural pauses fail once audio is cut or concatenated: the pauses vanish and one run put 188 words on a single page for about 2 seconds...">
+<meta property="og:title" content="Formats and delivery (motion-studio) · Video Studio">
+<meta property="og:description" content="Caption pages that split on natural pauses fail once audio is cut or concatenated: the pauses vanish and one run put 188 words on a single page for about 2 seconds...">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23eef3ff'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%233b6cf6'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../../assets/site.css">
+<link rel="stylesheet" href="../../../assets/panel-skills.css">
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="../../../"><span class="dot"></span>Video Studio</a>
+    <nav class="main" aria-label="Main"><a href="../../../">Home</a><a href="../../../tour/">Tour</a><a href="../../../guide/">Guide</a><a href="../../../skills/" aria-current="page">Skills</a><a href="../../../prompts/">Prompts</a><a href="../../../studio/">Studio</a><a href="../../../techniques/">Techniques</a><a href="../../../shot-library/">Shot library</a><a href="../../../research/">Research</a><a href="../../../gallery/">Gallery</a><a href="../../../credits/">Credits</a></nav>
+    <div class="tools">
+      <a class="btn" href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">GitHub</a>
+      <button class="btn" id="theme-toggle" type="button" aria-label="Toggle light or dark theme">Theme</button>
+    </div>
+  </div>
+</header>
+<main>
+  <div class="wrap">
+<nav class="crumbs ps-crumbs" aria-label="Breadcrumb"><a href="../../../">Home</a> <span aria-hidden="true">/</span> <a href="../../../skills/">Skills</a> <span aria-hidden="true">/</span> <a href="../../../skills/motion-studio/">motion-studio</a> <span aria-hidden="true">/</span> <span aria-current="page">Formats and delivery</span></nav><header class="ps-head"><div class="ps-badges"><span class="badge plain">Reference</span> <span class="badge">motion-studio</span></div><h1>Formats and delivery</h1></header><div class="ps-doc"><article class="ps-article"><table><thead><tr><th>Format</th><th>Size</th><th>Use</th><th>Notes</th></tr></thead><tbody><tr><td>16:9</td><td>1920×1080, 60 fps</td><td>site, YouTube, decks, sales</td><td>master</td></tr><tr><td>9:16</td><td>1080×1920, 30 fps</td><td>Reels, Shorts, TikTok</td><td>text out of top 220 px and bottom 380 px; bigger type; hook in the first second</td></tr><tr><td>4:5</td><td>1080×1350, 30 fps</td><td>LinkedIn and Instagram feed</td><td>the strongest feed format</td></tr><tr><td>1:1</td><td>1080×1080</td><td>feeds</td><td>caption above, device below, tighter</td></tr></tbody></table>
+<ul><li>Compose each format as its own stage (own layout and camera keys). Never centre-crop the master.</li><li>Muted autoplay shows the opening seconds instead of the thumbnail: frame 0 must already carry the message (title card), and burned-in captions matter more than voice for feed formats.</li></ul>
+<h2 id="subtitles">Subtitles</h2>
+<ul><li>Optional burned-in subtitles: bottom, 30 px, 66 % black box, 0.12 s fades, the line&#39;s text from <code>script.json</code> (<code>de</code> etc.), shown from line start to line end + 0.25 s.</li><li>Always also deliver <code>.srt</code> files (<code>node tools/srt.mjs</code>), one per language.</li><li>No em or en dashes as separators in subtitle text; use a comma or a colon.</li></ul>
+<h2 id="files">Files</h2>
+<ul><li><code>out/&lt;Name&gt;_&lt;VO-lang&gt;_1080p60.mp4</code>, <code>out/&lt;Name&gt;_&lt;VO-lang&gt;_&lt;SUB-lang&gt;-subs_1080p60.mp4</code>, <code>out/&lt;Name&gt;_&lt;lang&gt;.srt</code>.</li><li>H.264 high, CRF 15, yuv420p, AAC 256 kb/s, <code>+faststart</code>.</li><li>Keep a poster frame PNG (the end card or the hook) for thumbnails: <code>node ~/.claude/skills/motion-review/tools/inspect.mjs poster &lt;mp4&gt; &lt;t&gt;</code> takes it from the encoded file.</li><li>For social posts, write a short post text that adds what the video can&#39;t (context, a link), never the full script again.</li></ul>
+<h2 id="subtitle-chunking-on-cut-audio">Subtitle chunking on cut audio</h2>
+<p>Caption pages that split on natural pauses fail once audio is cut or concatenated: the pauses vanish and one run put 188 words on a single page for about 2 seconds. Chunk by <strong>maximum words (about 3 to 6), maximum on-screen time and sentence boundary, never by pause alone</strong>, and test with a deliberately pause-free input. Our line-by-line Kokoro clips sidestep this; it matters when captions are generated from joined or trimmed voice. Evidence: described by the author, not shown (F-C13).</p>
+<h2 id="web-embed-delivery-checklist">Web-embed delivery checklist</h2>
+<p>For a loop or hero video embedded on a web page:</p>
+<ul><li>[ ] H.264 High, <code>yuv420p</code>, <code>-movflags +faststart</code>.</li><li>[ ] <code>muted playsinline autoplay loop</code> and <code>preload=&quot;metadata&quot;</code>.</li><li>[ ] Served with byte-range support.</li><li>[ ] New filename on every re-export so browsers forget a cached failure.</li><li>[ ] <code>-tune grain</code> only if dark gradients band.</li><li>[ ] Size budget checked in the network panel (a short loop can be under 1 MB).</li><li>[ ] Poster image set.</li></ul>
+<p>Why: a first-hand 4-hour debug of a clip that played in one browser and showed black in another. We replaced the author&#39;s diagnosis (a profile claim we could not confirm) with the standard causes: pixel format, faststart and range requests (F-C12).</p><nav class="ps-prevnext" aria-label="Previous and next"><a class="ps-pn prev" href="../engine/"><span class="ps-pn-dir">Previous</span><span class="ps-pn-title">Engine: composition, live player, renderer</span></a><a class="ps-pn next" href="../golden-scene/"><span class="ps-pn-dir">Next</span><span class="ps-pn-title">Build loop: golden scene, plan check, commits, acceptance criteria</span></a></nav></article><aside class="ps-side"><details class="ps-side-d" open><summary>On this page</summary><ul class="ps-toc"><li class="l2"><a href="#subtitles">Subtitles</a></li><li class="l2"><a href="#files">Files</a></li><li class="l2"><a href="#subtitle-chunking-on-cut-audio">Subtitle chunking on cut audio</a></li><li class="l2"><a href="#web-embed-delivery-checklist">Web-embed delivery checklist</a></li></ul></details><details class="ps-side-d" open><summary>In motion-studio</summary><ul class="ps-sidelist"><li><a href="../">SKILL.md</a></li><li><a href="../audio/">Music, sound effects, loudness</a></li><li><a href="../banned-effects/">Banned effects: a list per film</a></li><li><a href="../capture/">Capturing a real app</a></li><li><a href="../delivery/">Final delivery (Phase 5)</a></li><li><a href="../design-system/">A reusable motion-design system</a></li><li><a href="../design/">Visual design</a></li><li><a href="../direction/">Direction: brief, story, script, captions</a></li><li><a href="../engine/">Engine: composition, live player, renderer</a></li><li class="on"><span aria-current="page">Formats and delivery</span></li><li><a href="../golden-scene/">Build loop: golden scene, plan check, commits, acceptance criteria</a></li><li><a href="../gotchas/">Gotchas catalogue</a></li><li><a href="../learnings/">Learnings log</a></li><li><a href="../motion/">Motion</a></li><li><a href="../qa/">QA checklists</a></li><li><a href="../reference-analysis/">Using a visual reference</a></li><li><a href="../review/">Render, inspect, fix: the review loop</a></li><li><a href="../three-d/">3D (three.js): rarely the right call</a></li><li><a href="../transitions/">Transitions: &quot;X becomes Y&quot;, velocity handoff, hidden cuts</a></li><li><a href="../vocabulary/">Vocabulary → recipes in this engine</a></li><li><a href="../voice/">Voice-over</a></li><li><a href="../workflow/">Staged workflow</a></li></ul></details><p class="ps-side-foot"><a href="https://github.com/AnnasMustafaDev/video-studio/blob/main/skills/motion-studio/references/formats.md" rel="noopener noreferrer">View source on GitHub</a></p></aside></div><script>
+(function(){
+  var mq = window.matchMedia('(min-width: 981px)');
+  function sync(){ document.querySelectorAll('details.ps-side-d').forEach(function(d){ d.open = mq.matches; }); }
+  sync();
+  if (mq.addEventListener) mq.addEventListener('change', sync);
+  var links = [].slice.call(document.querySelectorAll('.ps-toc a'));
+  if (!links.length || !('IntersectionObserver' in window)) return;
+  var byId = {};
+  links.forEach(function(a){ byId[decodeURIComponent(a.getAttribute('href').slice(1))] = a; });
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (!e.isIntersecting) return;
+      links.forEach(function(a){ a.classList.remove('on'); });
+      var a = byId[e.target.id]; if (a) a.classList.add('on');
+    });
+  }, { rootMargin: '-70px 0px -70% 0px' });
+  Object.keys(byId).forEach(function(id){ var el = document.getElementById(id); if (el) io.observe(el); });
+})();
+</script>
+  </div>
+</main>
+<footer class="site">
+  <div class="wrap cols">
+    <div>
+      <strong>Video Studio</strong><br>
+      A personal studio for motion graphics and animated videos with Claude Code.
+    </div>
+    <div>
+      <a href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">Source on GitHub</a><br>
+      <a href="../../../credits/">Credits and licences</a>
+    </div>
+  </div>
+</footer>
+<script src="../../../assets/site.js" defer></script>
+</body>
+</html>

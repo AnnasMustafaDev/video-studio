@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Storyboard (motion-director) · Video Studio</title>
+<meta name="description" content="Turn the chosen direction into a storyboard with timestamps and a clear narrative arc (hook, development, payoff, ending). Write it so a builder can implement a scene...">
+<meta property="og:title" content="Storyboard (motion-director) · Video Studio">
+<meta property="og:description" content="Turn the chosen direction into a storyboard with timestamps and a clear narrative arc (hook, development, payoff, ending). Write it so a builder can implement a scene...">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23eef3ff'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%233b6cf6'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../../assets/site.css">
+<link rel="stylesheet" href="../../../assets/panel-skills.css">
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="../../../"><span class="dot"></span>Video Studio</a>
+    <nav class="main" aria-label="Main"><a href="../../../">Home</a><a href="../../../tour/">Tour</a><a href="../../../guide/">Guide</a><a href="../../../skills/" aria-current="page">Skills</a><a href="../../../prompts/">Prompts</a><a href="../../../studio/">Studio</a><a href="../../../techniques/">Techniques</a><a href="../../../shot-library/">Shot library</a><a href="../../../research/">Research</a><a href="../../../gallery/">Gallery</a><a href="../../../credits/">Credits</a></nav>
+    <div class="tools">
+      <a class="btn" href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">GitHub</a>
+      <button class="btn" id="theme-toggle" type="button" aria-label="Toggle light or dark theme">Theme</button>
+    </div>
+  </div>
+</header>
+<main>
+  <div class="wrap">
+<nav class="crumbs ps-crumbs" aria-label="Breadcrumb"><a href="../../../">Home</a> <span aria-hidden="true">/</span> <a href="../../../skills/">Skills</a> <span aria-hidden="true">/</span> <a href="../../../skills/motion-director/">motion-director</a> <span aria-hidden="true">/</span> <span aria-current="page">Storyboard</span></nav><header class="ps-head"><div class="ps-badges"><span class="badge plain">Reference</span> <span class="badge">motion-director</span></div><h1>Storyboard</h1></header><div class="ps-doc"><article class="ps-article"><p>Turn the chosen direction into a storyboard with timestamps and a clear narrative arc (hook, development, payoff, ending). Write it so a builder can implement a scene without asking a question. Template: <a href="../template-storyboard/">../templates/storyboard.md</a>.</p>
+<h2 id="scene-table-one-row-per-scene-every-column-filled">Scene table: one row per scene, every column filled</h2>
+<table><thead><tr><th>Column</th><th>Rule</th></tr></thead><tbody><tr><td><strong>#, time</strong></td><td>Seconds and frames at the video&#39;s fps (<code>2.50 s / f75</code>). Scene boundaries on the music grid if there is music</td></tr><tr><td><strong>First frame</strong></td><td>What is on screen at the first frame. Frame 0 of the video is a finished frame (muted autoplay shows it), never black or empty</td></tr><tr><td><strong>Last frame</strong></td><td>What is on screen at the last frame (the hand-off to the next scene)</td></tr><tr><td><strong>Focal point</strong></td><td>The one thing the eye goes to. One per scene</td></tr><tr><td><strong>Exact text</strong></td><td>Every on-screen word as it will appear, with line breaks (<code>/</code>). Max ~5 words per beat for captions</td></tr><tr><td><strong>Animation</strong></td><td>What moves, from where to where, distance, duration, stagger, trigger</td></tr><tr><td><strong>Easing</strong></td><td>Named: <code>spring (damping 200)</code>, <code>spring (stiffness 120, damping 14), slight overshoot</code>, <code>ease-out cubic 0.5 s</code>, <code>linear (intentional: progress bar)</code></td></tr><tr><td><strong>Transition out</strong></td><td>Cut, match cut, mask reveal, wipe, zoom, morph, camera move; and <strong>what carries across</strong></td></tr><tr><td><strong>Audio cue</strong></td><td>Music section, SFX names with times, voice line, or silence</td></tr><tr><td><strong>Purpose</strong></td><td>Why this scene exists in the story (one sentence)</td></tr><tr><td><strong>Link to next</strong></td><td>How it leads into the next scene (shape, motion, idea, colour)</td></tr><tr><td><strong>Repetition flag</strong></td><td><code>REPEAT?</code> if it reuses the same layout, motion or trick as an earlier scene, with the scene it repeats. Fix or justify each flag</td></tr></tbody></table>
+<h2 id="hits-table-sound-cannot-drift">Hits table (sound cannot drift)</h2>
+<p>Every accent that should have a sound, one row each: <code>time (s) | frame | visual event | sound | level</code>. Builders turn this table into the SFX list in code (<code>hits.ts</code> for Remotion, <code>sfx</code> cues for the HTML engine) and nothing else adds SFX. The reviewer checks the render against it with <code>inspect.mjs sync</code>. Fewer is better: transitions, the main reveal, the payoff, the logo.</p>
+<h2 id="also-in-the-storyboard-file">Also in the storyboard file</h2>
+<ul><li><strong>Design-system notes:</strong> palette tokens, type scale, spacing, radius, default spring and durations, safe margins, which existing components (<code>studio/src/lib/</code>) each scene reuses. New components are named once and reused.</li><li><strong>Assets list:</strong> real files needed (path or &quot;missing&quot;), fonts and music with licence.</li><li><strong>Formats:</strong> one line per scene on how each extra aspect ratio differs (stacking, type size, crop focus). Each format is composed for its shape.</li><li><strong>Pacing check:</strong> longest gap without a new event (aim ≤ 4 s), where the holds are, the two or three showpiece moments.</li><li><strong>Build order:</strong> which scene is built first as the quality probe (usually the hook or the signature moment).</li></ul>
+<h2 id="timing-rules-of-thumb">Timing rules of thumb</h2>
+<ul><li>Reading time ≈ 0.3 s per word plus 0.5 s; numbers and the CTA hold still 1.5 to 2 s.</li><li>Entrances 0.4 to 0.7 s; exits faster (0.25 to 0.35 s); stagger 40 to 80 ms.</li><li>Something new every 2 to 4 s; alternate long and short beats.</li><li>The end card holds at least 2 s.</li></ul>
+<h2 id="additions-to-the-scene-table">Additions to the scene table</h2>
+<ul><li><strong>Transition out reads &quot;X becomes Y&quot;.</strong> The outgoing object, what it carries (label, words, colour), the incoming object. Never &quot;cut&quot; or &quot;fade&quot; on its own; a hard cut onto an already set page is written as that. Morph vocabulary (iris, accordion squeeze, flood-and-contract, line carry, bezel or mat grows, text rises from a mask line): <code>motion-studio/references/transitions.md</code>. Check on the contact sheet: does frame N-1 contain the thing frame N grows from? Why: naming the carried element removes the crossfade default. Evidence: shown in two finished films.</li><li><strong>Density tag</strong> per scene (sparse, medium, dense). Dense is rare and deliberate; &quot;dead air&quot; (a static screen under the voice) is a flag. Evidence: shown in a published workflow repo, not validated.</li><li><strong>Colour-flow table</strong> (section, time, dominant colour, mood) so the palette shift is planned. Not adopted: the source&#39;s fixed 1920x1080-only sizes and its purple and blue colour-psychology table.</li><li><strong>Where real footage goes:</strong> a list of scenes where an animated placeholder stands in until a real capture replaces it.</li><li><strong>Beat map</strong> (music-led only): beat, bar, event, sound; BPM, total beats, beats before the drop. No dead time does not mean constant motion.</li><li><strong>Sanity numbers</strong> (reference, not gates): median shot about 1.5 s, a new beat about every 0.7 to 1 s, no low-energy stretch over 4 s, one earned stillness of 1.0 to 1.6 s on the key claim, end card about 2 s. Author&#39;s measurements of other films (claimed).</li><li><strong>Copy:</strong> exact text is written as 1 to 4 word fragments; about 15 to 25 words per 30 s. See <code>motion-studio/references/design.md</code> &quot;Copy budget and fragment chains&quot;.</li></ul><nav class="ps-prevnext" aria-label="Previous and next"><a class="ps-pn prev" href="../reference-analysis/"><span class="ps-pn-dir">Previous</span><span class="ps-pn-title">Reference breakdown</span></a><a class="ps-pn next" href="../vocabulary/"><span class="ps-pn-dir">Next</span><span class="ps-pn-title">Motion vocabulary for directing</span></a></nav></article><aside class="ps-side"><details class="ps-side-d" open><summary>On this page</summary><ul class="ps-toc"><li class="l2"><a href="#scene-table-one-row-per-scene-every-column-filled">Scene table: one row per scene, every column filled</a></li><li class="l2"><a href="#hits-table-sound-cannot-drift">Hits table (sound cannot drift)</a></li><li class="l2"><a href="#also-in-the-storyboard-file">Also in the storyboard file</a></li><li class="l2"><a href="#timing-rules-of-thumb">Timing rules of thumb</a></li><li class="l2"><a href="#additions-to-the-scene-table">Additions to the scene table</a></li></ul></details><details class="ps-side-d" open><summary>In motion-director</summary><ul class="ps-sidelist"><li><a href="../">SKILL.md</a></li><li><a href="../brief/">The brief: 10 ingredients</a></li><li><a href="../directions/">Three creative directions</a></li><li><a href="../director-review/">Director review of the plan (Round 0)</a></li><li><a href="../reference-analysis/">Reference breakdown</a></li><li class="on"><span aria-current="page">Storyboard</span></li><li><a href="../vocabulary/">Motion vocabulary for directing</a></li><li><a href="../template-acceptance/">Acceptance criteria: &lt;title&gt;</a></li><li><a href="../template-brief/">Brief: &lt;title&gt;</a></li><li><a href="../template-directions/">Directions: &lt;title&gt;</a></li><li><a href="../template-glossary/">Glossary: &lt;title&gt;</a></li><li><a href="../template-reference/">Reference breakdown: &lt;reference name / file&gt;</a></li><li><a href="../template-storyboard/">Storyboard: &lt;title&gt;</a></li></ul></details><p class="ps-side-foot"><a href="https://github.com/AnnasMustafaDev/video-studio/blob/main/skills/motion-director/references/storyboard.md" rel="noopener noreferrer">View source on GitHub</a></p></aside></div><script>
+(function(){
+  var mq = window.matchMedia('(min-width: 981px)');
+  function sync(){ document.querySelectorAll('details.ps-side-d').forEach(function(d){ d.open = mq.matches; }); }
+  sync();
+  if (mq.addEventListener) mq.addEventListener('change', sync);
+  var links = [].slice.call(document.querySelectorAll('.ps-toc a'));
+  if (!links.length || !('IntersectionObserver' in window)) return;
+  var byId = {};
+  links.forEach(function(a){ byId[decodeURIComponent(a.getAttribute('href').slice(1))] = a; });
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (!e.isIntersecting) return;
+      links.forEach(function(a){ a.classList.remove('on'); });
+      var a = byId[e.target.id]; if (a) a.classList.add('on');
+    });
+  }, { rootMargin: '-70px 0px -70% 0px' });
+  Object.keys(byId).forEach(function(id){ var el = document.getElementById(id); if (el) io.observe(el); });
+})();
+</script>
+  </div>
+</main>
+<footer class="site">
+  <div class="wrap cols">
+    <div>
+      <strong>Video Studio</strong><br>
+      A personal studio for motion graphics and animated videos with Claude Code.
+    </div>
+    <div>
+      <a href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">Source on GitHub</a><br>
+      <a href="../../../credits/">Credits and licences</a>
+    </div>
+  </div>
+</footer>
+<script src="../../../assets/site.js" defer></script>
+</body>
+</html>

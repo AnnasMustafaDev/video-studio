@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>15 · Fix one specific defect · Video Studio</title>
+<meta name="description" content="Fix one named visual problem (clipping, timing, easing, alignment, flicker) precisely, without collateral changes.">
+<meta property="og:title" content="15 · Fix one specific defect · Video Studio">
+<meta property="og:description" content="Fix one named visual problem (clipping, timing, easing, alignment, flicker) precisely, without collateral changes.">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23eef3ff'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%233b6cf6'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../assets/site.css">
+<link rel="stylesheet" href="../../assets/panel-skills.css">
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="../../"><span class="dot"></span>Video Studio</a>
+    <nav class="main" aria-label="Main"><a href="../../">Home</a><a href="../../tour/">Tour</a><a href="../../guide/">Guide</a><a href="../../skills/">Skills</a><a href="../../prompts/" aria-current="page">Prompts</a><a href="../../studio/">Studio</a><a href="../../techniques/">Techniques</a><a href="../../shot-library/">Shot library</a><a href="../../research/">Research</a><a href="../../gallery/">Gallery</a><a href="../../credits/">Credits</a></nav>
+    <div class="tools">
+      <a class="btn" href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">GitHub</a>
+      <button class="btn" id="theme-toggle" type="button" aria-label="Toggle light or dark theme">Theme</button>
+    </div>
+  </div>
+</header>
+<main>
+  <div class="wrap">
+<nav class="crumbs ps-crumbs" aria-label="Breadcrumb"><a href="../../">Home</a> <span aria-hidden="true">/</span> <a href="../../prompts/">Prompts</a> <span aria-hidden="true">/</span> <span aria-current="page">15 · Fix one specific defect</span></nav><div class="ps-narrow"><header class="ps-head"><div class="ps-badges"><span class="badge plain">Prompt 15</span> <span class="badge">Staged build</span> <span class="badge ">Documented</span></div><h1>Fix one specific defect</h1></header><dl class="ps-info ps-info-prompt"><div class="wide"><dt>Purpose</dt><dd>Fix one named visual problem (clipping, timing, easing, alignment, flicker) precisely, without collateral changes.</dd></div><div class=""><dt>Use when</dt><dd>You or a review spotted a concrete defect at a known frame. Not for taste changes (use <a href="../16-revision-feedback/"><code>16</code></a>).</dd></div><div class=""><dt>Stage</dt><dd>Inspect and revise loop (master phase 4).</dd></div><div class=""><dt>Inputs you must fill in</dt><dd><code>[CompId]</code>, <code>[frame or frame range]</code>, <code>[defect type]</code>, <code>[what you see]</code>, <code>[what it should do instead]</code>.</dd></div><div class=""><dt>Expected output</dt><dd>Root cause in one or two sentences, a minimal code change, before and after stills of the same frames, and confirmation nothing else moved.</dd></div><div class=""><dt>Why this exists</dt><dd>Plotting a value over time found a root cause that five blind fixes missed. Evidence: one detailed first-hand production write-up (RapidEye), second source only corroborates; no film was watched by the analysts. Findings F-B5, F-A3.</dd></div><div class=""><dt>Next prompt</dt><dd>Back to <a href="../13-quality-review/"><code>13-quality-review.md</code></a>, or continue <a href="../14-build-next-scene/"><code>14-build-next-scene.md</code></a>.</dd></div></dl><section class="ps-section ps-prompt"><h2 id="prompt">Prompt</h2>
+<pre><code class="lang-text">Fix one defect in [CompId]. Do not change anything else.
+
+Defect: [clipping | overflow | timing | easing | alignment | flicker | pop-in | font | colour | other]
+Where: frame(s) [frames], scene [scene], element [element]
+What I see: [what you see]
+What it should do: [target behaviour, with numbers where possible]
+
+Steps:
+0. Motion defects only (pause, snap, stall, kink, false overshoot): do not edit yet and do not try another variant. Sample the animated value of the element at every frame of the move, print value and velocity (per-frame difference), and show me the curve, marking any run of zero velocity inside the move. Name the cause from the plot. Typical cause: a wave or ease scoped to part of the lifetime instead of all of it.
+1. Render the affected frames as they are now and describe exactly what is wrong in the image.
+2. Find the root cause in code. State it in one or two sentences before editing.
+3. Make the smallest change that fixes the cause, not the symptom. Do not resize fonts globally to fix one line, do not add effects to hide a problem.
+4. Render the same frames again, plus one frame before and after the range, and compare.
+5. Confirm no other scene changed. If a shared component or token changed, render one frame of every scene that uses it.
+
+Defect-specific checks:
+- Clipping or overflow: measure the text box against the safe area at the longest string; prefer rewrapping or reflowing over shrinking; check the frame where the element is largest (overshoot peak).
+- Timing: give the old and new start frame, duration and hold in frames; keep the total duration and later scenes in sync.
+- Easing: name the curve or spring config (damping, stiffness, mass) before and after; show three consecutive frames at the start, middle and end of the move so spacing is visible.
+- Regression guard: after the fix run git diff --stat, name anything that changed outside this defect, and re-render the earlier approved stills of the same scene.
+- Flicker or pop-in: look for values that are not clamped, conditional rendering on a single frame, non-deterministic values, or fonts and images not loaded before render.</code></pre></section><section class="ps-section ps-additions"><h2 id="studio-additions">Studio additions</h2>
+<pre><code class="lang-text">Stills: npm run stills -- [CompId] [frames] in studio/. If you could not view them, say so. Log the defect and fix in one line in projects/[yyyy-mm-dd]-[slug]/review.md.</code></pre>
+<p>Sources: velocity-plot idea from Samuel Parks, RapidEye, &quot;Building our launch video with Claude&quot;; diff check after u/TheHol1day (r/ClaudeAI). Our wording.</p></section><nav class="ps-prevnext" aria-label="Previous and next"><a class="ps-pn prev" href="../72-commit-per-scene-and-decision-log/"><span class="ps-pn-dir">Previous</span><span class="ps-pn-title">72 · Commit per scene and decision log</span></a><a class="ps-pn next" href="../16-revision-feedback/"><span class="ps-pn-dir">Next</span><span class="ps-pn-title">16 · Revision from feedback</span></a></nav><p class="ps-small"><a href="https://github.com/AnnasMustafaDev/video-studio/blob/main/prompts/15-fix-defect.md" rel="noopener noreferrer">View this prompt on GitHub</a></p></div>
+  </div>
+</main>
+<footer class="site">
+  <div class="wrap cols">
+    <div>
+      <strong>Video Studio</strong><br>
+      A personal studio for motion graphics and animated videos with Claude Code.
+    </div>
+    <div>
+      <a href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">Source on GitHub</a><br>
+      <a href="../../credits/">Credits and licences</a>
+    </div>
+  </div>
+</footer>
+<script src="../../assets/site.js" defer></script>
+</body>
+</html>

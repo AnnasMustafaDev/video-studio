@@ -19,6 +19,9 @@ The director's vocabulary (definitions and prompt terms) is in `~/.claude/skills
 | Camera-driven transition | Camera key: push into an element until it fills the frame, cut to the next scene at that scale |
 | Overlapping transition | Next scene starts entering 0.1 to 0.2 s before the previous one finishes leaving |
 | Flood | Circle `clip-path` grows from the last thing looked at, radius ≥ distance to the farthest corner |
+| Iris, accordion squeeze, line carry, label carry | Morph vocabulary for "X becomes Y" transitions: [transitions.md](transitions.md) |
+| Velocity-matched cut | Exit accelerates to the cut, entry starts at that speed and brakes ([transitions.md](transitions.md)) |
+| Karaoke fill, weight pump | Word fill at speaking rate in the accent; variable-font weight on the beat ([motion.md](motion.md)) |
 | Rim lighting, soft bloom | Sparingly on hero objects only, never on UI; a static radial light, never one that follows |
 | Film grain | Seeded noise per frame index (never `Math.random`), opacity ≤ 0.04, applied after motion-blur averaging |
 | Depth of field | Not on UI. Only on non-UI objects in a three.js scene ([three-d.md](three-d.md)) |

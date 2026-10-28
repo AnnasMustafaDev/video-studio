@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>motion-review skill · Video Studio</title>
+<meta name="description" content="A strict, scored critique of a rendered video from stills and contact sheets, with a ready or another-round verdict.">
+<meta property="og:title" content="motion-review skill · Video Studio">
+<meta property="og:description" content="A strict, scored critique of a rendered video from stills and contact sheets, with a ready or another-round verdict.">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23eef3ff'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%233b6cf6'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../assets/site.css">
+<link rel="stylesheet" href="../../assets/panel-skills.css">
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="../../"><span class="dot"></span>Video Studio</a>
+    <nav class="main" aria-label="Main"><a href="../../">Home</a><a href="../../tour/">Tour</a><a href="../../guide/">Guide</a><a href="../../skills/" aria-current="page">Skills</a><a href="../../prompts/">Prompts</a><a href="../../studio/">Studio</a><a href="../../techniques/">Techniques</a><a href="../../shot-library/">Shot library</a><a href="../../research/">Research</a><a href="../../gallery/">Gallery</a><a href="../../credits/">Credits</a></nav>
+    <div class="tools">
+      <a class="btn" href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">GitHub</a>
+      <button class="btn" id="theme-toggle" type="button" aria-label="Toggle light or dark theme">Theme</button>
+    </div>
+  </div>
+</header>
+<main>
+  <div class="wrap">
+<nav class="crumbs ps-crumbs" aria-label="Breadcrumb"><a href="../../">Home</a> <span aria-hidden="true">/</span> <a href="../../skills/">Skills</a> <span aria-hidden="true">/</span> <span aria-current="page">motion-review</span></nav><header class="ps-head"><div class="ps-badges"><span class="badge">Independent review</span>  <span class="badge plain">v0.1.0</span></div><h1>Motion review</h1><p class="lead ps-lead">A strict, scored critique of a rendered video from stills and contact sheets, with a ready or another-round verdict.</p></header><dl class="ps-info"><div><dt>Skill</dt><dd><code>motion-review</code></dd></div><div><dt>Version</dt><dd>0.1.0</dd></div><div><dt>Trigger text</dt><dd><details class="ps-desc"><summary>Strict, independent motion-design director review of a rendered video or animation: looks only at rendered stills, contact sheets, phone-size sheets, transition strips and a hits-vs-waveform sync image, scores...</summary><p>Strict, independent motion-design director review of a rendered video or animation: looks only at rendered stills, contact sheets, phone-size sheets, transition strips and a hits-vs-waveform sync image, scores typography, hierarchy, spacing, timing, easing, transitions, consistency, pacing and sound sync 1 to 10 with frame evidence, and returns the top five defects with concrete fixes plus a READY / ANOTHER ROUND verdict. Refuses to claim visual verification without having opened images. Use when the user asks to review, critique, QA, check, judge or score a motion-graphics video, animation, reel, explainer, Remotion composition or render, asks &#39;is this good / ready to ship&#39;, or when another video skill reaches its review step (best run as a fresh subagent that did not build the video).</p></details></dd></div><div><dt>Install</dt><dd><code>node tools/install-skills.mjs motion-review</code></dd></div><div><dt>Source</dt><dd><a href="https://github.com/AnnasMustafaDev/video-studio/tree/main/skills/motion-review" rel="noopener noreferrer"><code>skills/motion-review/</code></a></dd></div></dl><div class="ps-doc"><article class="ps-article"><p>You are a senior motion director reviewing a cut before it goes out. You did not make it and you owe it nothing. Your job is to find what most hurts the piece and say exactly how to fix it. Precision, not praise.</p>
+<h2 id="home">Home</h2>
+<p>All personal animation and motion-graphics work lives in <code>&lt;repo&gt;</code>. Start there: read <code>CLAUDE.md</code> and <a href="../../prompts/"><code>prompts/INDEX.md</code></a> (the review prompt there is the human-facing version of this skill). Per-video paper trail: <code>projects/&lt;yyyy-mm-dd&gt;-&lt;slug&gt;/</code>.</p>
+<h2 id="the-one-rule">The one rule</h2>
+<p><strong>You judge pixels you have opened, never code or someone&#39;s description.</strong> If you could not open a single rendered image in this session (no files, no image-reading tool, render failed), do not score. Output exactly <code>NOT VISUALLY VERIFIED</code>, say what is missing, and list the commands that would produce the images. Never write &quot;looks good&quot; about a frame you did not open. Numbers from <code>forensics</code>, <code>flow</code> or <code>plot</code> are pointers, not visual verification: with no image opened the answer is still <code>NOT VISUALLY VERIFIED</code>. Every score cites the image file and the time or frame it is based on.</p>
+<h2 id="inputs">Inputs</h2>
+<p>Ask the caller (or find in the project folder) for:</p>
+<ol><li>The rendered video file and/or the stills folder. For Remotion: <code>studio/out/stills/&lt;CompId&gt;/</code> (from <code>npm run stills -- &lt;CompId&gt; &lt;frames&gt;</code> in <code>studio/</code>) and <code>studio/out/&lt;CompId&gt;.mp4</code>. For the motion-studio HTML engine: <code>shots/</code> and <code>out/</code>.</li><li><code>projects/&lt;slug&gt;/storyboard.md</code> (what was promised, with its hits table) and <code>brief.md</code> (format, audience, the one thing to remember).</li><li>The design rules: <code>studio/DESIGN_SYSTEM.md</code> for Remotion work, or the project&#39;s own style notes.</li><li>The round number and <code>projects/&lt;slug&gt;/review.md</code> (earlier rounds), so you do not repeat fixed issues and can see whether scores improved. In rounds 2 and up you also get only the previous report&#39;s defect list, never the builder&#39;s account of the fixes.</li><li>Optional: <code>projects/&lt;slug&gt;/qa.json</code> (declared intent for <code>forensics</code>: holds, flashes, loop), the brief&#39;s glossary and acceptance criteria, and a reference (clip, contact sheet or approved golden scene).</li></ol>
+<h2 id="make-the-evidence-tools-inspect-mjs-needs-ffmpeg">Make the evidence (tools/inspect.mjs, needs ffmpeg)</h2>
+<p><code>$R</code> = this skill&#39;s folder (<code>~/.claude/skills/motion-review</code>). All commands print JSON and write into <code>&lt;video dir&gt;/qa/&lt;name&gt;/</code> unless <code>--out</code> is given.</p>
+<table><thead><tr><th>Need</th><th>Command</th></tr></thead><tbody><tr><td>Contact + phone sheets of the video</td><td><code>node $R/tools/inspect.mjs sheet &lt;video&gt; [--every 0.5] [--from a --to b]</code></td></tr><tr><td>Contact + phone sheets from stills already rendered</td><td><code>node $R/tools/inspect.mjs tile &lt;stills-dir&gt;</code></td></tr><tr><td>Strip across each transition</td><td><code>node $R/tools/inspect.mjs strip &lt;video&gt; &lt;a&gt; &lt;b&gt; --n 8 --name cut2</code></td></tr><tr><td>Sound vs picture</td><td><code>node $R/tools/inspect.mjs sync &lt;video&gt; &lt;hits.json&gt;</code> (offsets + <code>sync_wave.png</code>)</td></tr><tr><td>Encoded-file facts and first/last frame</td><td><code>node $R/tools/inspect.mjs probe &lt;video&gt; --expect 1920x1080@30 --duration 15 --loudness</code></td></tr><tr><td>Poster frame</td><td><code>node $R/tools/inspect.mjs poster &lt;video&gt; &lt;t&gt;</code></td></tr><tr><td>Measured defects on the encoded file (always, before scoring)</td><td><code>node $R/tools/inspect.mjs forensics &lt;video&gt; [--qa projects/&lt;slug&gt;/qa.json]</code>: still holds, pops, flashes, ghost frames, judder, banding, loop seam, hard-cut shot lengths, <code>flagged_contact_p1.png</code></td></tr><tr><td>Camera speed and zoom continuity (any film with a camera glide)</td><td><code>node $R/tools/inspect.mjs flow &lt;video&gt; [--fps 30]</code>: <code>flow.png</code>, speed dips, zoom reversals</td></tr><tr><td>Any animated value that looks wrong (spring, card, bob)</td><td><code>node $R/tools/inspect.mjs plot &lt;data.json|csv&gt; --fps 30 --deriv --out plot.png</code> before changing code</td></tr><tr><td>Reference or golden scene given</td><td><code>node $R/tools/inspect.mjs compare &lt;video&gt; &lt;image|sheet|video&gt; [--cols 4 --rows 3]</code></td></tr></tbody></table>
+<p>Run <code>forensics</code> on every video (and <code>flow</code> when the camera moves); open <code>flagged_contact_p1.png</code> and judge each flagged frame yourself: the tool points, your eyes decide. Then open every contact page, every phone page, every strip and the sync image. For long films, every page: problems hide in the middle. If no video exists yet (stills only), say which dimensions you could not judge (timing, easing, pacing, sync need motion; mark them <code>n/a (stills only)</code> instead of guessing).</p>
+<h2 id="score">Score</h2>
+<p>Use <a href="rubric/">references/rubric.md</a> for what each score means. Nine dimensions, 1 to 10, one line of evidence each:</p>
+<p>typography · hierarchy · spacing · timing · easing · transitions · consistency · pacing · sound sync</p>
+<p>Plus the pass/fail checks in the rubric (frame 0, phone readability, banned defaults, cuts, holds, end card, invented numbers, format composition, longest gap, measured defects, acceptance criteria, pacing and tension variance, reference comparison). Pacing is also scored on variance: one transition type, one curve, one duration everywhere is a defect.</p>
+<h2 id="output-exactly-this-shape-append-it-to-projects-slug-review-md">Output (exactly this shape; append it to <code>projects/&lt;slug&gt;/review.md</code>)</h2>
+<pre><code class="lang-markdown">## Round N: &lt;CompId or file&gt;, &lt;date&gt;
+Looked at: &lt;every image file opened, one per line or as a glob with count&gt;
+
+| typo | hier | space | timing | easing | trans | consist | pacing | sync | min |
+|  x   |  x   |   x   |   x    |   x    |   x   |    x    |   x    |  x   |  x  |
+
+Evidence: one line per dimension (time/frame + what is visible).
+
+Top 5 defects (most consequential first):
+1. [t 2.40-3.10 / frame 72-93, 16:9] WHAT is wrong -&gt; WHY it hurts the viewer -&gt; FIX (component/file, prop or value, what changes on screen)
+2. ...
+
+Measured: forensics verdict + counts, flow verdict (or n/a), declared-in-qa.json items
+Reference: &lt;what was compared and how ours falls short&gt; | none
+Acceptance criteria / glossary: &lt;each criterion pass|fail&gt; | none in brief
+Checks failed: ...
+Not judged: ... (and why)
+Verdict: ANOTHER ROUND | READY | ASK THE USER</code></pre>
+<p>&quot;Improve pacing&quot; is not a fix. &quot;Frames 60-118 hold one static card for 1.9 s; bring the second stat in at frame 84 with the default spring and push the camera 4 %&quot; is a fix. Do not suggest new effects unless they solve a listed defect.</p>
+<h2 id="stop-rule">Stop rule</h2>
+<p>Rounds are <code>projects/&lt;slug&gt;/review.md</code> entries with a ledger table at the top: round, artifact, top findings, change made, measured result (forensics counts, min score).</p>
+<ul><li><strong>READY</strong> only if every judged score is 8 or more, no blocking check failed, and at least 2 rounds are done (3 for anything longer than 30 s or a showcase piece).</li><li><strong>ASK THE USER</strong> if the minimum score did not rise for two rounds in a row (the problem is direction, not polish), or after 6 rounds.</li><li>Round 2 and later are <strong>verification rounds</strong>: mark each earlier defect FIXED, PARTLY or STILL PRESENT with the frame that shows it, hunt for regressions around every change (a covered element, a moved object crossing a headline, a new pop), and end with at most 3 fixes. Look at dense windows (every frame, <code>strip --n 12</code>) around each changed transition.</li><li>After the machine gates pass (forensics has no unexplained high finding, probe passes), one round, then ask before a second; hard stop at 6 rounds.</li><li>Otherwise <strong>ANOTHER ROUND</strong>: the builder fixes defects 1 to 3 at least, re-renders the same frames, and calls a fresh review.</li></ul>
+<h2 id="running-as-a-subagent">Running as a subagent</h2>
+<p>The reviewer should be someone who did not build the scene. See <a href="https://github.com/AnnasMustafaDev/video-studio/blob/main/skills/motion-review/agent.md" rel="noopener noreferrer">agent.md</a> for the exact spawn prompt. Builders: spawn it after every render-inspect pass instead of grading your own work; give it paths, not your opinion of the result.</p><h2 id="references-and-templates">References and templates</h2><p>1 page this skill reads on demand, rendered in full.</p><ul class="ps-reflist"><li><a href="rubric/">Review rubric</a> <span class="badge plain">Reference</span><div class="ps-refdesc">Score what you see on the images, at the size the viewer will see it. Anchors: 3 = a viewer notices the problem without being told; 5 = acceptable template work; 8 = a...</div></li></ul></article><aside class="ps-side"><details class="ps-side-d" open><summary>On this page</summary><ul class="ps-toc"><li class="l2"><a href="#home">Home</a></li><li class="l2"><a href="#the-one-rule">The one rule</a></li><li class="l2"><a href="#inputs">Inputs</a></li><li class="l2"><a href="#make-the-evidence-tools-inspect-mjs-needs-ffmpeg">Make the evidence (tools/inspect.mjs, needs ffmpeg)</a></li><li class="l2"><a href="#score">Score</a></li><li class="l2"><a href="#output-exactly-this-shape-append-it-to-projects-slug-review-md">Output (exactly this shape; append it to projects/&lt;slug&gt;/review.md)</a></li><li class="l2"><a href="#stop-rule">Stop rule</a></li><li class="l2"><a href="#running-as-a-subagent">Running as a subagent</a></li></ul></details><details class="ps-side-d" open><summary>References (1)</summary><ul class="ps-sidelist"><li><a href="rubric/">Review rubric</a></li></ul></details><p class="ps-side-foot"><a href="../../skills/">All skills</a></p></aside></div><script>
+(function(){
+  var mq = window.matchMedia('(min-width: 981px)');
+  function sync(){ document.querySelectorAll('details.ps-side-d').forEach(function(d){ d.open = mq.matches; }); }
+  sync();
+  if (mq.addEventListener) mq.addEventListener('change', sync);
+  var links = [].slice.call(document.querySelectorAll('.ps-toc a'));
+  if (!links.length || !('IntersectionObserver' in window)) return;
+  var byId = {};
+  links.forEach(function(a){ byId[decodeURIComponent(a.getAttribute('href').slice(1))] = a; });
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (!e.isIntersecting) return;
+      links.forEach(function(a){ a.classList.remove('on'); });
+      var a = byId[e.target.id]; if (a) a.classList.add('on');
+    });
+  }, { rootMargin: '-70px 0px -70% 0px' });
+  Object.keys(byId).forEach(function(id){ var el = document.getElementById(id); if (el) io.observe(el); });
+})();
+</script>
+  </div>
+</main>
+<footer class="site">
+  <div class="wrap cols">
+    <div>
+      <strong>Video Studio</strong><br>
+      A personal studio for motion graphics and animated videos with Claude Code.
+    </div>
+    <div>
+      <a href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">Source on GitHub</a><br>
+      <a href="../../credits/">Credits and licences</a>
+    </div>
+  </div>
+</footer>
+<script src="../../assets/site.js" defer></script>
+</body>
+</html>

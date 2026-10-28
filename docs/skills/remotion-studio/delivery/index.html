@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Final delivery (remotion-studio) · Video Studio</title>
+<meta name="description" content="From &lt;repo&gt;\studio, at the brief&#39;s resolution and fps (they come from the composition registration):">
+<meta property="og:title" content="Final delivery (remotion-studio) · Video Studio">
+<meta property="og:description" content="From &lt;repo&gt;\studio, at the brief&#39;s resolution and fps (they come from the composition registration):">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23eef3ff'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%233b6cf6'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../../assets/site.css">
+<link rel="stylesheet" href="../../../assets/panel-skills.css">
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="../../../"><span class="dot"></span>Video Studio</a>
+    <nav class="main" aria-label="Main"><a href="../../../">Home</a><a href="../../../tour/">Tour</a><a href="../../../guide/">Guide</a><a href="../../../skills/" aria-current="page">Skills</a><a href="../../../prompts/">Prompts</a><a href="../../../studio/">Studio</a><a href="../../../techniques/">Techniques</a><a href="../../../shot-library/">Shot library</a><a href="../../../research/">Research</a><a href="../../../gallery/">Gallery</a><a href="../../../credits/">Credits</a></nav>
+    <div class="tools">
+      <a class="btn" href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">GitHub</a>
+      <button class="btn" id="theme-toggle" type="button" aria-label="Toggle light or dark theme">Theme</button>
+    </div>
+  </div>
+</header>
+<main>
+  <div class="wrap">
+<nav class="crumbs ps-crumbs" aria-label="Breadcrumb"><a href="../../../">Home</a> <span aria-hidden="true">/</span> <a href="../../../skills/">Skills</a> <span aria-hidden="true">/</span> <a href="../../../skills/remotion-studio/">remotion-studio</a> <span aria-hidden="true">/</span> <span aria-current="page">Final delivery</span></nav><header class="ps-head"><div class="ps-badges"><span class="badge plain">Reference</span> <span class="badge">remotion-studio</span></div><h1>Final delivery</h1></header><div class="ps-doc"><article class="ps-article"><h2 id="1-render">1. Render</h2>
+<p>From <code>&lt;repo&gt;\studio</code>, at the brief&#39;s resolution and fps (they come from the composition registration):</p>
+<pre><code>npx remotion render &lt;CompId&gt; ../projects/&lt;yyyy-mm-dd&gt;-&lt;slug&gt;/out/&lt;slug&gt;_&lt;h&gt;p&lt;fps&gt;.mp4 --codec=h264 --crf=16</code></pre>
+<p>One render per format composition (<code>&lt;CompId&gt;916</code> etc.). Run long renders in the background. Check the official rendering guide for current flags.</p>
+<h2 id="2-loudness-when-there-is-audio">2. Loudness (when there is audio)</h2>
+<p>Target -14 LUFS integrated, ≤ -1 dBTP for web and social (-16 for presentations). Measure and, if needed, normalise without touching the picture:</p>
+<pre><code>node ~/.claude/skills/motion-review/tools/inspect.mjs probe &lt;file.mp4&gt; --loudness
+ffmpeg -i in.mp4 -c:v copy -af loudnorm=I=-14:TP=-1:LRA=11 -c:a aac -b:a 256k -movflags +faststart out.mp4</code></pre>
+<h2 id="3-verify-the-encoded-file-not-the-stills">3. Verify the encoded file (not the stills)</h2>
+<pre><code>node ~/.claude/skills/motion-review/tools/inspect.mjs probe &lt;file.mp4&gt; --expect 1920x1080@30 --duration 15 --loudness
+node ~/.claude/skills/motion-review/tools/inspect.mjs sheet &lt;file.mp4&gt;
+node ~/.claude/skills/motion-review/tools/inspect.mjs sync &lt;file.mp4&gt; &lt;hits.json&gt;
+node ~/.claude/skills/motion-review/tools/inspect.mjs poster &lt;file.mp4&gt; &lt;t of the best frame, usually the end card or hook&gt;</code></pre>
+<p>Open <code>encoded_first.png</code>, <code>encoded_last.png</code>, the final contact sheet and the poster. Every check in the probe output must pass (or be explained, e.g. a deliberately silent video).</p>
+<h2 id="4-delivery-report-write-to-projects-slug-notes-md-and-give-it-to-the-user">4. Delivery report (write to <code>projects/&lt;slug&gt;/notes.md</code> and give it to the user)</h2>
+<pre><code class="lang-markdown"># Delivery: &lt;title&gt;, &lt;date&gt;
+
+Files
+- &lt;absolute path to each mp4&gt;  (&lt;w&gt;×&lt;h&gt;, &lt;fps&gt; fps, &lt;duration&gt; s, &lt;size&gt; MB)
+- Poster: &lt;path&gt; · Contact sheet: &lt;path&gt; · Stills: studio/out/stills/&lt;CompId&gt;/
+
+Composition: &lt;CompId&gt; in studio/src/videos/&lt;slug&gt;/ (registered in studio/src/Root.tsx)
+
+Assets and fonts used: &lt;font families + source/licence&gt;, &lt;images/footage/music/SFX + source/licence&gt;
+Missing assets or licensing concerns: &lt;none / list&gt;
+Illustrative (not real data): &lt;list or none&gt;
+
+QA performed
+- Rounds: &lt;n&gt;; last scores &lt;row&gt;; verdict &lt;READY / stopped at user request&gt;
+- Looked at: &lt;sheets, phone pages, strips, encoded first/last frame&gt;
+- Probe: resolution / fps / duration / yuv420p / audio / loudness: &lt;pass or values&gt;
+- Sync: &lt;hits within ±40 ms / exceptions&gt;
+
+Remaining limitations: &lt;concrete defects still open, or &quot;not visually verified: &lt;reason&gt;&quot;&gt;
+Next improvements I would make: &lt;the review&#39;s open defects, concrete&gt;</code></pre>
+<h2 id="5-learnings">5. Learnings</h2>
+<p>Append technique-only lessons (no client, product or app names) to <code>&lt;repo&gt;\skills\motion-studio\references\learnings.md</code> under the right heading, then re-run <code>node &lt;repo&gt;\tools\install-skills.mjs</code> so the installed skills carry them. If a component proved itself, propose adding it to <code>studio/src/lib/</code> and <code>DESIGN_SYSTEM.md</code>.</p>
+<h2 id="if-embedding-on-a-web-page">If embedding on a web page</h2>
+<p>H.264 High, <code>yuv420p</code>, <code>-movflags +faststart</code>; markup <code>muted playsinline autoplay loop</code> with <code>preload=&quot;metadata&quot;</code>; serve with byte-range support; rename the file on every re-export so browsers forget a cached failure; <code>-tune grain</code> only if dark gradients band; check the size in the network panel (a short loop can be under 1 MB); set a poster. (Evidence: first-hand debug of a clip that showed black in one browser; the author&#39;s profile diagnosis was replaced by the standard causes.)</p>
+<h2 id="alpha-export-maybe-level-test-before-relying">Alpha export (maybe-level, test before relying)</h2>
+<p>For overlays and stingers over live footage: <code>--codec=prores --prores-profile=4444</code> with <code>yuva444p10le</code>, or VP9 WebM with alpha, and a transparent composition background. Run one test render and open it in the target editor before promising it. (Evidence: claimed by two sources, not tested here.)</p><nav class="ps-prevnext" aria-label="Previous and next"><span></span><a class="ps-pn next" href="../determinism/"><span class="ps-pn-dir">Next</span><span class="ps-pn-title">Deterministic Remotion rules</span></a></nav></article><aside class="ps-side"><details class="ps-side-d" open><summary>On this page</summary><ul class="ps-toc"><li class="l2"><a href="#1-render">1. Render</a></li><li class="l2"><a href="#2-loudness-when-there-is-audio">2. Loudness (when there is audio)</a></li><li class="l2"><a href="#3-verify-the-encoded-file-not-the-stills">3. Verify the encoded file (not the stills)</a></li><li class="l2"><a href="#4-delivery-report-write-to-projects-slug-notes-md-and-give-it-to-the-user">4. Delivery report (write to projects/&lt;slug&gt;/notes.md and give it to the user)</a></li><li class="l2"><a href="#5-learnings">5. Learnings</a></li><li class="l2"><a href="#if-embedding-on-a-web-page">If embedding on a web page</a></li><li class="l2"><a href="#alpha-export-maybe-level-test-before-relying">Alpha export (maybe-level, test before relying)</a></li></ul></details><details class="ps-side-d" open><summary>In remotion-studio</summary><ul class="ps-sidelist"><li><a href="../">SKILL.md</a></li><li class="on"><span aria-current="page">Final delivery</span></li><li><a href="../determinism/">Deterministic Remotion rules</a></li><li><a href="../inspect-render/">Render, inspect, improve</a></li><li><a href="../phases/">The five phases in this repo</a></li></ul></details><p class="ps-side-foot"><a href="https://github.com/AnnasMustafaDev/video-studio/blob/main/skills/remotion-studio/references/delivery.md" rel="noopener noreferrer">View source on GitHub</a></p></aside></div><script>
+(function(){
+  var mq = window.matchMedia('(min-width: 981px)');
+  function sync(){ document.querySelectorAll('details.ps-side-d').forEach(function(d){ d.open = mq.matches; }); }
+  sync();
+  if (mq.addEventListener) mq.addEventListener('change', sync);
+  var links = [].slice.call(document.querySelectorAll('.ps-toc a'));
+  if (!links.length || !('IntersectionObserver' in window)) return;
+  var byId = {};
+  links.forEach(function(a){ byId[decodeURIComponent(a.getAttribute('href').slice(1))] = a; });
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (!e.isIntersecting) return;
+      links.forEach(function(a){ a.classList.remove('on'); });
+      var a = byId[e.target.id]; if (a) a.classList.add('on');
+    });
+  }, { rootMargin: '-70px 0px -70% 0px' });
+  Object.keys(byId).forEach(function(id){ var el = document.getElementById(id); if (el) io.observe(el); });
+})();
+</script>
+  </div>
+</main>
+<footer class="site">
+  <div class="wrap cols">
+    <div>
+      <strong>Video Studio</strong><br>
+      A personal studio for motion graphics and animated videos with Claude Code.
+    </div>
+    <div>
+      <a href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">Source on GitHub</a><br>
+      <a href="../../../credits/">Credits and licences</a>
+    </div>
+  </div>
+</footer>
+<script src="../../../assets/site.js" defer></script>
+</body>
+</html>

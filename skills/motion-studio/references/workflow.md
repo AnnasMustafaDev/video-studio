@@ -2,7 +2,7 @@
 
 People getting impressive results use Claude as motion designer, creative director, animator and developer, with a workflow that lets them inspect and improve the actual video. Separate creative decisions from implementation, and implementation from quality assurance. Never generate the whole video in one shot.
 
-`<VS>` = `C:\Users\Annas Mustafa\Documents\me\video-studio`. Paper trail: `<VS>\projects\<yyyy-mm-dd>-<slug>\` with `brief.md`, `reference.md`, `directions.md`, `storyboard.md`, `review.md`, `notes.md`, and renders in `out/` (gitignored). For the HTML engine the film project itself goes in `film/` inside that folder. Templates for the documents: `~/.claude/skills/motion-director/templates/`.
+`<VS>` = `{{VIDEO_STUDIO}}`. Paper trail: `<VS>\projects\<yyyy-mm-dd>-<slug>\` with `brief.md`, `reference.md`, `directions.md`, `storyboard.md`, `review.md`, `notes.md`, and renders in `out/` (gitignored). For the HTML engine the film project itself goes in `film/` inside that folder. Templates for the documents: `~/.claude/skills/motion-director/templates/`.
 
 ## The five phases
 
@@ -43,3 +43,13 @@ The same prompts, for humans, are in `<VS>\prompts\` (see `prompts/INDEX.md`).
 ## When the user says "just make it"
 
 Still write a short brief and storyboard (minutes, not hours), say that you skipped the approval stops at their request, and keep the one-scene-first and review loop: those protect the result, not the process.
+
+## Additions to the staged workflow
+
+- **Tagged brief.** `brief.md` carries fixed headings: `inputs` (what to ask the user, defaults if skipped), `direction` (concept triple, look, **Banned for this film**), `structure` (beat map or timed scenes), `build` (numbered engineering rules), `gotchas` (known failures from [gotchas.md](gotchas.md) that apply), `start` (the gate). Template: `~/.claude/skills/motion-director/templates/brief.md`. Why: a contract the model cannot quietly reinterpret, with the stop where it is cheapest. Evidence: the same skeleton recurs in five finished films by two authors (F-B1).
+- **Banned list per film** in the direction tag, seeded from [banned-effects.md](banned-effects.md); the reviewer checks it.
+- **Start gate.** Before any code: the beat map or line-to-visual map plus 4 to 8 named stills. See [golden-scene.md](golden-scene.md).
+- **Build loop.** Five-line plan before each scene, golden scene as the template for the rest, local commit per approved scene with a diff read, decision log, acceptance criteria and a per-film glossary: [golden-scene.md](golden-scene.md).
+- **Storyboard rules.** Transition column reads "X becomes Y" ([transitions.md](transitions.md)); colour-flow table, a density tag per scene (sparse, medium, dense; dense is rare and deliberate; "dead air" is a static screen under the voice) and a list of where real footage replaces animation (templates in `motion-director`).
+- **Say what you cannot do.** At the start say what can only be previewed (no render possible, no way to view images). Never describe results you have not seen. Evidence: only claimed in one prompt (F-B14); it extends our "not visually verified" rule to render capability.
+- **Earns its place.** In the plan review, each scene must earn its place within about 3 seconds or be cut; if every transition has the same duration, flag it (name the one hard cut and the one fast fade). Why: the even, tensionless rhythm commenters mock. Evidence: widely reported, judgement not a recipe (F-C5).

@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Voice-over (motion-studio) · Video Studio</title>
+<meta name="description" content="Generate the hook and the proof lines with 3 or 4 voices (python tools/vo.py --casting h1,h2,r2 --voices af_heart,bm_george,am_michael) and let the user choose by ear...">
+<meta property="og:title" content="Voice-over (motion-studio) · Video Studio">
+<meta property="og:description" content="Generate the hook and the proof lines with 3 or 4 voices (python tools/vo.py --casting h1,h2,r2 --voices af_heart,bm_george,am_michael) and let the user choose by ear...">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23eef3ff'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%233b6cf6'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../../assets/site.css">
+<link rel="stylesheet" href="../../../assets/panel-skills.css">
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="../../../"><span class="dot"></span>Video Studio</a>
+    <nav class="main" aria-label="Main"><a href="../../../">Home</a><a href="../../../tour/">Tour</a><a href="../../../guide/">Guide</a><a href="../../../skills/" aria-current="page">Skills</a><a href="../../../prompts/">Prompts</a><a href="../../../studio/">Studio</a><a href="../../../techniques/">Techniques</a><a href="../../../shot-library/">Shot library</a><a href="../../../research/">Research</a><a href="../../../gallery/">Gallery</a><a href="../../../credits/">Credits</a></nav>
+    <div class="tools">
+      <a class="btn" href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">GitHub</a>
+      <button class="btn" id="theme-toggle" type="button" aria-label="Toggle light or dark theme">Theme</button>
+    </div>
+  </div>
+</header>
+<main>
+  <div class="wrap">
+<nav class="crumbs ps-crumbs" aria-label="Breadcrumb"><a href="../../../">Home</a> <span aria-hidden="true">/</span> <a href="../../../skills/">Skills</a> <span aria-hidden="true">/</span> <a href="../../../skills/motion-studio/">motion-studio</a> <span aria-hidden="true">/</span> <span aria-current="page">Voice-over</span></nav><header class="ps-head"><div class="ps-badges"><span class="badge plain">Reference</span> <span class="badge">motion-studio</span></div><h1>Voice-over</h1></header><div class="ps-doc"><article class="ps-article"><h2 id="engine-kokoro-82m-local-and-free">Engine: Kokoro-82M, local and free</h2>
+<ul><li>Model <code>hexgrad/Kokoro-82M</code> from the Hugging Face cache, <code>pip install kokoro==0.9.4 soundfile</code> (Python 3.12 venv). Run with <code>HF_HUB_OFFLINE=1</code> once voices are cached.</li><li>English voices that sound natural: <code>af_heart</code> (warm, default), <code>am_michael</code>, <code>am_fenrir</code>, <code>am_puck</code>, <code>am_eric</code>, <code>am_onyx</code>, British <code>bm_george</code>, <code>bm_fable</code>, <code>bm_lewis</code>. Voices missing from the cache fail offline; download first.</li><li>Blends: <code>&quot;am_michael:0.5+bm_george:0.5&quot;</code> averages voice tensors.</li><li>Speed 0.94 to 0.98 for product films; slower reads more premium than faster.</li><li>Cloud TTS voices were judged &quot;too robotic&quot; next to Kokoro for this kind of film.</li></ul>
+<h2 id="casting">Casting</h2>
+<p>Generate the hook and the proof lines with 3 or 4 voices (<code>python tools/vo.py --casting h1,h2,r2 --voices af_heart,bm_george,am_michael</code>) and let the user choose by ear. Never pick silently.</p>
+<h2 id="line-by-line">Line by line</h2>
+<ul><li>One clip per script line. Pauses are authored in the timeline, so each line is placed on the beat grid with intent.</li><li>Trim silence at both ends (<code>silenceremove</code> forward and reversed), then master:</li></ul>
+<pre><code>highpass=f=80, deesser=i=0.35,
+acompressor=threshold=0.125:ratio=3:attack=12:release=180:makeup=1.6,
+equalizer=f=3200:t=q:w=1.1:g=2, equalizer=f=220:t=q:w=1.0:g=-1.5,
+aecho=0.8:0.5:22|37:0.06|0.04, alimiter=limit=0.89      → 48 kHz mono</code></pre>
+<ul><li>Regenerate single lines with <code>--only id1,id2</code>; durations merge into <code>audio/vo/durations.json</code>.</li></ul>
+<h2 id="word-times">Word times</h2>
+<ul><li><code>python tools/words.py</code> runs faster-whisper (<code>base.en</code> for English, <code>small</code> for other languages) with <code>word_timestamps=True</code> and writes <code>audio/vo/words.json</code> <code>{id: {heard, words:[{w,a,b}]}}</code>.</li><li>Decode the WAV with ffmpeg to float32 PCM and pass the array; this avoids PyAV version issues.</li><li><strong>Do not pass <code>initial_prompt</code></strong>: it caused hallucinated, repeated transcripts.</li><li>Compare <code>heard</code> with the script: a mismatch means the pronunciation is off or the word is ambiguous. Rewrite the line (&quot;Fast.&quot; → &quot;And fast.&quot;) rather than trust a wrong anchor.</li></ul>
+<h2 id="delivery">Delivery</h2>
+<ul><li>Accent and register: match the audience (neutral international English for B2B; formal second person in German subtitles).</li><li>Numbers are spoken in full (&quot;one hundred ninety-eight percent&quot;) and shown as digits.</li><li>Product names: test pronunciation early; spell phonetically in the TTS text if needed while the caption keeps the real spelling.</li></ul>
+<h2 id="windows-gotchas">Windows gotchas</h2>
+<ul><li>An Application Control policy can block msgpack&#39;s native DLL on first import; a retry worked. Fallback: <code>MSGPACK_PUREPYTHON=1</code>.</li><li>Run Python tools with <code>-I</code> when reading untrusted downloaded files.</li></ul>
+<h2 id="onset-anchored-word-times-segment-wise-whisper">Onset-anchored word times (segment-wise Whisper)</h2>
+<p>A single Whisper pass over a long read can place words late (the source claims up to half a second). When a line has internal pauses, or the sync check shows drift:</p>
+<ol><li>Split the clip at pauses of <strong>100 ms or more</strong> (silence detection).</li><li>Run Whisper on each segment separately.</li><li>Anchor each segment&#39;s first word to the <strong>measured onset</strong> of that segment (first frame above the noise floor), then keep Whisper&#39;s relative times inside it.</li></ol>
+<p>One clip per line already acts as segmentation; the onset anchor is the part to add. Check the result by comparing the visual change against the waveform (<code>inspect.mjs sync</code>). Why: measurable improvement over a single pass. Evidence: precise in a finished film&#39;s prompt; the half-second figure is the author&#39;s claim and untested here (F-B11).</p>
+<p>Other voice hygiene (optional, claimed): regenerate a bad line several times and splice the best (<code>--only</code>); shorten pauses over 0.28 s to 0.2 s; pull phrase levels toward the median with gain changes only inside pauses.</p>
+<h2 id="freeze-the-words-before-building">Freeze the words before building</h2>
+<p>Hard-coded frame numbers break when words change. Lock <code>script.json</code> (the words) and re-run <code>words.py</code> before cutting any scene to word times; if a word changes later, re-derive times, never nudge frames by hand. Why: a word change shifts every number after it. Evidence: failure-derived (F-A14).</p><nav class="ps-prevnext" aria-label="Previous and next"><a class="ps-pn prev" href="../vocabulary/"><span class="ps-pn-dir">Previous</span><span class="ps-pn-title">Vocabulary → recipes in this engine</span></a><a class="ps-pn next" href="../workflow/"><span class="ps-pn-dir">Next</span><span class="ps-pn-title">Staged workflow</span></a></nav></article><aside class="ps-side"><details class="ps-side-d" open><summary>On this page</summary><ul class="ps-toc"><li class="l2"><a href="#engine-kokoro-82m-local-and-free">Engine: Kokoro-82M, local and free</a></li><li class="l2"><a href="#casting">Casting</a></li><li class="l2"><a href="#line-by-line">Line by line</a></li><li class="l2"><a href="#word-times">Word times</a></li><li class="l2"><a href="#delivery">Delivery</a></li><li class="l2"><a href="#windows-gotchas">Windows gotchas</a></li><li class="l2"><a href="#onset-anchored-word-times-segment-wise-whisper">Onset-anchored word times (segment-wise Whisper)</a></li><li class="l2"><a href="#freeze-the-words-before-building">Freeze the words before building</a></li></ul></details><details class="ps-side-d" open><summary>In motion-studio</summary><ul class="ps-sidelist"><li><a href="../">SKILL.md</a></li><li><a href="../audio/">Music, sound effects, loudness</a></li><li><a href="../banned-effects/">Banned effects: a list per film</a></li><li><a href="../capture/">Capturing a real app</a></li><li><a href="../delivery/">Final delivery (Phase 5)</a></li><li><a href="../design-system/">A reusable motion-design system</a></li><li><a href="../design/">Visual design</a></li><li><a href="../direction/">Direction: brief, story, script, captions</a></li><li><a href="../engine/">Engine: composition, live player, renderer</a></li><li><a href="../formats/">Formats and delivery</a></li><li><a href="../golden-scene/">Build loop: golden scene, plan check, commits, acceptance criteria</a></li><li><a href="../gotchas/">Gotchas catalogue</a></li><li><a href="../learnings/">Learnings log</a></li><li><a href="../motion/">Motion</a></li><li><a href="../qa/">QA checklists</a></li><li><a href="../reference-analysis/">Using a visual reference</a></li><li><a href="../review/">Render, inspect, fix: the review loop</a></li><li><a href="../three-d/">3D (three.js): rarely the right call</a></li><li><a href="../transitions/">Transitions: &quot;X becomes Y&quot;, velocity handoff, hidden cuts</a></li><li><a href="../vocabulary/">Vocabulary → recipes in this engine</a></li><li class="on"><span aria-current="page">Voice-over</span></li><li><a href="../workflow/">Staged workflow</a></li></ul></details><p class="ps-side-foot"><a href="https://github.com/AnnasMustafaDev/video-studio/blob/main/skills/motion-studio/references/voice.md" rel="noopener noreferrer">View source on GitHub</a></p></aside></div><script>
+(function(){
+  var mq = window.matchMedia('(min-width: 981px)');
+  function sync(){ document.querySelectorAll('details.ps-side-d').forEach(function(d){ d.open = mq.matches; }); }
+  sync();
+  if (mq.addEventListener) mq.addEventListener('change', sync);
+  var links = [].slice.call(document.querySelectorAll('.ps-toc a'));
+  if (!links.length || !('IntersectionObserver' in window)) return;
+  var byId = {};
+  links.forEach(function(a){ byId[decodeURIComponent(a.getAttribute('href').slice(1))] = a; });
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (!e.isIntersecting) return;
+      links.forEach(function(a){ a.classList.remove('on'); });
+      var a = byId[e.target.id]; if (a) a.classList.add('on');
+    });
+  }, { rootMargin: '-70px 0px -70% 0px' });
+  Object.keys(byId).forEach(function(id){ var el = document.getElementById(id); if (el) io.observe(el); });
+})();
+</script>
+  </div>
+</main>
+<footer class="site">
+  <div class="wrap cols">
+    <div>
+      <strong>Video Studio</strong><br>
+      A personal studio for motion graphics and animated videos with Claude Code.
+    </div>
+    <div>
+      <a href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">Source on GitHub</a><br>
+      <a href="../../../credits/">Credits and licences</a>
+    </div>
+  </div>
+</footer>
+<script src="../../../assets/site.js" defer></script>
+</body>
+</html>

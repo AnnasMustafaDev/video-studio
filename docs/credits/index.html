@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Credits and licences · Video Studio</title>
+<meta name="description" content="Licences and credits for the Video Studio: Remotion, vendored third-party skills, bundled music, prompt authors, the research gallery policy and fonts.">
+<meta property="og:title" content="Credits and licences · Video Studio">
+<meta property="og:description" content="Licences and credits for the Video Studio: Remotion, vendored third-party skills, bundled music, prompt authors, the research gallery policy and fonts.">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23eef3ff'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%233b6cf6'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../assets/site.css">
+
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="../"><span class="dot"></span>Video Studio</a>
+    <nav class="main" aria-label="Main"><a href="../">Home</a><a href="../tour/">Tour</a><a href="../guide/">Guide</a><a href="../skills/">Skills</a><a href="../prompts/">Prompts</a><a href="../studio/">Studio</a><a href="../techniques/">Techniques</a><a href="../shot-library/">Shot library</a><a href="../research/">Research</a><a href="../gallery/">Gallery</a><a href="../credits/" aria-current="page">Credits</a></nav>
+    <div class="tools">
+      <a class="btn" href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">GitHub</a>
+      <button class="btn" id="theme-toggle" type="button" aria-label="Toggle light or dark theme">Theme</button>
+    </div>
+  </div>
+</header>
+<main>
+  <div class="wrap">
+
+<nav class="crumbs" aria-label="Breadcrumb"><a href="../">Home</a><span class="sep">/</span><span aria-current="page">Credits</span></nav>
+<div class="doc">
+<aside class="doc-toc" data-auto aria-label="On this page"></aside>
+<article class="prose wide">
+<p class="eyebrow">Credits and licences</p>
+<h1>Who made what, and what you may do with it.</h1>
+<p class="lead">This studio stands on other people's work. This page says whose, under which licence, and what you must do if you use it in a published video.</p>
+<div class="callout "><div class="title">Short version</div><p>Check the Remotion licence for your company size. Credit the bundled music if you use it. Prompts found on the web belong to their authors. Everything vendored keeps its original licence.</p></div>
+
+<h2 id="repo">This repository</h2>
+<p>The repository itself has <strong>no licence file yet</strong>. That means default copyright applies: the original work here is not offered for reuse, copying or redistribution. You may read it, and clone it for your own private use. If you want to reuse something, ask first. The third-party material listed below keeps its own licence and is not affected by this.</p>
+<p>This website is generated from the repository by a script in <code>docs/_build</code>. It quotes and links to the sources below rather than copying them.</p>
+
+<h2 id="remotion">Remotion</h2>
+<p>Videos here are rendered with <a href="https://www.remotion.dev" rel="noopener noreferrer">Remotion</a>. Remotion is free for individuals and for companies with up to 3 employees. Larger companies need a company licence. Check the current terms at <a href="https://remotion.dev/license" rel="noopener noreferrer">remotion.dev/license</a> before you use it commercially, because they can change.</p>
+<h3 id="remotion-skills">Official Remotion agent skills</h3>
+<p>The official Remotion agent skills are <strong>not redistributed</strong> in this repo, because their upstream repository declares no licence. Install them yourself from the <code>studio/</code> folder:</p>
+<pre><code>npx remotion skills add</code></pre>
+<p>The versions are pinned in <code>studio/skills-lock.json</code>.</p>
+
+<h2 id="brag">brag (third party, MIT)</h2>
+<p><code>third_party/brag/</code> is a byte-for-byte copy of <a href="https://github.com/latent-spaces/brag" rel="noopener noreferrer">latent-spaces/brag</a> by Shunit Haviv Hakimi, pinned to one upstream commit, under the <strong>MIT licence</strong>. The licence text sits next to the files. It is not edited here.</p>
+<div class="callout warn"><div class="title">Credit the music</div>
+<p>The music bundled with brag, "Happy Beats / Business Moves", is by <strong>Sascha Ende</strong> (<a href="https://ende.app" rel="noopener noreferrer">ende.app</a>) and is licensed <strong>CC BY 4.0</strong>, not MIT. If a published video uses it, you must credit it. A line you can paste:</p>
+<pre><code>Music: Sascha Ende, ende.app (CC BY 4.0)</code></pre>
+<p>The sound effects bundled with brag come from Kenney.nl and unicae_games and are CC0, so no credit is required.</p></div>
+
+<h2 id="shotcraft">video-shotcraft (third party, Apache-2.0)</h2>
+<p><code>third_party/video-shotcraft/</code> is an unmodified subset of <a href="https://github.com/Vincentwei1021/video-shotcraft" rel="noopener noreferrer">video-shotcraft</a> by Vincent Wei, pinned to one commit, under the <strong>Apache License 2.0</strong>. The licence and a NOTICE file are kept with it. The cards and demo source are Vincent Wei's work.</p>
+<p>The <a href="../shot-library/">shot library</a> on this site is a separate work, written in our own words, that points back to each upstream card and credits it.</p>
+
+<h2 id="prompt-motion">Prompts from other authors</h2>
+<p>The <code>prompt-motion-search</code> skill looks up animations on <a href="https://prompt-motion.com" rel="noopener noreferrer">prompt-motion.com</a>. The prompts and videos it finds <strong>belong to their authors</strong>. The skill always shows the author and the link, and saves a chosen prompt only with credit, on demand. If you reuse a prompt, keep the credit.</p>
+
+<h2 id="gallery">The research gallery</h2>
+<p>The <a href="../gallery/">gallery</a> and the <a href="../research/">research findings</a> collect videos made with Claude by other people, from GitHub, Reddit, X, YouTube, TikTok, Instagram and the web. The policy is simple:</p>
+<ul>
+<li>Entries are <strong>paraphrased</strong> in our own words, never copied wholesale.</li>
+<li>Every entry <strong>links to its source</strong> and names its creator.</li>
+<li>Nobody watched the videos while researching. Descriptions come from captions, READMEs, post text and articles, and entries are marked verified or unconfirmed.</li>
+<li>The videos themselves are not hosted here. They stay with their creators.</li>
+</ul>
+<p>If you made something listed there and want it changed or removed, open an issue on <a href="https://github.com/AnnasMustafaDev/video-studio/issues" rel="noopener noreferrer">the repository</a>.</p>
+
+<h2 id="fonts">Fonts</h2>
+<p>Videos use <strong>Inter Tight</strong> for text and <strong>JetBrains Mono</strong> for labels and code, loaded through Remotion's Google Fonts package. Both are under the <strong>SIL Open Font Licence 1.1</strong>, which allows use in published work. This website uses the Inter and JetBrains Mono families if you have them installed, and falls back to system fonts otherwise.</p>
+
+<h2 id="sound">Sound effects in the studio</h2>
+<p>The sound cues in <code>studio/public/sfx/</code> are generated with ffmpeg by a script in the repo, so they have no licence questions.</p>
+
+<h2 id="more">More</h2>
+<div class="grid">
+  <a class="card" href="https://github.com/AnnasMustafaDev/video-studio"><h3>Source on GitHub</h3><p>Every licence file lives next to the code it covers.</p></a>
+  <a class="card" href="../tour/"><h3>Tour</h3><p>Back to the walkthrough for new users.</p></a>
+</div>
+<div class="pager">
+  <a class="prev" href="../research/"><small>Previous</small><strong>Research findings</strong></a>
+  <a class="next" href="../"><small>Back to</small><strong>Home</strong></a>
+</div>
+</article>
+</div>
+  </div>
+</main>
+<footer class="site">
+  <div class="wrap cols">
+    <div>
+      <strong>Video Studio</strong><br>
+      A personal studio for motion graphics and animated videos with Claude Code.
+    </div>
+    <div>
+      <a href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">Source on GitHub</a><br>
+      <a href="../credits/">Credits and licences</a>
+    </div>
+  </div>
+</footer>
+<script src="../assets/site.js" defer></script>
+</body>
+</html>

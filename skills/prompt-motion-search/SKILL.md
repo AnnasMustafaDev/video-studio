@@ -10,7 +10,7 @@ Find a motion video on https://prompt-motion.com that is close to what the user 
 
 ## Home
 
-All personal animation and motion-graphics work lives in `C:\Users\Annas Mustafa\Documents\me\video-studio` (`$VS`). Read `$VS\CLAUDE.md` and `$VS\prompts\INDEX.md` first. The human-facing version of this skill is `$VS\prompts\21-find-inspiration-prompt-motion.md`.
+All personal animation and motion-graphics work lives in `{{VIDEO_STUDIO}}` (call it `$VS`). Read `$VS\CLAUDE.md` and `$VS\prompts\INDEX.md` first. The human-facing version of this skill is `$VS\prompts\21-find-inspiration-prompt-motion.md`.
 
 Tools (Node 18+, no dependencies), in this skill's `tools/` folder (installed copy: `~/.claude/skills/prompt-motion-search/tools/`):
 

@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Design system · Video Studio</title>
+<meta name="description" content="The rules every video follows: palette, type, spacing, motion principles, transitions and components.">
+<meta property="og:title" content="Design system · Video Studio">
+<meta property="og:description" content="The rules every video follows: palette, type, spacing, motion principles, transitions and components.">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23eef3ff'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%233b6cf6'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../assets/site.css">
+<link rel="stylesheet" href="../../assets/panel-studio.css">
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="../../"><span class="dot"></span>Video Studio</a>
+    <nav class="main" aria-label="Main"><a href="../../">Home</a><a href="../../tour/">Tour</a><a href="../../guide/">Guide</a><a href="../../skills/">Skills</a><a href="../../prompts/">Prompts</a><a href="../../studio/" aria-current="page">Studio</a><a href="../../techniques/">Techniques</a><a href="../../shot-library/">Shot library</a><a href="../../research/">Research</a><a href="../../gallery/">Gallery</a><a href="../../credits/">Credits</a></nav>
+    <div class="tools">
+      <a class="btn" href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">GitHub</a>
+      <button class="btn" id="theme-toggle" type="button" aria-label="Toggle light or dark theme">Theme</button>
+    </div>
+  </div>
+</header>
+<main>
+  <div class="wrap">
+<div class="doc"><div class="doc-main ps-main"><header class="ps-hero"><p class="eyebrow">Studio / Design system</p><h1>Design system rules</h1><p class="lead">The rules every video in the studio follows, rendered from <a href="https://github.com/AnnasMustafaDev/video-studio/blob/main/studio/DESIGN_SYSTEM.md" rel="noopener noreferrer">DESIGN_SYSTEM.md</a>. See them drawn on the <a href="../../studio/tokens/">tokens page</a>.</p></header><nav class="ps-subnav" aria-label="Studio sections"><ul class="pills"><li><a href="../">Overview</a></li><li><a href="../components/">Components</a></li><li><a href="../tokens/">Design tokens</a></li><li><a href="../design-system/" aria-current="page">Design system</a></li><li><a href="../engines/">Two engines</a></li></ul></nav><details class="ps-mtoc"><summary>On this page</summary><ul><li><a href="#palette">Palette</a></li><li><a href="#fonts">Fonts</a></li><li><a href="#type-scale">Type scale</a></li><li><a href="#spacing-and-safe-margins">Spacing and safe margins</a></li><li><a href="#motion-principles">Motion principles</a></li><li><a href="#transitions">Transitions</a></li><li><a href="#components">Components</a></li><li><a href="#frame-ramp-text-floor-one-accent-per-frame-video-native-type">Frame ramp, text floor, one accent per frame (video-native type)</a></li><li><a href="#transitions-added">Transitions added</a></li><li><a href="#frame-arithmetic-traps">Frame arithmetic traps</a></li><li><a href="#not-in-the-system-on-purpose">Not in the system (on purpose)</a></li><li><a href="#note-on-studio-editing">Note on Studio editing</a></li></ul></details><div class="prose wide ps-prose"><p>The rules every video in <code>studio/</code> follows. Values live in <code>src/lib/tokens.ts</code>; this file says how to use them. If a scene needs something this file does not allow, change the system on purpose (tokens + this file), never inline in one scene.</p>
+<p>Reference composition: <code>LibraryShowcase</code> (1920x1080) and <code>Showcase-Vertical</code> (1080x1920) in <code>src/videos/library-showcase/</code>. Every rule below is visible there.</p>
+<h2 id="palette">Palette</h2>
+<p>One accent. Everything else is neutral.</p>
+<table><thead><tr><th>Token</th><th>Value</th><th>Use</th></tr></thead><tbody><tr><td><code>color.bg</code></td><td><code>#0D0E10</code></td><td>Frame background</td></tr><tr><td><code>color.surface</code></td><td><code>#16181C</code></td><td>Cards, plates</td></tr><tr><td><code>color.surfaceRaised</code></td><td><code>#1E2126</code></td><td>Neutral bars, raised panels</td></tr><tr><td><code>color.line</code> / <code>lineStrong</code></td><td>off-white at 10 % / 22 %</td><td>Hairlines, grid, borders</td></tr><tr><td><code>color.text</code></td><td><code>#F2F1EC</code></td><td>Primary text</td></tr><tr><td><code>color.textMuted</code></td><td><code>#9A9CA1</code></td><td>Supporting text, labels</td></tr><tr><td><code>color.textFaint</code></td><td><code>#5E6168</code></td><td>Metadata, timecodes</td></tr><tr><td><code>color.accent</code></td><td><code>#5B8CFF</code></td><td>The focal point only</td></tr></tbody></table>
+<p>Accent rules:</p>
+<ul><li>At most one accented thing on screen at a time: one word, one bar, one number, one mark.</li><li>Accent is never a background fill for large areas and never a glow.</li><li>To re-brand a video, change <code>color.accent</code> (and only that) in a copy of the tokens.</li></ul>
+<h2 id="fonts">Fonts</h2>
+<p>Loaded with <code>@remotion/google-fonts</code> in <code>src/lib/fonts.ts</code> (rendering waits until they are ready).</p>
+<ul><li><strong>Inter Tight</strong> 400 / 500 / 600: everything people read. Headlines 600, body 400.</li><li><strong>JetBrains Mono</strong> 400 / 500: small labels, eyebrows, paths, timecodes.</li></ul>
+<p>No third family. No italics for emphasis: use the accent colour or weight.</p>
+<h2 id="type-scale">Type scale</h2>
+<p>Designed against the short side of the frame (1080 px), so the same scale works in 16:9, 9:16 and 1:1.</p>
+<table><thead><tr><th>Token</th><th>Size / line height</th><th>Use</th></tr></thead><tbody><tr><td><code>display</code></td><td>132 / 1.02, 600, -0.035em</td><td>One statement per scene, max 2 lines</td></tr><tr><td><code>h1</code></td><td>96 / 1.05, 600</td><td>Headlines, vertical titles</td></tr><tr><td><code>h2</code></td><td>64 / 1.1, 600</td><td>Section titles, card titles</td></tr><tr><td><code>body</code></td><td>44 / 1.3, 400</td><td>Supporting lines (minimum for anything important)</td></tr><tr><td><code>caption</code></td><td>48 / 1.25</td><td>Captions</td></tr><tr><td><code>label</code></td><td>26 / 1.2, mono, +0.08em</td><td>Eyebrows, chart titles, metadata</td></tr></tbody></table>
+<p>Text rules: sentence case everywhere (no Title Case, no ALL CAPS headlines). Break lines by hand with <code>\n</code> in <code>TitleReveal</code> so line breaks follow meaning. Never let text touch the safe margin; if it does, cut words before shrinking type.</p>
+<h2 id="spacing-and-safe-margins">Spacing and safe margins</h2>
+<p>8 px grid: <code>space.xs 8 / s 16 / m 24 / l 40 / xl 64 / xxl 96</code>. Radii <code>8 / 16 / 28</code>.</p>
+<p>Safe margins (<code>safeArea</code> in tokens, applied by <code>&lt;SafeArea&gt;</code> and <code>useSafeArea()</code>):</p>
+<table><thead><tr><th>Format</th><th>Size</th><th>Top</th><th>Right</th><th>Bottom</th><th>Left</th></tr></thead><tbody><tr><td>16:9</td><td>1920x1080</td><td>96</td><td>128</td><td>96</td><td>128</td></tr><tr><td>9:16</td><td>1080x1920</td><td>220</td><td>80</td><td>380</td><td>80</td></tr><tr><td>1:1</td><td>1080x1080</td><td>96</td><td>96</td><td>96</td><td>96</td></tr></tbody></table>
+<p>9:16 keeps the top 220 px and bottom 380 px free for the platform UI (profile, caption, buttons). Re-compose for the format; do not just scale the 16:9 layout (16:9 puts things side by side, 9:16 stacks them).</p>
+<h2 id="motion-principles">Motion principles</h2>
+<ol><li><strong>Frame-based only.</strong> <code>useCurrentFrame()</code>, <code>interpolate()</code>, <code>spring()</code>, <code>useVideoConfig()</code>. No CSS transitions or animations, no <code>requestAnimationFrame</code>, no timers, no <code>Math.random()</code> (use <code>random(seed)</code> from <code>remotion</code>). The same frame must always render the same pixels.</li><li><strong>Springs, not linear.</strong> Entrances use <code>springs.smooth</code> (no overshoot) or <code>ease.out</code>. Exits use <code>ease.in</code> and are faster than entrances (<code>timing.exit</code> 12 frames vs <code>timing.enter</code> 20). Linear is only for counters&#39; clocks and constant drift (grid).</li><li><strong>Tiny overshoot, max.</strong> <code>springs.settle</code> (about 1 % overshoot) is the only bouncy preset, for one element per scene. No elastic, no bounce.</li><li><strong>Hold.</strong> After a reveal finishes, hold at least <code>timing.hold</code> (45 frames, 1.5 s) before the next thing moves or the scene leaves. The last scene holds still for its final second.</li><li><strong>One focal point.</strong> Each moment has one thing to look at. Stage, do not stack: in the showcase the lower third leaves before the captions arrive.</li><li><strong>Stagger in reading order.</strong> Words <code>timing.wordStagger</code> (3 f), characters <code>timing.charStagger</code> (1.5 f), lines and bars <code>timing.lineStagger</code> (5 f).</li><li><strong>Small distances.</strong> Text travels 0.4 em or rises out of a mask; elements move 10-24 px. Nothing flies across the frame.</li><li><strong>Sound is placed, not sprayed.</strong> One cue per event that deserves weight; whooshes start 3-4 frames before a cut.</li></ol>
+<h2 id="transitions">Transitions</h2>
+<p>Built on <code>@remotion/transitions</code> inside a <code>&lt;TransitionSeries&gt;</code>, always with <code>transitionTiming()</code> (spring, no overshoot, 15 frames). Approved presets (<code>presets</code> in <code>src/lib/transitions.tsx</code>):</p>
+<table><thead><tr><th>Preset</th><th>When</th></tr></thead><tbody><tr><td><code>presets.wipe(from, edgeColor?)</code></td><td>Moving forward in a sequence. Hard edge, optional 3 px accent edge line; outgoing scene drifts 4 %.</td></tr><tr><td><code>presets.fade()</code></td><td>A change of topic. Let the incoming scene start its animation after the fade (delay &gt;= 14) so text never ghosts over text.</td></tr><tr><td><code>presets.circle([x, y])</code></td><td>Into a detail, or a match cut: put the origin where the previous focal point was.</td></tr></tbody></table>
+<p>Rules: at most three transition types per video. A hard cut is always allowed and often best. Total duration = sum of scenes - transitions x 15.</p>
+<h2 id="components">Components</h2>
+<p>All in <code>src/lib/</code>, exported from <code>src/lib/index.ts</code>. Every component is frame-local (frame 0 = its parent <code>Sequence</code> start), and most take <code>delay</code> and <code>durationInFrames</code> (omit the latter to stay until the scene ends).</p>
+<h3 id="background-every-scene"><code>&lt;Background&gt;</code>: every scene</h3>
+<p>Flat colour, hairline grid or dot grid, optional vignette and seeded film grain (changes every 2 frames, <code>random()</code>-driven).</p>
+<pre><code class="lang-tsx">&lt;Background variant=&quot;grid&quot; cell={80} grain grainAmount={0.06} drift={4} seed=&quot;intro&quot; /&gt;</code></pre>
+<h3 id="safearea-layout-box"><code>&lt;SafeArea&gt;</code>: layout box</h3>
+<p>Padded by the current format&#39;s safe margins; flex column.</p>
+<pre><code class="lang-tsx">&lt;SafeArea justify=&quot;center&quot; align=&quot;flex-start&quot; gap={space.xl}&gt;...&lt;/SafeArea&gt;</code></pre>
+<h3 id="titlereveal-openers-chapter-titles"><code>&lt;TitleReveal&gt;</code>: openers, chapter titles</h3>
+<p>Masked line-by-line reveal, optional mono eyebrow with accent tick, optional subtitle.</p>
+<pre><code class="lang-tsx">&lt;TitleReveal eyebrow=&quot;Chapter one&quot; title={&quot;A small motion system,\nbuilt to be reused.&quot;} subtitle=&quot;Supporting line.&quot; size=&quot;display&quot; delay={6} /&gt;</code></pre>
+<h3 id="wordstagger-statements-hooks-supporting-lines"><code>&lt;WordStagger&gt;</code>: statements, hooks, supporting lines</h3>
+<p>Word-by-word rise and fade; <code>highlight</code> puts one word in the accent.</p>
+<pre><code class="lang-tsx">&lt;WordStagger text=&quot;Motion should explain, not decorate.&quot; highlight={[&quot;explain&quot;]} size=&quot;display&quot; delay={4} /&gt;</code></pre>
+<h3 id="charstagger-one-short-word-or-phrase"><code>&lt;CharStagger&gt;</code>: one short word or phrase</h3>
+<p>Per-character masked reveal; lines break only between words. Not for sentences.</p>
+<pre><code class="lang-tsx">&lt;CharStagger text=&quot;Made in code.&quot; size=&quot;display&quot; align=&quot;center&quot; delay={14} /&gt;</code></pre>
+<h3 id="lowerthird-naming-a-person-or-source"><code>&lt;LowerThird&gt;</code>: naming a person or source</h3>
+<p>Accent bar grows, name wipes in, role fades up; leaves on its own (default 3 s).</p>
+<pre><code class="lang-tsx">&lt;LowerThird name=&quot;Sam Rivera&quot; role=&quot;Product designer&quot; delay={8} durationInFrames={60} /&gt;</code></pre>
+<h3 id="captions-word-timed-subtitles"><code>&lt;Captions&gt;</code>: word-timed subtitles</h3>
+<p>Takes <code>{text, startMs, endMs}[]</code> (times relative to the parent Sequence; Whisper output maps directly). Pages by word count and pauses; spoken words white, current word accent, upcoming dimmed.</p>
+<pre><code class="lang-tsx">import words from &quot;./captions.json&quot;;
+&lt;Captions captions={words} maxWordsPerPage={6} pauseMs={500} /&gt;</code></pre>
+<h3 id="statcounter-one-number-that-matters"><code>&lt;StatCounter&gt;</code>: one number that matters</h3>
+<p>Counts with ease-out, tabular figures, width reserved so nothing shifts.</p>
+<pre><code class="lang-tsx">&lt;StatCounter value={450} label=&quot;frames, every one rendered from code&quot; delay={14} /&gt;</code></pre>
+<h3 id="barchart-comparing-a-handful-of-values"><code>&lt;BarChart&gt;</code>: comparing a handful of values</h3>
+<p>Horizontal bars grow in order; one <code>highlight</code> bar in accent; values ride on bar ends. Five bars or fewer.</p>
+<pre><code class="lang-tsx">&lt;BarChart title=&quot;Scene length, seconds&quot; data={[{ label: &quot;Title&quot;, value: 3.3 }]} highlight={0} max={5} decimals={1} valueSuffix=&quot; s&quot; /&gt;</code></pre>
+<h3 id="shapemask-revealing-an-object-inside-a-scene"><code>&lt;ShapeMask&gt;</code>: revealing an object inside a scene</h3>
+<p>Rectangle (from a side) or circle (from a point), spring-driven; <code>reverse</code> hides.</p>
+<pre><code class="lang-tsx">&lt;ShapeMask shape=&quot;circle&quot; origin={[50, 50]} delay={10}&gt;&lt;Logo /&gt;&lt;/ShapeMask&gt;</code></pre>
+<h3 id="presets-maskwipe-circlereveal-transitiontiming-scene-transitions"><code>presets</code>, <code>maskWipe</code>, <code>circleReveal</code>, <code>transitionTiming</code>: scene transitions</h3>
+<p>See Transitions above.</p>
+<pre><code class="lang-tsx">&lt;TransitionSeries.Transition presentation={presets.wipe(&quot;left&quot;, color.accent)} timing={transitionTiming()} /&gt;</code></pre>
+<h3 id="sfx-cues-sound-effects"><code>&lt;Sfx&gt;</code> + <code>cues</code>: sound effects</h3>
+<p><code>&lt;Sequence from={at}&gt;</code> + <code>&lt;Audio&gt;</code> from <code>@remotion/media</code>. Built-in cues are synthesised by <code>npm run sfx</code> (no licence issues): <code>tick</code> (something lands), <code>whoosh</code> (wipes), <code>thud</code> (the main reveal, once).</p>
+<pre><code class="lang-tsx">&lt;Sfx at={sceneStart(1) - 4} src={cues.whoosh} volume={0.3} /&gt;</code></pre>
+<h3 id="hooks">Hooks</h3>
+<p><code>useInOut({delay, durationInFrames})</code> (enter/exit progress), <code>useStagger()</code>, <code>useSafeArea()</code>, <code>directionVector()</code>.</p>
+<h2 id="frame-ramp-text-floor-one-accent-per-frame-video-native-type">Frame ramp, text floor, one accent per frame (video-native type)</h2>
+<p>The px <code>type</code> scale above is for reading text. For hero moments use the frame ramp in <code>tokens.ts</code>: sizes in percent of the composition WIDTH (vw), so a hero word can fill the frame instead of collapsing into a web layout. Evidence: a published launch-video spec (HeyGen frame spec); reasoning documented, numbers not independently checked.</p>
+<table><thead><tr><th>Step</th><th>vw</th><th>px at 1920</th><th>Use</th></tr></thead><tbody><tr><td><code>wordmark</code></td><td>30</td><td>576</td><td>One giant keyword, once per film</td></tr><tr><td><code>stat</code></td><td>18</td><td>346</td><td>A numeral that is the whole scene</td></tr><tr><td><code>display</code></td><td>14</td><td>269</td><td>One or two words</td></tr><tr><td><code>claim</code></td><td>6.5</td><td>125</td><td>A claim or fragment line (source says 6 to 9; 6.5 fits five words in the safe area)</td></tr><tr><td><code>reading</code></td><td>3.2</td><td>61</td><td>Reading text on a hero frame</td></tr><tr><td><code>label</code></td><td>1.4</td><td>27</td><td>Chrome labels: the text floor</td></tr></tbody></table>
+<p>Text floor: nothing below <code>TEXT_FLOOR_VW</code> (1.4 vw, 27 px at 1920); <code>frameType()</code> enforces it. Accent: one accented thing per frame, a test you can run on any still. Atoms (colours, families) are sacred, composition is free, numbers come from the script.</p>
+<pre><code class="lang-tsx">const t = useFrameType(&quot;stat&quot;);            // { fontSize, lineHeight, letterSpacing, fontWeight }
+&lt;div style={{ fontFamily: font.sans, ...t }}&gt;30&lt;/div&gt;</code></pre>
+<h3 id="fragmentchain-film-copy-as-fragments-f-a2"><code>&lt;FragmentChain&gt;</code>: film copy as fragments (F-A2)</h3>
+<p>1 to 4 word fragments with a picture beat between them. <code>mode=&quot;build&quot;</code>: fragments append to one held line, the newest in the accent, the line re-centres once per fragment (widths measured with a canvas, so the font must be loaded; <code>fonts.ts</code> blocks rendering until it is). <code>mode=&quot;replace&quot;</code>: each leaves whole, the next takes the same centre. Budget: about 15 to 25 words per 30 s, 6 or fewer for a muted loop, at most 8 words on one frame, copy on at most about 65 % of frames. Check with <code>lintCopy()</code> or <code>node scripts/copy-lint.mjs &quot;a|b|c&quot; --seconds 11</code>. Evidence: numbers from one author&#39;s study of eight films (their claim); the discipline is good, taste evidence mixed.</p>
+<pre><code class="lang-tsx">&lt;FragmentChain fragments={[&quot;Move once.&quot;, &quot;Land softly.&quot;, &quot;Cut.&quot;]} mode=&quot;build&quot; step=&quot;claim&quot; framesPerFragment={26} delay={6} /&gt;</code></pre>
+<h3 id="ghosttype-typed-text-with-a-locked-box-f-c14"><code>&lt;GhostType&gt;</code>: typed text with a locked box (F-C14)</h3>
+<p>The full text is always laid out; untyped characters are transparent, so lines never reflow and the card never jumps. No cursor (cursors stay out of the system). Use only when a brief calls for typed text (prompt box, terminal).</p>
+<pre><code class="lang-tsx">&lt;GhostType text=&quot;Same frame, same pixels.&quot; fontSize={t.fontSize} delay={30} maxWidth={1000} /&gt;</code></pre>
+<h3 id="camera-with-speedcurve-and-logzoom-f-b4"><code>&lt;Camera&gt;</code> with <code>speedCurve</code> and <code>logZoom</code> (F-B4)</h3>
+<p>Camera speed is a table of shares of cruise speed over seconds, integrated into position, so it cannot surge or stop unless the table says so. Zoom runs in log space. Write the table in the storyboard as the camera language of a glide shot. Evidence: one precisely described prompt; the optical-flow check from it is not built.</p>
+<pre><code class="lang-tsx">const cam = speedCurve([[0, 0], [0.5, 0.55], [1.1, 1], [2.2, 1], [3, 0.15], [3.3, 0]], { fps: 30, distance: 2600 });
+&lt;Camera x={cam.position(frame)} zoom={logZoom(p, 1, 1.35)}&gt;...&lt;/Camera&gt;</code></pre>
+<h3 id="buoyant-a-rising-element-that-never-freezes-f-a3"><code>buoyant()</code>: a rising element that never freezes (F-A3)</h3>
+<p>Cubic ease-out plus a half-sine bob over the whole move; ends exactly at 1 with about 2 % overshoot, so it is the one bounce allowed: one element per scene. Check any move with <code>node scripts/export-curve.mjs buoyant</code> (prints the longest mid-move stall) and plot the JSON with <code>inspect.mjs plot</code>. Evidence: one production write-up; the constants are this studio&#39;s own.</p>
+<pre><code class="lang-tsx">const rise = (1 - buoyant()(progress)) * 90;   // px, progress 0..1</code></pre>
+<h2 id="transitions-added">Transitions added</h2>
+<table><thead><tr><th>Preset</th><th>When</th><th>Evidence</th></tr></thead><tbody><tr><td><code>velocityCut({ travel, frames })</code> + <code>velocityCutTiming(frames)</code></td><td>Momentum should cross the edit: the outgoing scene accelerates (x1.15 per 60-fps frame) and is cut at its fastest frame; the incoming scene starts at the same speed (36 px per 60-fps frame, never above 60) and decays x0.93 per frame. Delay the incoming scene&#39;s entrances by <code>0.4 * frames</code>. Text must be under 20 px per frame when read.</td><td>Author-measured numbers, claimed</td></tr><tr><td><code>occluderCut({ from })</code> + <code>occluderTiming(frames)</code></td><td>A soft neutral band sweeps across and the hard cut happens at the midpoint, with a 28 px drag before and a settle after.</td><td>Author-tuned on placeholder material: a starting point</td></tr></tbody></table>
+<p>Still at most three transition types per video. Line-carry, impact slam and light leak are not built: line-carry needs per-scene cooperation, and glows and leaks are outside this system.</p>
+<h2 id="frame-arithmetic-traps">Frame arithmetic traps</h2>
+<p>Listed in the header of <code>src/lib/curves.ts</code>: <code>fadeIn(0)</code> is an empty frame, exit fades must reach 0 on the last frame, frame N is the first frame after an N-frame move, no double fades, keyframes start off-screen, freeze copy before hard-coding frames. Helpers: <code>softFade</code>, <code>exitOpacity</code>.</p>
+<h2 id="not-in-the-system-on-purpose">Not in the system (on purpose)</h2>
+<p>Glows, lens flares, light leaks, particles, 3D tilts, typewriter cursors, elastic bounces, rainbow gradients. If a brief truly needs one, add it as a deliberate, documented component, not a one-off.</p>
+<h2 id="note-on-studio-editing">Note on Studio editing</h2>
+<p>Library components are prop-driven: edit them through their props in code (or the Studio props panel of a composition). The Remotion skills&#39; <code>Interactive.*</code> inline-keyframe style is for one-off scene markup; use it in scenes when you want timeline-editable keyframes.</p></div></div><aside class="doc-toc" data-spy aria-label="On this page"><p class="toc-title">On this page</p><ul><li class=""><a href="#palette">Palette</a></li><li class=""><a href="#fonts">Fonts</a></li><li class=""><a href="#type-scale">Type scale</a></li><li class=""><a href="#spacing-and-safe-margins">Spacing and safe margins</a></li><li class=""><a href="#motion-principles">Motion principles</a></li><li class=""><a href="#transitions">Transitions</a></li><li class=""><a href="#components">Components</a></li><li class=""><a href="#frame-ramp-text-floor-one-accent-per-frame-video-native-type">Frame ramp, text floor, one accent per frame (video-native type)</a></li><li class=""><a href="#transitions-added">Transitions added</a></li><li class=""><a href="#frame-arithmetic-traps">Frame arithmetic traps</a></li><li class=""><a href="#not-in-the-system-on-purpose">Not in the system (on purpose)</a></li><li class=""><a href="#note-on-studio-editing">Note on Studio editing</a></li></ul></aside></div><script>
+(function(){
+  var links=[].slice.call(document.querySelectorAll('[data-spy] a[href^="#"]'));
+  var items=[];links.forEach(function(a){var el=document.getElementById(decodeURIComponent(a.getAttribute('href').slice(1)));if(el)items.push({a:a,el:el});});
+  if(!items.length)return;
+  var tick=false;
+  function update(){tick=false;var cur=null;items.forEach(function(it){if(it.el.getBoundingClientRect().top<=140)cur=it;});links.forEach(function(a){a.classList.remove('active');});if(cur)cur.a.classList.add('active');}
+  window.addEventListener('scroll',function(){if(!tick){tick=true;requestAnimationFrame(update);}},{passive:true});
+  update();
+})();
+</script>
+  </div>
+</main>
+<footer class="site">
+  <div class="wrap cols">
+    <div>
+      <strong>Video Studio</strong><br>
+      A personal studio for motion graphics and animated videos with Claude Code.
+    </div>
+    <div>
+      <a href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">Source on GitHub</a><br>
+      <a href="../../credits/">Credits and licences</a>
+    </div>
+  </div>
+</footer>
+<script src="../../assets/site.js" defer></script>
+</body>
+</html>

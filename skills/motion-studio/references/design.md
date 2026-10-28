@@ -55,3 +55,25 @@ What reads as cheap (avoid):
 
 - Thin accent rule, small mono kicker, the name very large (mask reveal), one-line promise, the CTA as a solid accent chip, brand mark.
 - Built word by word on the closing voice line; holds still for at least 2 s.
+
+## Copy budget and fragment chains
+
+Film copy rarely lands as a sentence. It arrives as **fragments of 1 to 4 words** with a picture beat between them, in one of two modes:
+
+- **Build:** fragments append to a held line, the newest in the accent, and the line re-centres (or re-aligns) once per fragment.
+- **Replace:** each fragment leaves whole and the next takes the same position.
+
+Recipes: the animation is the verb (words land before or after the demo, never describing it); the cliffhanger cut (the picture delivers the payoff word); a stem plus a rotating slot instead of a list; an image standing in for a word; one giant keyword per film.
+
+Budget (checkable by counting the strings): about **15 to 25 words per 30 s** launch film, 6 or fewer for a muted loop, no more than about 8 words readable on one frame, and the "subtitle film" smell test (copy on more than about 65 percent of frames fails).
+Why: a concrete, checkable answer to text walls and to captions that fight the picture. Evidence: numbers come from one author's frame study of eight professional films (claimed, not checked by us); good for discipline, mixed for taste in their own blind test (F-A2).
+Not adopted: the author's ban on questions and exclamation marks (a style choice; a question hook is allowed here). This sits beside the existing "max 5 words per caption, one accent word" rule; fragments are the way to obey it.
+
+## Frame ramp and text floor
+
+Type sizes for video are set relative to the frame, not copied from a web page. See [design-system.md](design-system.md) "Frame ramp" for the ramp, the text floor and the one-accent-per-frame check. If the ramp reads like a web UI (cards, pills, panels, small type), the layout is wrong.
+
+## Typed text (ghost-text layout lock)
+
+When a brief really needs typed text (a prompt box, a terminal): render the full text invisibly to fix the container's height and width, and overlay the visible characters on top, so the card never jumps as lines wrap. The camera never follows a wrapping cursor. Typewriter cursors as decoration stay banned (DESIGN_SYSTEM); this is for typing that is the content.
+Why: the reported fix for a card that moved as lines wrapped. Evidence: shown in the poster's own text, tiny (F-C14).

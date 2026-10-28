@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>70 · Post-mortem and learnings · Video Studio</title>
+<meta name="description" content="Capture what worked, what failed and what to do differently, and feed technique lessons back into the skill.">
+<meta property="og:title" content="70 · Post-mortem and learnings · Video Studio">
+<meta property="og:description" content="Capture what worked, what failed and what to do differently, and feed technique lessons back into the skill.">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23eef3ff'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%233b6cf6'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../assets/site.css">
+<link rel="stylesheet" href="../../assets/panel-skills.css">
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="../../"><span class="dot"></span>Video Studio</a>
+    <nav class="main" aria-label="Main"><a href="../../">Home</a><a href="../../tour/">Tour</a><a href="../../guide/">Guide</a><a href="../../skills/">Skills</a><a href="../../prompts/" aria-current="page">Prompts</a><a href="../../studio/">Studio</a><a href="../../techniques/">Techniques</a><a href="../../shot-library/">Shot library</a><a href="../../research/">Research</a><a href="../../gallery/">Gallery</a><a href="../../credits/">Credits</a></nav>
+    <div class="tools">
+      <a class="btn" href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">GitHub</a>
+      <button class="btn" id="theme-toggle" type="button" aria-label="Toggle light or dark theme">Theme</button>
+    </div>
+  </div>
+</header>
+<main>
+  <div class="wrap">
+<nav class="crumbs ps-crumbs" aria-label="Breadcrumb"><a href="../../">Home</a> <span aria-hidden="true">/</span> <a href="../../prompts/">Prompts</a> <span aria-hidden="true">/</span> <span aria-current="page">70 · Post-mortem and learnings</span></nav><div class="ps-narrow"><header class="ps-head"><div class="ps-badges"><span class="badge plain">Prompt 70</span> <span class="badge">Process and review</span> </div><h1>Post-mortem and learnings</h1></header><dl class="ps-info ps-info-prompt"><div class="wide"><dt>Purpose</dt><dd>Capture what worked, what failed and what to do differently, and feed technique lessons back into the skill.</dd></div><div class=""><dt>Use when</dt><dd>After every delivered video and after each learning-plan day.</dd></div><div class=""><dt>Stage</dt><dd>Last step of every project.</dd></div><div class=""><dt>Inputs you must fill in</dt><dd><code>[slug]</code>, <code>[what you personally liked and disliked]</code>, <code>[viewer reactions or numbers, if any]</code>.</dd></div><div class=""><dt>Expected output</dt><dd><code>notes.md</code> filled in (what changed between drafts and why), 3 to 7 technique-only lessons appended to the learnings log, suggested updates to prompts or the design system.</dd></div><div class=""><dt>Next prompt</dt><dd><a href="../31-componentize-project/"><code>31-componentize-project.md</code></a> if not done. Next video: <a href="../00-master-workflow/"><code>00-master-workflow.md</code></a>.</dd></div></dl><section class="ps-section ps-prompt"><h2 id="prompt">Prompt</h2>
+<pre><code class="lang-text">Run a post-mortem on the video [slug]. Read its brief, directions, storyboard, review log, the final delivery report and the git history of the video folder.
+
+1. What changed between the first draft and the final, and why. Which review findings came up more than once?
+2. What worked: decisions that made it look intentional (be specific: values, components, transitions).
+3. What failed or cost the most time: defects that slipped through, prompts that produced generic output, steps I had to repeat. Root cause for each.
+4. My own view: [likes and dislikes]. Viewer reactions or numbers: [reactions].
+5. Lessons: write 3 to 7 technique-only lessons (no client, product or brand names), each one line, actionable next time (&quot;Do X because Y&quot;). Mark which section they belong to: direction and taste, process, motion, voice, music and sound, rendering and tooling, data honesty.
+6. Suggest concrete edits to the prompt library, the design system or the tokens, if a lesson should become a default. Do not apply them without my approval.</code></pre></section><section class="ps-section ps-additions"><h2 id="studio-additions">Studio additions</h2>
+<pre><code class="lang-text">Write sections 1 to 4 to projects/[yyyy-mm-dd]-[slug]/notes.md under &quot;Post-mortem&quot;. Append the approved lessons to skills/motion-studio/references/learnings.md under the matching section, newest at the bottom, then run node tools/install-skills.mjs. Commit locally; do not push.</code></pre></section><nav class="ps-prevnext" aria-label="Previous and next"><a class="ps-pn prev" href="../31-componentize-project/"><span class="ps-pn-dir">Previous</span><span class="ps-pn-title">31 · Turn this video into reusable components</span></a><a class="ps-pn next" href="../71-system-audit/"><span class="ps-pn-dir">Next</span><span class="ps-pn-title">71 · System audit (trace two unlike briefs)</span></a></nav><p class="ps-small"><a href="https://github.com/AnnasMustafaDev/video-studio/blob/main/prompts/70-post-mortem.md" rel="noopener noreferrer">View this prompt on GitHub</a></p></div>
+  </div>
+</main>
+<footer class="site">
+  <div class="wrap cols">
+    <div>
+      <strong>Video Studio</strong><br>
+      A personal studio for motion graphics and animated videos with Claude Code.
+    </div>
+    <div>
+      <a href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">Source on GitHub</a><br>
+      <a href="../../credits/">Credits and licences</a>
+    </div>
+  </div>
+</footer>
+<script src="../../assets/site.js" defer></script>
+</body>
+</html>

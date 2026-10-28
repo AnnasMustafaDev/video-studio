@@ -1,6 +1,6 @@
 # The five phases in this repo
 
-`$VS` = `C:\Users\Annas Mustafa\Documents\me\video-studio`. Slug: lowercase-kebab (`launch-teaser`). Paper trail: `$VS\projects\<yyyy-mm-dd>-<slug>\`. Composition id: PascalCase of the slug (`LaunchTeaser`), plus a format suffix for extra ratios (`LaunchTeaser916`).
+`$VS` = `{{VIDEO_STUDIO}}`. Slug: lowercase-kebab (`launch-teaser`). Paper trail: `$VS\projects\<yyyy-mm-dd>-<slug>\`. Composition id: PascalCase of the slug (`LaunchTeaser`), plus a format suffix for extra ratios (`LaunchTeaser916`).
 
 ## Phase 1: understand and plan (no code)
 
@@ -39,3 +39,17 @@ See [delivery.md](delivery.md): render at the specified resolution and fps, norm
 ## Revisions after delivery
 
 Small change (copy, colour, timing): edit, re-run stills for the affected frames plus scene boundaries, quick self-check, re-render, re-probe, update the report. Structural change: back to the storyboard first.
+
+## Build loop additions (research round)
+
+Method and reasons: `~/.claude/skills/motion-studio/references/golden-scene.md`. In this repo:
+
+1. **Start gate.** Before any code show the beat map or line-to-visual map and 4 to 8 named stills (scene, timestamp). If you cannot render or view images here, say so first.
+2. **Plan check, five lines**, written into `notes.md` before each scene: what you will build, what you will not touch, the one thing most likely to go wrong, the stills you will show first, the acceptance criteria aimed at. For a risky scene a fresh subagent that did not write the plan lists its five weakest decisions before you render. Optional, skip for simple scenes. (Evidence: claimed by two builders.)
+3. **Golden scene.** After scene 1 passes review, name `studio/src/videos/<slug>/scenes/Scene01.tsx` the golden scene in `notes.md`. Scenes 2 to N (and parallel scene-builder subagents) get its source and the instruction "same structure (beat mapping, stagger, entrance style), change only the content, list what you copied". Each scene still gets its own typographic action. (Evidence: claimed; standard few-shot principle.)
+4. **Commit per approved scene.** One local commit per approved scene (CLAUDE.md rule 6: local only, never push). On each revision pass show `git diff --stat`, name anything that changed outside the request, and re-render the previous approved stills to compare before and after. Log decisions in `notes.md`. (Evidence: first-hand experience.)
+5. **Tunables.** Expose a scene's numbers (counts, sizes, gravity, scale) through a zod `schema` on the component so Remotion Studio's props panel gives sliders; record the final values in `timing.ts` or the scene's constants. A count prop gives density variants of the same scene for free. (Evidence: one launch-video write-up; same idea natively in Remotion.)
+6. **Glossary and acceptance criteria.** `projects/<slug>/glossary.md` and `acceptance.md` (templates in `motion-director`); revision requests cite them.
+7. **Real assets.** For any product, import the real component or a real capture; draw UI from scratch only for abstract diagrams. (Evidence: opinion of several builders; one builder happily rendered the app's own components.)
+8. **Asset spec and primitives (maybe-level).** In the design phase list each asset (what, source, real or code-made) before anything is generated, and list the film's own reusable motion primitives before scenes. (Evidence: low confidence, one second-hand summary.)
+9. **Parallel scene builders** are told the film's banned list and the gotchas file; only the main session edits shared files.

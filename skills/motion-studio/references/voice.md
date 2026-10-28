@@ -43,3 +43,21 @@ aecho=0.8:0.5:22|37:0.06|0.04, alimiter=limit=0.89      → 48 kHz mono
 
 - An Application Control policy can block msgpack's native DLL on first import; a retry worked. Fallback: `MSGPACK_PUREPYTHON=1`.
 - Run Python tools with `-I` when reading untrusted downloaded files.
+
+## Onset-anchored word times (segment-wise Whisper)
+
+A single Whisper pass over a long read can place words late (the source claims up to half a second). When a line has internal pauses, or the sync check shows drift:
+
+1. Split the clip at pauses of **100 ms or more** (silence detection).
+2. Run Whisper on each segment separately.
+3. Anchor each segment's first word to the **measured onset** of that segment (first frame above the noise floor), then keep Whisper's relative times inside it.
+
+One clip per line already acts as segmentation; the onset anchor is the part to add. Check the result by comparing the visual change against the waveform (`inspect.mjs sync`).
+Why: measurable improvement over a single pass. Evidence: precise in a finished film's prompt; the half-second figure is the author's claim and untested here (F-B11).
+
+Other voice hygiene (optional, claimed): regenerate a bad line several times and splice the best (`--only`); shorten pauses over 0.28 s to 0.2 s; pull phrase levels toward the median with gain changes only inside pauses.
+
+## Freeze the words before building
+
+Hard-coded frame numbers break when words change. Lock `script.json` (the words) and re-run `words.py` before cutting any scene to word times; if a word changes later, re-derive times, never nudge frames by hand.
+Why: a word change shifts every number after it. Evidence: failure-derived (F-A14).

@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>52 · Recompose for 9:16 and 1:1 · Video Studio</title>
+<meta name="description" content="Make vertical (9:16) and square (1:1) versions composed for their own frame, not cropped from the 16:9 master.">
+<meta property="og:title" content="52 · Recompose for 9:16 and 1:1 · Video Studio">
+<meta property="og:description" content="Make vertical (9:16) and square (1:1) versions composed for their own frame, not cropped from the 16:9 master.">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23eef3ff'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%233b6cf6'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../assets/site.css">
+<link rel="stylesheet" href="../../assets/panel-skills.css">
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="../../"><span class="dot"></span>Video Studio</a>
+    <nav class="main" aria-label="Main"><a href="../../">Home</a><a href="../../tour/">Tour</a><a href="../../guide/">Guide</a><a href="../../skills/">Skills</a><a href="../../prompts/" aria-current="page">Prompts</a><a href="../../studio/">Studio</a><a href="../../techniques/">Techniques</a><a href="../../shot-library/">Shot library</a><a href="../../research/">Research</a><a href="../../gallery/">Gallery</a><a href="../../credits/">Credits</a></nav>
+    <div class="tools">
+      <a class="btn" href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">GitHub</a>
+      <button class="btn" id="theme-toggle" type="button" aria-label="Toggle light or dark theme">Theme</button>
+    </div>
+  </div>
+</header>
+<main>
+  <div class="wrap">
+<nav class="crumbs ps-crumbs" aria-label="Breadcrumb"><a href="../../">Home</a> <span aria-hidden="true">/</span> <a href="../../prompts/">Prompts</a> <span aria-hidden="true">/</span> <span aria-current="page">52 · Recompose for 9:16 and 1:1</span></nav><div class="ps-narrow"><header class="ps-head"><div class="ps-badges"><span class="badge plain">Prompt 52</span> <span class="badge">Finishing</span> </div><h1>Recompose for 9:16 and 1:1</h1></header><dl class="ps-info ps-info-prompt"><div class="wide"><dt>Purpose</dt><dd>Make vertical (9:16) and square (1:1) versions composed for their own frame, not cropped from the 16:9 master.</dd></div><div class=""><dt>Use when</dt><dd>The 16:9 master is approved and the video also goes to Reels, Shorts, TikTok, Instagram or LinkedIn feed.</dd></div><div class=""><dt>Stage</dt><dd>Finishing, after the master is locked (and after <a href="../50-sound-design/"><code>50</code></a>/<a href="../51-captions-subtitles/"><code>51</code></a>), before <a href="../53-final-render-delivery/"><code>53</code></a>.</dd></div><div class=""><dt>Inputs you must fill in</dt><dd><code>[CompId]</code> of the master, <code>[target formats]</code>, <code>[platforms]</code>, <code>[anything to cut or shorten for the short version]</code>.</dd></div><div class=""><dt>Expected output</dt><dd>A layout plan per format, new compositions sharing scenes and timing with the master, platform-safe text, stills of every scene per format.</dd></div><div class=""><dt>Next prompt</dt><dd><a href="../13-quality-review/"><code>13-quality-review.md</code></a> on each new format, then <a href="../53-final-render-delivery/"><code>53-final-render-delivery.md</code></a>.</dd></div></dl><section class="ps-section ps-prompt"><h2 id="prompt">Prompt</h2>
+<pre><code class="lang-text">Create [9:16 1080x1920] and [1:1 1080x1080] versions of [CompId]. Compose each for its own frame. Do not centre-crop or letterbox the 16:9 master.
+
+1. Plan first, per format and per scene: where the focal element goes, how the type re-flows (line breaks change, sizes go up for phone viewing), what moves from side-by-side to stacked, what gets cut because it does not fit, and how camera moves and transitions change direction (a horizontal wipe may become vertical). Show me the plan and wait.
+2. Platform safe areas: for 9:16 keep text out of the top ~220 px and bottom ~380 px (platform UI), and away from the right edge where buttons sit. For 1:1 and 4:5 keep a generous margin; captions above, visual below often works.
+3. Hook: frame 0 and the first second must carry the message on their own; feeds autoplay muted. If the master opens slowly, propose a tighter opening for these formats.
+4. Length: [same length | shorten to N s by cutting X]. Keep audio in sync; re-cut the music at bar lines if shortening.
+5. Share, don&#39;t fork: scenes take the format as a prop (or read width/height from useVideoConfig) and use per-format layout tokens, so a later copy change updates every format.
+6. Render stills of every scene&#39;s settled state and each transition midpoint in each format and inspect them for clipping, cramped type and elements under platform UI.</code></pre></section><section class="ps-section ps-additions"><h2 id="studio-additions">Studio additions</h2>
+<pre><code class="lang-text">Register [CompId]-9x16 and [CompId]-1x1 in studio/src/Root.tsx next to the master, same fps. Per-format layout values belong in studio/src/lib/tokens.ts (or a layout map in the video folder if one-off). Stills: npm run stills -- [CompId]-9x16 [frames] and the same for 1x1. If you could not view them, say so.</code></pre></section><nav class="ps-prevnext" aria-label="Previous and next"><a class="ps-pn prev" href="../51-captions-subtitles/"><span class="ps-pn-dir">Previous</span><span class="ps-pn-title">51 · Captions and subtitles</span></a><a class="ps-pn next" href="../53-final-render-delivery/"><span class="ps-pn-dir">Next</span><span class="ps-pn-title">53 · Final render and delivery report</span></a></nav><p class="ps-small"><a href="https://github.com/AnnasMustafaDev/video-studio/blob/main/prompts/52-recompose-formats.md" rel="noopener noreferrer">View this prompt on GitHub</a></p></div>
+  </div>
+</main>
+<footer class="site">
+  <div class="wrap cols">
+    <div>
+      <strong>Video Studio</strong><br>
+      A personal studio for motion graphics and animated videos with Claude Code.
+    </div>
+    <div>
+      <a href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">Source on GitHub</a><br>
+      <a href="../../credits/">Credits and licences</a>
+    </div>
+  </div>
+</footer>
+<script src="../../assets/site.js" defer></script>
+</body>
+</html>

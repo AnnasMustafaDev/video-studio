@@ -7,6 +7,7 @@
 | **Stage** | Briefing, right before Phase 1. |
 | **Inputs you must fill in** | Every `[placeholder]` below. Leave a line as "your call" if you genuinely do not mind; Claude will document its assumption. |
 | **Expected output** | A complete brief you can paste. Saved copy in `projects/[yyyy-mm-dd]-[slug]/brief.md`. |
+| **Why this exists** | Films with a per-film Banned list and a start gate (beat map plus named stills before any code) were shipped by several authors. Evidence: shown in finished films (five, two authors); that the bans cause the quality is the gallery's reading. Findings F-B1, F-B2, F-C6. |
 | **Next prompt** | `00-master-workflow.md` (paste brief under it), then `10` or `11`. |
 
 Source: the 10 ingredients and the weak/strong example are from notes §3. "You don't have to specify every pixel. You do need to specify the decisions that make the video feel intentional."
@@ -38,8 +39,29 @@ BRIEF: [working title]
 
 10. Quality constraints: no clipped text, broken layouts, random decoration, accidental overlaps, inconsistent fonts or unreviewed final renders. Also: [your extras, e.g. no em dashes on screen, real numbers only].
 
+11. Banned for this film (mandatory, written for this film, not generic): [e.g. crossfades, blur-ins, glows, particles, holds over 1 s, bouncy easing, anything that looks like a template]. Seed it from studio/DESIGN_SYSTEM.md, then add what this film's subject tempts a model to do.
+
+12. Glossary (vague words defined in motion terms, once, for this film): [e.g. "punchy" = entrances at most 10 frames, one scale event per scene, hard cut into the next]. Round 3 must mean the same as round 1.
+
+13. Gotchas (known failure modes to avoid up front): [e.g. flood must overscale past all corners; start each scene at the zoom the last one ended on; fades under 0.3 s read as pops; last frame must equal first for a loop].
+
+14. Start gate: ask me for anything missing in this brief (with the default you will use if I skip it), then show ONLY: the beat map or timed scene list, and [4 to 8] named stills (frame or timestamp plus what each must show). Write no code until I approve those.
+
 Storyboard the sequence before coding it.
 ```
+
+## Tagged variant (same content, for pasting into a long build)
+
+```text
+<inputs>    what to ask me for; default if I skip each </inputs>
+<direction> look, type, one accent, motion language. Banned: [per-film list] </direction>
+<structure> timed scenes or beat ranges; every transition written "A becomes B" </structure>
+<build>     numbered engineering rules (frame-based only, tokens, reuse lib) </build>
+<gotchas>   known failures to avoid up front </gotchas>
+<start>     ask for inputs, then show the beat map and [N] named stills; no code before approval </start>
+```
+
+Why tags: each block is a contract the model cannot quietly reinterpret, and the approval stop sits before the expensive step. If you cannot view images or render here, say so first; do not describe results you have not seen.
 
 ## Weak vs strong (notes §3, verbatim)
 
@@ -69,3 +91,9 @@ Storyboard the sequence before coding it.
 | 8 Transitions | code transforms into a diagram (a morph, motivated) | Continuity instead of decorative wipes. |
 | 9 Audio | one SFX synced to the main reveal | Sound placed on a visual event. |
 | 10 Quality | restrained camera, distinct but consistent scenes, storyboard first | Guards against over-animation and one-shotting. |
+
+## Studio additions (new fields)
+
+- Fields 11 to 14 are new. Banned list: the reviewer (prompt 13, `motion-review`) must check the film's own list, not only the global one.
+- Start gate stills: they become the "stills to check" for `12-build-one-scene.md`; keep the same frame numbers.
+- Sources: tagged-brief and ban-list structure from the prompt-motion.com briefs of @twoclipping, @ultimaxbt and @rossaxbt; glossary idea from u/TheHol1day and u/FerretVirtual8466 (r/ClaudeAI). Wording is ours.

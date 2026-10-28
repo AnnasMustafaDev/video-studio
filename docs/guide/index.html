@@ -1,0 +1,1344 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Motion graphics with Claude</title>
+<meta name="description" content="A practical handbook for making professional motion graphics and animated videos with Claude Code and Remotion, tied to the video-studio repo.">
+<style>
+:root {
+  --bg: #fafaf9;
+  --surface: #ffffff;
+  --text: #1c2024;
+  --muted: #5a636c;
+  --line: #e2e4e7;
+  --accent: #2a5d8c;
+  --accent-text: #24527c;
+  --accent-weak: #eef3f8;
+  --code-bg: #f3f4f5;
+  --shadow: 0 1px 2px rgba(20, 30, 40, .05);
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #141719;
+    --surface: #1b1f22;
+    --text: #e4e7ea;
+    --muted: #9ba4ad;
+    --line: #2d3338;
+    --accent: #7fb1df;
+    --accent-text: #8fbce6;
+    --accent-weak: #1b2733;
+    --code-bg: #1f2428;
+    --shadow: none;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #141719;
+  --surface: #1b1f22;
+  --text: #e4e7ea;
+  --muted: #9ba4ad;
+  --line: #2d3338;
+  --accent: #7fb1df;
+  --accent-text: #8fbce6;
+  --accent-weak: #1b2733;
+  --code-bg: #1f2428;
+  --shadow: none;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 16px/1.65 system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  overflow-wrap: break-word;
+}
+a { color: var(--accent-text); text-underline-offset: 2px; }
+a:hover { text-decoration-thickness: 2px; }
+code, pre, kbd { font-family: ui-monospace, "Cascadia Mono", Consolas, "SF Mono", Menlo, monospace; }
+:not(pre) > code {
+  font-size: .9em;
+  background: var(--code-bg);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 0 .3em;
+  overflow-wrap: anywhere;
+}
+
+/* Layout */
+.layout {
+  display: grid;
+  grid-template-columns: 290px minmax(0, 1fr);
+  min-height: 100vh;
+}
+.sidebar {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  border-right: 1px solid var(--line);
+  padding: 28px 22px 32px;
+  background: var(--bg);
+}
+.brand { font-weight: 650; font-size: 1.02rem; margin: 0 0 2px; }
+.brand-sub { color: var(--muted); font-size: .86rem; margin: 0 0 18px; }
+.search { display: block; margin: 0 0 16px; }
+.search label { display: block; font-size: .82rem; color: var(--muted); margin-bottom: 4px; }
+.search input {
+  width: 100%;
+  font: inherit;
+  font-size: .92rem;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 7px 10px;
+}
+.search input:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+.search-status { font-size: .8rem; color: var(--muted); min-height: 1.2em; margin-top: 4px; }
+.toc ol { list-style: none; margin: 0; padding: 0; }
+.toc li { margin: 0; }
+.toc a {
+  display: block;
+  padding: 5px 10px;
+  margin-left: -10px;
+  border-left: 2px solid transparent;
+  color: var(--muted);
+  text-decoration: none;
+  font-size: .9rem;
+  line-height: 1.4;
+}
+.toc a:hover { color: var(--text); }
+.toc a.active { color: var(--accent-text); border-left-color: var(--accent); font-weight: 600; }
+.toc .sub a { padding-left: 22px; font-size: .86rem; }
+.toc li.hidden { display: none; }
+.side-foot { margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--line); }
+.btn {
+  font: inherit;
+  font-size: .86rem;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+.btn:hover { border-color: var(--muted); }
+.btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+.topbar { display: none; }
+
+main { padding: 48px 56px 96px; }
+.content { max-width: 780px; }
+
+header.doc-head { margin-bottom: 40px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
+h1 { font-size: clamp(1.9rem, 4vw, 2.6rem); line-height: 1.15; letter-spacing: -.015em; margin: 0 0 14px; font-weight: 700; }
+.lead { font-size: 1.12rem; color: var(--muted); margin: 0 0 12px; }
+.meta { font-size: .88rem; color: var(--muted); margin: 0; }
+
+section.doc { padding-top: 8px; margin-bottom: 56px; scroll-margin-top: 16px; }
+section.doc.hidden { display: none; }
+h2 { font-size: 1.55rem; line-height: 1.25; letter-spacing: -.01em; margin: 0 0 16px; font-weight: 680; }
+h3 { font-size: 1.14rem; line-height: 1.35; margin: 32px 0 10px; font-weight: 650; }
+h4 { font-size: 1rem; margin: 22px 0 8px; font-weight: 650; }
+h3[id], h4[id] { scroll-margin-top: 16px; }
+p { margin: 0 0 14px; }
+ul, ol { margin: 0 0 16px; padding-left: 1.4em; }
+li { margin: 4px 0; }
+li > p { margin: 0; }
+strong { font-weight: 650; }
+.muted { color: var(--muted); }
+.small { font-size: .9rem; }
+blockquote {
+  margin: 0 0 16px;
+  padding: 2px 0 2px 16px;
+  border-left: 3px solid var(--line);
+  color: var(--text);
+}
+
+/* Callouts */
+.repo {
+  background: var(--accent-weak);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--accent);
+  border-radius: 6px;
+  padding: 16px 20px 6px;
+  margin: 20px 0 24px;
+}
+.repo > .repo-title { font-weight: 650; color: var(--accent-text); margin: 0 0 8px; font-size: .95rem; }
+.repo p, .repo li { font-size: .95rem; }
+.note {
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 14px 18px 2px;
+  margin: 18px 0 22px;
+  background: var(--surface);
+}
+.note > .note-title { font-weight: 650; margin: 0 0 6px; }
+
+/* Code blocks */
+.code {
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--code-bg);
+  margin: 12px 0 20px;
+  overflow: hidden;
+}
+.code-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 6px 8px 6px 14px;
+  border-bottom: 1px solid var(--line);
+  background: var(--surface);
+  font-size: .82rem;
+  color: var(--muted);
+}
+.code-head .label { min-width: 0; overflow-wrap: anywhere; }
+.copy {
+  font: inherit;
+  font-size: .8rem;
+  color: var(--text);
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  padding: 3px 10px;
+  cursor: pointer;
+  flex: none;
+}
+.copy:hover { border-color: var(--muted); }
+.copy:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.copy.done { color: var(--accent-text); border-color: var(--accent); }
+pre {
+  margin: 0;
+  padding: 14px 16px;
+  font-size: .86rem;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  tab-size: 2;
+}
+
+/* Prompt comparison */
+.compare { display: grid; grid-template-columns: 1fr; gap: 4px; }
+.why { font-size: .95rem; margin: -8px 0 22px; }
+.why strong { color: var(--text); }
+
+/* Tables */
+.table-wrap { overflow-x: auto; margin: 12px 0 22px; border: 1px solid var(--line); border-radius: 6px; }
+table { width: 100%; border-collapse: collapse; font-size: .93rem; background: var(--surface); }
+th, td { text-align: left; vertical-align: top; padding: 10px 12px; border-bottom: 1px solid var(--line); }
+th { font-weight: 650; background: var(--code-bg); }
+tr:last-child td { border-bottom: 0; }
+td.num { white-space: nowrap; }
+
+/* Definition-style lists */
+.terms { margin: 0 0 18px; padding: 0; list-style: none; }
+.terms > li { padding: 14px 0; border-bottom: 1px solid var(--line); margin: 0; }
+.terms > li:first-child { border-top: 1px solid var(--line); }
+.terms .term { font-weight: 650; display: block; margin-bottom: 4px; }
+.terms .goal { display: block; margin-top: 6px; color: var(--muted); }
+.terms .goal strong { color: var(--text); }
+.prompt-terms { display: block; margin-top: 8px; font-size: .92rem; color: var(--muted); }
+.prompt-terms code { color: var(--text); }
+
+ol.ingredients > li { margin: 8px 0; }
+
+/* Checklist */
+.checklist { list-style: none; padding: 0; margin: 0 0 18px; }
+.checklist li { display: flex; gap: 10px; align-items: flex-start; padding: 7px 0; border-bottom: 1px solid var(--line); margin: 0; }
+.checklist li:last-child { border-bottom: 0; }
+.checklist input { margin-top: 5px; flex: none; accent-color: var(--accent); width: 16px; height: 16px; }
+.checklist label { cursor: pointer; }
+
+/* Diagrams */
+figure.diagram { container-type: inline-size; margin: 18px 0 26px; padding: 18px 14px 10px; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); }
+figure.diagram svg { display: block; width: 100%; height: auto; }
+figure.diagram figcaption { font-size: .86rem; color: var(--muted); margin-top: 10px; padding: 0 4px; }
+figure.diagram svg.d-narrow { display: none; max-width: 360px; margin: 0 auto; }
+@container (max-width: 640px) {
+  figure.diagram svg.d-wide { display: none; }
+  figure.diagram svg.d-narrow { display: block; }
+}
+.d-box { fill: var(--bg); stroke: var(--line); stroke-width: 1.5; }
+.d-box-accent { fill: var(--accent-weak); stroke: var(--accent); stroke-width: 1.5; }
+.d-box-dash { fill: none; stroke: var(--muted); stroke-width: 1.2; stroke-dasharray: 5 4; }
+.d-title { fill: var(--text); font: 600 14px system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+.d-sub { fill: var(--muted); font: 12px system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+.d-label { fill: var(--accent-text); font: 600 12px system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+.d-line { stroke: var(--muted); stroke-width: 1.5; fill: none; }
+.d-loop { stroke: var(--accent); stroke-width: 1.5; fill: none; }
+.d-bracket { stroke: var(--line); stroke-width: 1.5; fill: none; }
+.d-arrow { fill: var(--muted); }
+.d-arrow-accent { fill: var(--accent); }
+
+.no-results { display: none; padding: 20px; border: 1px dashed var(--line); border-radius: 6px; color: var(--muted); }
+.no-results.show { display: block; }
+
+footer.doc-foot { border-top: 1px solid var(--line); padding-top: 18px; color: var(--muted); font-size: .88rem; }
+
+/* Responsive */
+@media (max-width: 960px) {
+  .layout { grid-template-columns: minmax(0, 1fr); }
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: var(--bg);
+    border-bottom: 1px solid var(--line);
+    padding: 10px 16px;
+  }
+  .topbar .brand { margin: 0; font-size: .95rem; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .topbar .actions { display: flex; gap: 8px; flex: none; }
+  .sidebar {
+    position: fixed;
+    top: 53px;
+    left: 0;
+    right: 0;
+    height: auto;
+    max-height: calc(100vh - 53px);
+    z-index: 19;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+    padding: 16px 16px 20px;
+    display: none;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, .12);
+  }
+  .sidebar.open { display: block; }
+  .sidebar .brand, .sidebar .brand-sub, .sidebar .side-foot { display: none; }
+  main { padding: 28px 16px 72px; }
+  section.doc, h3[id], h4[id] { scroll-margin-top: 64px; }
+}
+@media (max-width: 680px) {
+  th, td { padding: 8px 9px; }
+  table { font-size: .88rem; }
+  h2 { font-size: 1.35rem; }
+}
+
+/* Print */
+@media print {
+  :root, :root[data-theme="dark"] {
+    --bg: #fff; --surface: #fff; --text: #000; --muted: #444; --line: #bbb;
+    --accent: #1f4e79; --accent-text: #1f4e79; --accent-weak: #fff; --code-bg: #fff;
+  }
+  .sidebar, .topbar, .copy, .search, .no-results { display: none !important; }
+  .layout { display: block; }
+  main { padding: 0; }
+  .content { max-width: none; }
+  section.doc, section.doc.hidden { display: block !important; break-inside: auto; }
+  .code, .repo, figure.diagram, tr, .terms > li { break-inside: avoid; }
+  h2, h3 { break-after: avoid; }
+  a { color: inherit; }
+  a[href^="http"]::after { content: " (" attr(href) ")"; font-size: .85em; color: #444; overflow-wrap: anywhere; }
+  figure.diagram svg.d-wide { display: block !important; }
+  figure.diagram svg.d-narrow { display: none !important; }
+  body { font-size: 11pt; }
+}
+</style>
+<style id="vs-embed-style">
+html { scroll-padding-top: 56px; }
+body { padding-top: 44px !important; }
+.vs-bar { position: fixed; top: 0; left: 0; right: 0; height: 44px; z-index: 2147483000; display: flex; align-items: center; gap: 4px;
+  padding: 0 14px; background: rgba(255,255,255,.94); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  border-bottom: 1px solid #e8eaf0; font: 500 13.5px/1 Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  box-sizing: border-box; color: #454b57; }
+.vs-bar * { box-sizing: border-box; }
+.vs-bar .vs-brand { display: flex; align-items: center; gap: 8px; font-weight: 700; color: #15171c; text-decoration: none; white-space: nowrap; margin-right: 10px; flex: none; }
+.vs-bar .vs-brand i { width: 11px; height: 11px; border-radius: 50%; background: #3b6cf6; display: inline-block; box-shadow: 0 0 0 3px #eef3ff; }
+.vs-bar nav { display: flex; gap: 1px; overflow-x: auto; scrollbar-width: none; flex: 1; min-width: 0; align-items: center; height: 100%; }
+.vs-bar nav::-webkit-scrollbar { display: none; }
+.vs-bar nav a { color: #454b57; text-decoration: none; padding: 7px 10px; border-radius: 8px; white-space: nowrap; flex: none; }
+.vs-bar nav a:hover { background: #f0f2f7; color: #15171c; }
+.vs-bar nav a[aria-current="page"] { background: #eef3ff; color: #2c55d4; font-weight: 650; }
+.vs-bar a:focus-visible { outline: 3px solid rgba(59,108,246,.5); outline-offset: 1px; }
+html[data-theme="dark"] .vs-bar { background: rgba(14,16,19,.94); border-bottom-color: #262a32; color: #c6c9d1; }
+html[data-theme="dark"] .vs-bar .vs-brand { color: #f1f2f4; }
+html[data-theme="dark"] .vs-bar .vs-brand i { background: #6b93ff; box-shadow: 0 0 0 3px #19233f; }
+html[data-theme="dark"] .vs-bar nav a { color: #c6c9d1; }
+html[data-theme="dark"] .vs-bar nav a:hover { background: #1b1f26; color: #fff; }
+html[data-theme="dark"] .vs-bar nav a[aria-current="page"] { background: #19233f; color: #8aa9ff; }
+@media print { .vs-bar { display: none; } body { padding-top: 0 !important; } }
+@media (min-width: 961px) { .sidebar { top: 44px !important; height: calc(100vh - 44px) !important; } }
+@media (max-width: 960px) {
+  .topbar { top: 44px !important; }
+  .sidebar { top: 97px !important; max-height: calc(100vh - 97px) !important; }
+  section.doc, h3[id], h4[id] { scroll-margin-top: 108px !important; }
+}</style>
+</head>
+<body>
+<!--vs-embed-start--><div class="vs-bar" role="navigation" aria-label="Site"><a class="vs-brand" href="../"><i></i>Video Studio</a><nav><a href="../">Home</a><a href="../tour/">Tour</a><a href="../guide/" aria-current="page">Guide</a><a href="../skills/">Skills</a><a href="../prompts/">Prompts</a><a href="../studio/">Studio</a><a href="../techniques/">Techniques</a><a href="../shot-library/">Shot library</a><a href="../research/">Research</a><a href="../gallery/">Gallery</a><a href="../credits/">Credits</a></nav></div><!--vs-embed-end-->
+
+<div class="topbar">
+  <p class="brand">Motion graphics with Claude</p>
+  <div class="actions">
+    <button class="btn" id="tocToggle" type="button" aria-expanded="false" aria-controls="sidebar">Contents</button>
+    <button class="btn theme-toggle" type="button">Dark mode</button>
+  </div>
+</div>
+
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <p class="brand">Motion graphics with Claude</p>
+    <p class="brand-sub">Video studio handbook</p>
+    <div class="search">
+      <label for="q">Filter sections</label>
+      <input id="q" type="search" placeholder="e.g. easing, storyboard, LUFS" autocomplete="off">
+      <div class="search-status" id="searchStatus" aria-live="polite"></div>
+    </div>
+    <nav class="toc" aria-label="Contents">
+      <ol id="tocList">
+        <li data-for="overview"><a href="#overview">Overview</a></li>
+        <li data-for="repo-map"><a href="#repo-map">In this repo: where things live</a></li>
+        <li data-for="workflow"><a href="#workflow">1. The workflow</a></li>
+        <li data-for="skills"><a href="#skills">2. Install the right skills</a></li>
+        <li data-for="describe-motion"><a href="#describe-motion">3. Describe motion, not appearance</a></li>
+        <li data-for="vocabulary"><a href="#vocabulary">4. Vocabulary</a></li>
+        <li data-for="master-prompt"><a href="#master-prompt">5. The master prompt</a></li>
+        <li data-for="staged"><a href="#staged">6. Work in stages</a></li>
+        <li data-for="references"><a href="#references">7. Visual references</a></li>
+        <li data-for="design-system"><a href="#design-system">8. A reusable design system</a></li>
+        <li data-for="learn"><a href="#learn">9. What to learn</a></li>
+        <li data-for="seven-day"><a href="#seven-day">10. 7-day learning plan</a></li>
+        <li data-for="model-choice"><a href="#model-choice">11. Model choice</a></li>
+        <li data-for="resources"><a href="#resources">12. Resources</a></li>
+        <li data-for="final"><a href="#final">Final recommendation</a></li>
+        <li data-for="new-video"><a href="#new-video">In this repo: start a new video</a></li>
+        <li data-for="qa"><a href="#qa">In this repo: pre-delivery QA</a></li>
+        <li data-for="studio-rules"><a href="#studio-rules">Extra studio rules</a></li>
+      </ol>
+    </nav>
+    <div class="side-foot">
+      <button class="btn theme-toggle" type="button">Dark mode</button>
+    </div>
+  </aside>
+
+  <main id="main">
+    <div class="content">
+
+      <header class="doc-head">
+        <h1>How to create genuinely good motion graphics and animated videos with Claude</h1>
+        <p class="lead">A handbook for directing Claude as a motion designer: the workflow, the setup, the prompts, the vocabulary and the review habits that turn a quick draft into polished work.</p>
+        <p class="meta">Built from <code>source/claude-motion-graphics-notes.md</code> (notes received 2026-10-22). Boxes titled "In this repo" are additions that tie the notes to this video-studio repo.</p>
+      </header>
+
+      <div class="no-results" id="noResults">No section matches that filter. Clear the box to see everything.</div>
+
+      <!-- Overview -->
+      <section class="doc" id="overview">
+        <h2>Overview</h2>
+        <p>The biggest secret is that people getting impressive results usually aren't just typing "make me a cinematic video" into Claude. They're using Claude as a motion designer, creative director, animator, and developer, with a workflow that lets them inspect and improve the actual video.</p>
+        <p>The most useful technique to learn is <strong>Claude Code + Remotion + Remotion Agent Skills</strong>. Remotion is a framework that creates videos from React code, rendering animations frame by frame. Claude writes the code, Remotion previews and renders the video, and you direct the creative decisions. Remotion officially supports this workflow with Claude Code and other coding agents.</p>
+        <p>This guide walks through the tools, prompts, terminology, setup, and iteration process to use for professional-looking results.</p>
+      </section>
+
+      <section class="doc" id="repo-map">
+        <h2>In this repo: where things live</h2>
+        <div class="repo">
+          <p class="repo-title">In this repo</p>
+          <p>This repo is the home for all personal video, animation and motion-graphics work.</p>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Path</th><th>What it is</th></tr></thead>
+              <tbody>
+                <tr><td><code>guide/index.html</code></td><td>This guide.</td></tr>
+                <tr><td><code>prompts/</code></td><td>The prompt library. <code>prompts/INDEX.md</code> says which prompt to use for which purpose and in what order; <code>prompts/00-master-workflow.md</code> is the master prompt.</td></tr>
+                <tr><td><code>skills/</code></td><td>Canonical source of the personal skills (for example <code>skills/motion-studio</code>). Install them with <code>node tools/install-skills.mjs</code>.</td></tr>
+                <tr><td><code>third_party/</code></td><td>Vendored third-party skills (<code>third_party/brag/</code>), pinned to an upstream commit and never edited here. The same install script installs them.</td></tr>
+                <tr><td><code>studio/</code></td><td>The Remotion project (React, frame-based). Official Remotion agent skills in <code>studio/.claude/skills/</code>, components in <code>studio/src/lib/</code>, tokens in <code>studio/src/lib/tokens.ts</code>, rules in <code>studio/DESIGN_SYSTEM.md</code>.</td></tr>
+                <tr><td><code>studio/src/videos/&lt;slug&gt;/</code></td><td>One folder per video (scenes and composition), registered in <code>studio/src/Root.tsx</code>.</td></tr>
+                <tr><td><code>projects/&lt;yyyy-mm-dd&gt;-&lt;slug&gt;/</code></td><td>The paper trail for each video: <code>brief.md</code>, <code>directions.md</code>, <code>storyboard.md</code>, <code>review.md</code>, <code>notes.md</code>, and renders in <code>out/</code> (gitignored).</td></tr>
+                <tr><td><code>learning/</code></td><td>The 7-day plan, one folder per day with brief, prompt, storyboard and notes.</td></tr>
+                <tr><td><code>source/</code></td><td>The notes this repo was built from.</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>House rules: never one-shot a whole video, use frame-based deterministic animation only, judge rendered frames rather than code, append technique-only lessons after each video, and commit locally without pushing unless asked.</p>
+        </div>
+      </section>
+
+      <!-- 1 -->
+      <section class="doc" id="workflow">
+        <h2>1. First, understand the workflow people are using</h2>
+        <ol>
+          <li><strong>Creative direction:</strong> choose a visual reference, style, story and mood.</li>
+          <li><strong>Script and storyboard:</strong> define scenes, timings, layouts, transitions and audio.</li>
+          <li><strong>Claude Code + Remotion:</strong> build the animation from reusable components and timed sequences.</li>
+          <li><strong>Preview, inspect and revise:</strong> catch visual defects, refine movement, adjust timing and improve sound.</li>
+          <li><strong>Render the final video:</strong> export the finished MP4 in the right resolution and frame rate.</li>
+        </ol>
+
+        <figure class="diagram" aria-label="The five-step workflow">
+          <svg class="d-wide" viewBox="0 0 880 196" role="img" aria-labelledby="wfTitle">
+            <title id="wfTitle">Creative direction, then script and storyboard, then Claude Code with Remotion, then preview, inspect and revise (looping back to the build), then render the final video.</title>
+            <defs>
+              <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="d-arrow" d="M0,0 L10,5 L0,10 z"/></marker>
+              <marker id="arrA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="d-arrow-accent" d="M0,0 L10,5 L0,10 z"/></marker>
+            </defs>
+            <g>
+              <rect class="d-box" x="6" y="20" width="152" height="96" rx="8"/>
+              <text class="d-title" x="82" y="56" text-anchor="middle">Creative</text>
+              <text class="d-title" x="82" y="74" text-anchor="middle">direction</text>
+              <text class="d-sub" x="82" y="98" text-anchor="middle">reference, style, mood</text>
+
+              <rect class="d-box" x="186" y="20" width="152" height="96" rx="8"/>
+              <text class="d-title" x="262" y="56" text-anchor="middle">Script and</text>
+              <text class="d-title" x="262" y="74" text-anchor="middle">storyboard</text>
+              <text class="d-sub" x="262" y="98" text-anchor="middle">scenes, timing, audio</text>
+
+              <rect class="d-box-accent" x="366" y="20" width="152" height="96" rx="8"/>
+              <text class="d-title" x="442" y="56" text-anchor="middle">Claude Code</text>
+              <text class="d-title" x="442" y="74" text-anchor="middle">+ Remotion</text>
+              <text class="d-sub" x="442" y="98" text-anchor="middle">components, sequences</text>
+
+              <rect class="d-box-accent" x="546" y="20" width="152" height="96" rx="8"/>
+              <text class="d-title" x="622" y="56" text-anchor="middle">Preview, inspect</text>
+              <text class="d-title" x="622" y="74" text-anchor="middle">and revise</text>
+              <text class="d-sub" x="622" y="98" text-anchor="middle">catch and fix defects</text>
+
+              <rect class="d-box" x="726" y="20" width="148" height="96" rx="8"/>
+              <text class="d-title" x="800" y="56" text-anchor="middle">Render the</text>
+              <text class="d-title" x="800" y="74" text-anchor="middle">final video</text>
+              <text class="d-sub" x="800" y="98" text-anchor="middle">MP4, size, frame rate</text>
+
+              <line class="d-line" x1="158" y1="68" x2="184" y2="68" marker-end="url(#arr)"/>
+              <line class="d-line" x1="338" y1="68" x2="364" y2="68" marker-end="url(#arr)"/>
+              <line class="d-line" x1="518" y1="68" x2="544" y2="68" marker-end="url(#arr)"/>
+              <line class="d-line" x1="698" y1="68" x2="724" y2="68" marker-end="url(#arr)"/>
+
+              <path class="d-loop" d="M622,116 C622,166 442,166 442,118" marker-end="url(#arrA)"/>
+              <text class="d-label" x="532" y="182" text-anchor="middle">revise until the defects are fixed</text>
+            </g>
+          </svg>
+          <svg class="d-narrow" viewBox="0 0 340 500" role="img" aria-labelledby="wfTitleN">
+            <title id="wfTitleN">The five-step workflow, top to bottom, with a loop from preview back to build.</title>
+            <defs>
+              <marker id="arrN" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="d-arrow" d="M0,0 L10,5 L0,10 z"/></marker>
+              <marker id="arrNA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="d-arrow-accent" d="M0,0 L10,5 L0,10 z"/></marker>
+            </defs>
+            <rect class="d-box" x="10" y="6" width="240" height="70" rx="8"/>
+            <text class="d-title" x="130" y="36" text-anchor="middle">Creative direction</text>
+            <text class="d-sub" x="130" y="56" text-anchor="middle">reference, style, mood</text>
+            <rect class="d-box" x="10" y="106" width="240" height="70" rx="8"/>
+            <text class="d-title" x="130" y="136" text-anchor="middle">Script and storyboard</text>
+            <text class="d-sub" x="130" y="156" text-anchor="middle">scenes, timing, audio</text>
+            <rect class="d-box-accent" x="10" y="206" width="240" height="70" rx="8"/>
+            <text class="d-title" x="130" y="236" text-anchor="middle">Claude Code + Remotion</text>
+            <text class="d-sub" x="130" y="256" text-anchor="middle">components, sequences</text>
+            <rect class="d-box-accent" x="10" y="306" width="240" height="70" rx="8"/>
+            <text class="d-title" x="130" y="336" text-anchor="middle">Preview, inspect, revise</text>
+            <text class="d-sub" x="130" y="356" text-anchor="middle">catch and fix defects</text>
+            <rect class="d-box" x="10" y="406" width="240" height="70" rx="8"/>
+            <text class="d-title" x="130" y="436" text-anchor="middle">Render the final video</text>
+            <text class="d-sub" x="130" y="456" text-anchor="middle">MP4, size, frame rate</text>
+            <line class="d-line" x1="130" y1="76" x2="130" y2="104" marker-end="url(#arrN)"/>
+            <line class="d-line" x1="130" y1="176" x2="130" y2="204" marker-end="url(#arrN)"/>
+            <line class="d-line" x1="130" y1="276" x2="130" y2="304" marker-end="url(#arrN)"/>
+            <line class="d-line" x1="130" y1="376" x2="130" y2="404" marker-end="url(#arrN)"/>
+            <path class="d-loop" d="M250,341 C300,341 300,241 252,241" marker-end="url(#arrNA)"/>
+            <text class="d-label" x="306" y="286" text-anchor="middle" transform="rotate(90 306 286)">revise</text>
+          </svg>
+          <figcaption>Steps 3 and 4 repeat until the critical defects are gone. Only then render the final video.</figcaption>
+        </figure>
+
+        <p>This is the key difference between a generic AI-generated animation and a carefully directed motion-graphics piece: you control the design, timing, and revisions instead of accepting the first output.</p>
+        <p>Remotion's official beginner workflow explicitly supports creating videos through prompts, previewing them in Remotion Studio, and refining them through follow-up instructions.</p>
+
+        <h3 id="which-tool">Which tool should you use for which job?</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Tool</th><th>Role</th><th>Use it for</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Remotion</strong></td><td>Your main tool.</td><td>Best for kinetic typography, animated diagrams, UI demos, product launches, data visualizations, explainers, subtitles and repeatable video templates. (Official Remotion documentation)</td></tr>
+              <tr><td><strong>Adobe After Effects</strong></td><td>For detailed visual finishing.</td><td>Useful for complex compositing, bespoke effects, intricate shape animation, particle effects and hands-on artistic control.</td></tr>
+              <tr><td><strong>Blender</strong></td><td>For real 3D.</td><td>Use when you need detailed 3D product shots, realistic materials, complex lighting, camera movement or simulated environments.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>You don't need all three to get started. For your first serious attempt, stick to Claude Code and Remotion. Add other tools only when the visual you want requires them.</p>
+
+        <div class="repo">
+          <p class="repo-title">In this repo: which engine</p>
+          <ul>
+            <li><strong>Remotion in <code>studio/</code> is the default.</strong> Kinetic type, UI demos, diagrams, data viz, explainers, captions and templates.</li>
+            <li><strong>The motion-studio HTML engine</strong> (<code>skills/motion-studio</code>) is for voice-over-driven product films where every cut lands on a spoken word. One HTML composition is driven by the voice's word timings, reviewed live in an HTML player, and rendered frame-exact to MP4 only on approval.</li>
+            <li><strong>After Effects or Blender</strong> only when the shot needs real compositing or real 3D. Say so instead of faking it in code.</li>
+          </ul>
+          <p>Quick test: if the story is carried by a voice-over and the edit must hit spoken words, use motion-studio. If it is type, diagrams, data or a template you will reuse, use Remotion.</p>
+        </div>
+
+        <div class="repo">
+          <p class="repo-title">In this repo: a quick launch video (brag)</p>
+          <p>For a fast 15 to 25 second launch video of a project you just built, run <code>/brag</code> in that project's folder. It reads the code, plans, builds, renders and writes share copy into <code>brag-output/</code>, in one command with no review rounds. It is a third-party MIT skill from <a href="https://github.com/latent-spaces/brag">latent-spaces/brag</a>, vendored and pinned in <code>third_party/brag/</code> (never edited here) and installed by the same script. When you want a directed, storyboarded piece instead, use the Remotion workflow above.</p>
+        </div>
+      </section>
+
+      <!-- 2 -->
+      <section class="doc" id="skills">
+        <h2>2. Install the right skills in Claude Code</h2>
+        <p>A skill is a set of instructions and workflows that teaches a coding agent how to handle a particular task consistently. It's different from a single prompt: the guidance can be reused across many projects.</p>
+        <p>Remotion provides official agent skills for creation, markup, rendering, captions, maps, and more. Its <code>remotion-best-practices</code> skill combines the other Remotion guidance.</p>
+
+        <h3 id="setup-step-1">Step 1: set up a project</h3>
+        <p>Install Node.js first if it isn't already installed. Then run these commands in your terminal:</p>
+        <div class="code"><div class="code-head"><span class="label">Terminal 1: create the project and start the preview</span><button class="copy" type="button">Copy</button></div><pre><code>npx create-video@latest --yes --blank motion-studio
+cd motion-studio
+npx remotion skills add
+npm run dev</code></pre></div>
+        <p>These are based on Remotion's official project-creation workflow.</p>
+
+        <h3 id="setup-step-2">Step 2: open a second terminal</h3>
+        <p>In the same project folder, start Claude Code:</p>
+        <div class="code"><div class="code-head"><span class="label">Terminal 2: start Claude Code</span><button class="copy" type="button">Copy</button></div><pre><code>cd motion-studio
+claude</code></pre></div>
+        <p>Keep the development server running in the first terminal so you can preview your changes in Remotion Studio.</p>
+
+        <h3 id="setup-step-3">Step 3: check that the skills are available</h3>
+        <p>Ask Claude:</p>
+        <div class="code"><div class="code-head"><span class="label">Prompt: skills check</span><button class="copy" type="button">Copy</button></div><pre><code>Inspect this project and identify the Remotion agent skills
+available to you.
+
+Read the relevant skill instructions before creating anything.
+Tell me which workflows you will use for:
+- Creative planning
+- Animation and typography
+- Scene transitions
+- Audio
+- Previewing and rendering
+- Quality assurance
+
+Do not build the video yet.</code></pre></div>
+        <p>This establishes whether Claude can see the relevant guidance before you commit to a large generation task.</p>
+        <p>You can also install the official Claude Code plugin from Remotion's marketplace if you want its packaged workflow and skills:</p>
+        <div class="code"><div class="code-head"><span class="label">Optional: Remotion's Claude Code plugin</span><button class="copy" type="button">Copy</button></div><pre><code>claude plugin marketplace add remotion-dev/claude-code-plugin
+claude plugin install remotion@remotion</code></pre></div>
+        <p>Restart Claude Code after installing the plugin. The plugin is documented by Remotion.</p>
+
+        <div class="repo">
+          <p class="repo-title">In this repo: skills</p>
+          <p>The Remotion project already exists as <code>studio/</code> (you do not need to run <code>create-video</code> again). The official Remotion agent skills live in <code>studio/.claude/skills/</code>. Use two terminals the same way: <code>npm run dev</code> in <code>studio/</code>, and <code>claude</code> in a second terminal.</p>
+          <p>The personal skills (such as motion-studio) are maintained in <code>skills/</code> and copied into <code>~/.claude/skills/</code> by the install script. Run it from the repo root after cloning, and again after you edit a skill or append to its learnings:</p>
+          <div class="code"><div class="code-head"><span class="label">Install the personal skills (repo root)</span><button class="copy" type="button">Copy</button></div><pre><code>node tools/install-skills.mjs</code></pre></div>
+          <p>The skills-check prompt above is saved as <code>prompts/01-skills-check.md</code>.</p>
+        </div>
+      </section>
+
+      <!-- 3 -->
+      <section class="doc" id="describe-motion">
+        <h2>3. The most important skill: learn to describe motion, not just appearance</h2>
+
+        <h3 id="weak-prompt">Weak prompt</h3>
+        <div class="code"><div class="code-head"><span class="label">Weak prompt (do not use)</span><button class="copy" type="button">Copy</button></div><pre><code>Make a really cool futuristic animation for an AI startup. Make it cinematic, smooth, premium, with nice transitions and glowing effects.</code></pre></div>
+        <p class="why"><strong>Why it fails:</strong> it doesn't define the composition, pacing, typography, visual hierarchy, scene order or actual motion. Claude has to invent everything, often producing generic-looking results.</p>
+
+        <h3 id="strong-prompt">Stronger prompt</h3>
+        <div class="code"><div class="code-head"><span class="label">Stronger prompt</span><button class="copy" type="button">Copy</button></div><pre><code>Design a 12-second premium product-launch animation for an AI developer tool. Use a near-black background, off-white typography and one electric-blue accent. Begin with an abstract grid assembling into a precise geometric mark. At 2.5 seconds, transition into a close-up of a code editor, with selected lines revealing in a staggered sequence. At 6 seconds, transform the code into a clean system diagram. End with the headline "BUILD WHAT'S NEXT" and a small product URL. Use restrained camera movement, purposeful easing, subtle depth, precise alignment and a sound effect synchronized to the main reveal. Keep each scene visually distinct but stylistically consistent. Storyboard the sequence before coding it.</code></pre></div>
+        <p class="why"><strong>Why it works:</strong> Claude has a defined visual system, a sequence of events, concrete timing and a clear ending.</p>
+        <p>Remotion's own guidance similarly encourages creating a project through structured prompts and iterating on the preview rather than treating the initial generation as the finished product.</p>
+
+        <h3 id="ingredients">The 10 ingredients of a professional motion-graphics prompt</h3>
+        <p>Use these as a checklist whenever you brief Claude.</p>
+        <ol class="ingredients">
+          <li><strong>Purpose.</strong> What is the video supposed to achieve? Product launch, explainer, brand identity, educational video, social post?</li>
+          <li><strong>Format.</strong> 16:9 for YouTube, 9:16 for Reels, or 1:1 for square content. Specify resolution, frame rate and duration.</li>
+          <li><strong>Art direction.</strong> Describe the aesthetic, reference styles, palette, contrast, materials, textures and atmosphere.</li>
+          <li><strong>Composition.</strong> Where are the elements? Centered hero object, left-aligned typography, negative space, foreground/background layers?</li>
+          <li><strong>Typography.</strong> Typeface, weight, size hierarchy, line breaks, tracking, alignment and exact on-screen text.</li>
+          <li><strong>Movement.</strong> What moves, in which direction, how far, at what speed, and what triggers the movement?</li>
+          <li><strong>Timing.</strong> Specify scene durations, delays, holds, overlaps, reveal times and ending.</li>
+          <li><strong>Transitions.</strong> Cut, match cut, mask reveal, wipe, zoom, morph, or camera move. Use transitions that support the story.</li>
+          <li><strong>Audio.</strong> Music mood, sound effects, voiceover, rhythmic accents and silence. State where audio events occur.</li>
+          <li><strong>Quality constraints.</strong> No clipped text, broken layouts, random decoration, accidental overlaps, inconsistent fonts or unreviewed final renders.</li>
+        </ol>
+        <p>You don't have to specify every pixel. You do need to specify the decisions that make the video feel intentional.</p>
+
+        <div class="repo">
+          <p class="repo-title">In this repo: briefs</p>
+          <p>Write the brief for every video into <code>projects/&lt;yyyy-mm-dd&gt;-&lt;slug&gt;/brief.md</code> using the ten ingredients as headings. A missing heading is a decision Claude will make for you.</p>
+        </div>
+      </section>
+
+      <!-- 4 -->
+      <section class="doc" id="vocabulary">
+        <h2>4. Learn the vocabulary that makes Claude much better at animation</h2>
+        <p>You don't need to become an expert in After Effects or write complex React code yourself. But knowing these terms lets you direct Claude much more precisely.</p>
+        <ul class="terms">
+          <li>
+            <span class="term">Kinetic typography</span>
+            Text itself becomes the animation: words slide, scale, split, rotate, reveal or change emphasis. Use this for high-impact hooks, title sequences and product statements.
+            <span class="prompt-terms">Prompt terms: <code>word-by-word reveal</code>, <code>staggered text</code>, <code>per-character animation</code>, <code>masked reveal</code>, <code>tracking expansion</code></span>
+          </li>
+          <li>
+            <span class="term">Easing and spring physics</span>
+            Easing controls acceleration and deceleration. A spring adds a physically inspired response, potentially with overshoot. This is one of the biggest differences between robotic movement and polished motion.
+            <span class="prompt-terms">Prompt terms: <code>ease-out</code>, <code>cubic-bezier</code>, <code>spring animation</code>, <code>subtle overshoot</code>, <code>settling motion</code>, <code>no linear movement unless intentional</code></span>
+          </li>
+          <li>
+            <span class="term">Staging and visual hierarchy</span>
+            Staging determines what the viewer notices first. Hierarchy controls which element has the greatest visual importance. Don't animate everything equally.
+            <span class="prompt-terms">Prompt terms: <code>single focal point</code>, <code>negative space</code>, <code>foreground midground background</code>, <code>parallax</code>, <code>asymmetric composition</code>, <code>controlled visual hierarchy</code></span>
+          </li>
+          <li>
+            <span class="term">Transitions and match cuts</span>
+            A transition connects scenes. A match cut uses a shared shape, position, motion or idea to make the change feel continuous.
+            <span class="prompt-terms">Prompt terms: <code>match cut</code>, <code>shape morph</code>, <code>directional wipe</code>, <code>camera-driven transition</code>, <code>overlapping transition</code>, <code>motivated cut</code></span>
+          </li>
+          <li>
+            <span class="term">Lighting, texture and depth</span>
+            These help flat graphics feel tactile or cinematic. Use them selectively; excessive glow, blur and grain can make a design look cheap rather than premium.
+            <span class="prompt-terms">Prompt terms: <code>rim lighting</code>, <code>soft bloom</code>, <code>ambient occlusion</code>, <code>subtle film grain</code>, <code>depth of field</code>, <code>specular highlights</code></span>
+          </li>
+        </ul>
+
+        <h3 id="deterministic">One particularly important technical rule</h3>
+        <p>Remotion animations should be driven by the current frame and the video configuration, rather than depending on real-time browser animation timers. Its documentation explains how <code>useCurrentFrame()</code>, <code>interpolate()</code> and <code>spring()</code> support frame-controlled animation and help avoid rendering inconsistencies.</p>
+        <p>You can ask Claude to enforce that directly:</p>
+        <div class="code"><div class="code-head"><span class="label">Prompt: deterministic animation</span><button class="copy" type="button">Copy</button></div><pre><code>Use deterministic, frame-based animation throughout Remotion.
+
+Use useCurrentFrame(), interpolate(), spring(), and
+useVideoConfig() where appropriate.
+
+Do not rely on CSS transitions, requestAnimationFrame,
+wall-clock timers, or random values that can vary between renders.
+
+Ensure every animation produces the same output when the
+same frame is rendered repeatedly.</code></pre></div>
+        <p>That is a technical constraint, not just a stylistic preference.</p>
+
+        <div class="repo">
+          <p class="repo-title">In this repo: the deterministic rule</p>
+          <p>This is a hard rule in <code>studio/</code>: <code>useCurrentFrame</code>, <code>interpolate</code>, <code>spring</code> and <code>useVideoConfig</code> only. No CSS transitions, <code>requestAnimationFrame</code>, timers or <code>Math.random</code>. When you need variation, use Remotion's <code>random(seed)</code>, which returns the same value on every render. The prompt is saved as <code>prompts/02-deterministic-rule.md</code>.</p>
+          <p>The motion-studio engine follows the same idea: <code>frame(t)</code> sets every style from <code>t</code> alone, with no state carried between frames.</p>
+        </div>
+      </section>
+
+      <!-- 5 -->
+      <section class="doc" id="master-prompt">
+        <h2>5. The master prompt to use with Claude Code</h2>
+        <p>This is the prompt to save and reuse for your own projects. It instructs Claude to work like a small motion-design studio, not just a code generator.</p>
+        <div class="code"><div class="code-head"><span class="label">Prompt: Motion Graphics Director, master workflow (all 5 phases)</span><button class="copy" type="button">Copy</button></div><pre><code>Motion Graphics Director — Master Workflow
+
+Act as a senior motion designer, creative director, animator, sound designer, and Remotion engineer.
+
+Your goal is to produce a polished, production-ready motion-graphics video, not a generic AI-generated animation.
+
+Phase 1 — Understand and plan. Before writing code:
+1. Identify the purpose, target audience, platform, duration, aspect ratio, message, and intended emotional response.
+2. If a critical requirement is missing, ask concise clarifying questions. Otherwise, make sensible creative assumptions and document them.
+3. Define the visual direction: palette, typography, composition, texture, lighting, depth, movement, and reference aesthetic.
+4. Create a storyboard with timestamps, scene purpose, on-screen text, visual composition, movement, transitions, and audio cues.
+5. Define a consistent design system that can be reused across all scenes.
+6. Identify which assets should be created in code and which require genuine images, video, or audio files.
+
+Do not begin full implementation until the storyboard and art direction are coherent.
+
+Phase 2 — Design for quality. Use professional motion-design principles:
+- Strong visual hierarchy and intentional negative space.
+- Consistent typography, spacing, colors, and alignment.
+- Purposeful movement with appropriate easing and duration.
+- A clear focal point in every scene.
+- Controlled staggered reveals and layered motion.
+- Meaningful transitions that connect the story.
+- Subtle depth, texture, lighting, and effects only where justified.
+- Sound design synchronized with important visual events.
+- Readable text, safe margins, and composition appropriate to the target platform.
+
+Avoid generic templates, excessive glow, random particles, constant movement, unnecessary transitions, and decoration without a purpose.
+
+Phase 3 — Implement in Remotion.
+1. Inspect the existing project and available Remotion skills before editing.
+2. Use the official Remotion best-practices guidance.
+3. Build reusable components and separate scene components.
+4. Centralize design tokens, timing values, typography, and colors.
+5. Use deterministic frame-based animations.
+6. Keep all scene durations and transitions synchronized with the final composition.
+7. Use real assets when required and preserve their aspect ratios.
+8. Ensure audio timing and visual timing are coordinated.
+9. Keep the implementation maintainable and easy to revise.
+
+Do not rewrite working project infrastructure unnecessarily.
+
+Phase 4 — Render, inspect, and improve. Do not treat successful compilation as proof of visual quality.
+1. Start the Remotion preview.
+2. Render an initial version or representative scene.
+3. Inspect actual rendered frames, including scene boundaries, text-heavy sections, complex transitions, and the final frame.
+4. Check for clipping, overflow, poor alignment, inconsistent typography, awkward pacing, flicker, incorrect timing, and visual discontinuities.
+5. Fix the problems found.
+6. Re-render and inspect the revised result.
+7. Repeat until the critical defects are resolved or explain any remaining limitations.
+
+If visual inspection tools are unavailable, tell me instead of claiming the video was visually verified.
+
+Phase 5 — Final delivery. Render the final video at the specified resolution and frame rate. Report:
+- The output file and its location.
+- Duration, resolution, and frame rate.
+- Assets and fonts used.
+- Any missing assets or licensing concerns.
+- What was checked during quality assurance.
+- Any remaining limitations.
+
+Work in stages. Prioritize creative quality, visual consistency, deterministic rendering, and verified output over adding more effects.
+
+Start with Phase 1 and present the proposed creative direction and storyboard before implementing the full video.</code></pre></div>
+
+        <h3 id="master-how">How to use it</h3>
+        <p>Save it in your project instructions or paste it at the start of a new video project. Then provide your specific brief, reference images, script, and desired outcome. It is a reusable workflow, not a guarantee that every video will be good without review.</p>
+        <p>Remotion's agent skills provide the technical guidance, while this master prompt adds a creative-production process and explicit quality checks.</p>
+
+        <div class="repo">
+          <p class="repo-title">In this repo: the master prompt and render-inspect-fix</p>
+          <p>The master prompt lives in <code>prompts/00-master-workflow.md</code>; <code>prompts/INDEX.md</code> shows where it sits among the other prompts. Paste it, then the contents of the video's <code>brief.md</code>.</p>
+          <p>For Phase 4, render stills of specific frames instead of a whole MP4, then open the images and look at them. Run it inside <code>studio/</code>:</p>
+          <div class="code"><div class="code-head"><span class="label">Render stills for inspection (in studio/)</span><button class="copy" type="button">Copy</button></div><pre><code>npm run stills -- &lt;CompId&gt; &lt;frames&gt;</code></pre></div>
+          <p>Pick frames at every settled state, at each scene boundary, in the middle of complex transitions, on the densest text and on the final frame. Fix, render the same frames again, and compare. If Claude could not look at the images, it must say so rather than call the video verified.</p>
+        </div>
+      </section>
+
+      <!-- 6 -->
+      <section class="doc" id="staged">
+        <h2>6. Don't ask Claude to make the entire video in one shot</h2>
+        <p>This is one of the most important workflow improvements you can make. Use a sequence of smaller prompts. Each stage has a different purpose.</p>
+
+        <figure class="diagram" aria-label="The staged prompt sequence">
+          <svg class="d-wide" viewBox="0 0 880 214" role="img" aria-labelledby="stTitle">
+            <title id="stTitle">Prompt 1 creative direction and prompt 2 storyboard are creative decisions; prompt 3 builds one scene (implementation); prompt 4 reviews it (quality assurance) and loops back to fix; then the remaining scenes follow.</title>
+            <defs>
+              <marker id="arrS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="d-arrow" d="M0,0 L10,5 L0,10 z"/></marker>
+              <marker id="arrSA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="d-arrow-accent" d="M0,0 L10,5 L0,10 z"/></marker>
+            </defs>
+            <path class="d-loop" d="M622,58 C622,20 442,20 442,56" marker-end="url(#arrSA)"/>
+            <text class="d-label" x="532" y="16" text-anchor="middle">fix, render again</text>
+
+            <rect class="d-box" x="6" y="58" width="152" height="86" rx="8"/>
+            <text class="d-title" x="82" y="90" text-anchor="middle">Prompt 1</text>
+            <text class="d-sub" x="82" y="112" text-anchor="middle">Creative direction</text>
+            <text class="d-sub" x="82" y="128" text-anchor="middle">three options, no code</text>
+
+            <rect class="d-box" x="186" y="58" width="152" height="86" rx="8"/>
+            <text class="d-title" x="262" y="90" text-anchor="middle">Prompt 2</text>
+            <text class="d-sub" x="262" y="112" text-anchor="middle">Storyboard</text>
+            <text class="d-sub" x="262" y="128" text-anchor="middle">timestamps, arc</text>
+
+            <rect class="d-box-accent" x="366" y="58" width="152" height="86" rx="8"/>
+            <text class="d-title" x="442" y="90" text-anchor="middle">Prompt 3</text>
+            <text class="d-sub" x="442" y="112" text-anchor="middle">Build one scene</text>
+            <text class="d-sub" x="442" y="128" text-anchor="middle">scene 1 only</text>
+
+            <rect class="d-box-accent" x="546" y="58" width="152" height="86" rx="8"/>
+            <text class="d-title" x="622" y="90" text-anchor="middle">Prompt 4</text>
+            <text class="d-sub" x="622" y="112" text-anchor="middle">Visual quality review</text>
+            <text class="d-sub" x="622" y="128" text-anchor="middle">five worst defects</text>
+
+            <rect class="d-box-dash" x="726" y="58" width="148" height="86" rx="8"/>
+            <text class="d-title" x="800" y="96" text-anchor="middle">Then the rest</text>
+            <text class="d-sub" x="800" y="118" text-anchor="middle">scene by scene</text>
+
+            <line class="d-line" x1="158" y1="101" x2="184" y2="101" marker-end="url(#arrS)"/>
+            <line class="d-line" x1="338" y1="101" x2="364" y2="101" marker-end="url(#arrS)"/>
+            <line class="d-line" x1="518" y1="101" x2="544" y2="101" marker-end="url(#arrS)"/>
+            <line class="d-line" x1="698" y1="101" x2="724" y2="101" marker-end="url(#arrS)"/>
+
+            <path class="d-bracket" d="M10,160 L10,170 L334,170 L334,160"/>
+            <text class="d-sub" x="172" y="192" text-anchor="middle">creative decisions</text>
+            <path class="d-bracket" d="M370,160 L370,170 L514,170 L514,160"/>
+            <text class="d-sub" x="442" y="192" text-anchor="middle">implementation</text>
+            <path class="d-bracket" d="M550,160 L550,170 L694,170 L694,160"/>
+            <text class="d-sub" x="622" y="192" text-anchor="middle">quality assurance</text>
+          </svg>
+          <svg class="d-narrow" viewBox="0 0 340 500" role="img" aria-labelledby="stTitleN">
+            <title id="stTitleN">The staged prompt sequence, top to bottom, with a loop from review back to build.</title>
+            <defs>
+              <marker id="arrSN" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="d-arrow" d="M0,0 L10,5 L0,10 z"/></marker>
+              <marker id="arrSNA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="d-arrow-accent" d="M0,0 L10,5 L0,10 z"/></marker>
+            </defs>
+            <rect class="d-box" x="10" y="6" width="240" height="70" rx="8"/>
+            <text class="d-title" x="130" y="36" text-anchor="middle">Prompt 1: Creative direction</text>
+            <text class="d-sub" x="130" y="56" text-anchor="middle">three options, no code</text>
+            <rect class="d-box" x="10" y="106" width="240" height="70" rx="8"/>
+            <text class="d-title" x="130" y="136" text-anchor="middle">Prompt 2: Storyboard</text>
+            <text class="d-sub" x="130" y="156" text-anchor="middle">timestamps, narrative arc</text>
+            <rect class="d-box-accent" x="10" y="206" width="240" height="70" rx="8"/>
+            <text class="d-title" x="130" y="236" text-anchor="middle">Prompt 3: Build one scene</text>
+            <text class="d-sub" x="130" y="256" text-anchor="middle">scene 1 only</text>
+            <rect class="d-box-accent" x="10" y="306" width="240" height="70" rx="8"/>
+            <text class="d-title" x="130" y="336" text-anchor="middle">Prompt 4: Quality review</text>
+            <text class="d-sub" x="130" y="356" text-anchor="middle">five worst defects, fix</text>
+            <rect class="d-box-dash" x="10" y="406" width="240" height="70" rx="8"/>
+            <text class="d-title" x="130" y="436" text-anchor="middle">Then the rest</text>
+            <text class="d-sub" x="130" y="456" text-anchor="middle">scene by scene</text>
+            <line class="d-line" x1="130" y1="76" x2="130" y2="104" marker-end="url(#arrSN)"/>
+            <line class="d-line" x1="130" y1="176" x2="130" y2="204" marker-end="url(#arrSN)"/>
+            <line class="d-line" x1="130" y1="276" x2="130" y2="304" marker-end="url(#arrSN)"/>
+            <line class="d-line" x1="130" y1="376" x2="130" y2="404" marker-end="url(#arrSN)"/>
+            <path class="d-loop" d="M250,341 C300,341 300,241 252,241" marker-end="url(#arrSNA)"/>
+            <text class="d-label" x="306" y="291" text-anchor="middle" transform="rotate(90 306 291)">fix, render</text>
+          </svg>
+          <figcaption>Separate creative decisions from implementation, and implementation from quality assurance. Review loops back to the build until the scene is clean.</figcaption>
+        </figure>
+
+        <h3 id="prompt-1">Prompt 1: creative direction</h3>
+        <div class="code"><div class="code-head"><span class="label">Prompt 1: creative direction</span><button class="copy" type="button">Copy</button></div><pre><code>I want a 20-second premium motion-graphics video about [topic]. Generate three genuinely different creative directions. For each, describe the visual language, palette, typography, pacing, animation style, transitions, and audio direction. Explain which direction is strongest and why. Do not write code yet.</code></pre></div>
+
+        <h3 id="prompt-2">Prompt 2: storyboard</h3>
+        <div class="code"><div class="code-head"><span class="label">Prompt 2: storyboard</span><button class="copy" type="button">Copy</button></div><pre><code>Turn the chosen direction into a storyboard with timestamps and a clear narrative arc. For every scene, specify the first frame, final frame, focal point, exact text, animation, easing, transition, and audio cues. Include the purpose of each scene and how it connects to the next. Flag any scene that is visually repetitive.</code></pre></div>
+
+        <h3 id="prompt-3">Prompt 3: build one scene</h3>
+        <div class="code"><div class="code-head"><span class="label">Prompt 3: build one scene</span><button class="copy" type="button">Copy</button></div><pre><code>Implement only scene 1 in Remotion using the approved storyboard. Focus on composition, typography, timing and motion quality. Use reusable components and frame-based animation. Start the preview, render representative frames and inspect the actual output if your tools support it. Fix visible issues before proceeding. Do not build the remaining scenes yet.</code></pre></div>
+
+        <h3 id="prompt-4">Prompt 4: visual quality review</h3>
+        <div class="code"><div class="code-head"><span class="label">Prompt 4: visual quality review</span><button class="copy" type="button">Copy</button></div><pre><code>Act as a strict motion-design director reviewing the rendered output. Evaluate typography, hierarchy, spacing, timing, easing, transitions, visual consistency, pacing, and sound synchronization. Identify the five most consequential defects. Give specific corrections, then implement the highest-impact fixes and render again. Do not add new effects unless they solve a real problem.</code></pre></div>
+
+        <p><strong>Why this works:</strong> you separate creative decisions from implementation, and implementation from quality assurance. This is also consistent with the iterative preview-and-revise workflow shown in Remotion's documentation and practitioner examples.</p>
+
+        <div class="repo">
+          <p class="repo-title">In this repo: where each stage's output goes</p>
+          <ul>
+            <li>Prompt 1 answer: <code>projects/&lt;date&gt;-&lt;slug&gt;/directions.md</code>, with the chosen direction marked.</li>
+            <li>Prompt 2 answer: <code>storyboard.md</code> in the same folder.</li>
+            <li>Prompt 3: code in <code>studio/src/videos/&lt;slug&gt;/</code>, checked with <code>npm run stills</code>.</li>
+            <li>Prompt 4 answer: <code>review.md</code>, one entry per round, so you can see what changed.</li>
+          </ul>
+          <p>See <a href="#new-video">start a new video</a> for the full setup.</p>
+        </div>
+      </section>
+
+      <!-- 7 -->
+      <section class="doc" id="references">
+        <h2>7. How to use visual references properly</h2>
+        <p>If you see a video on Instagram, YouTube, Dribbble or Pinterest that you want to recreate, don't just tell Claude to "make something like this." Give Claude the reference and ask it to analyse the design.</p>
+        <div class="code"><div class="code-head"><span class="label">Prompt: reference analysis</span><button class="copy" type="button">Copy</button></div><pre><code>Analyse the supplied motion-graphics reference as a motion designer.
+
+Break down:
+1. Composition and visual hierarchy.
+2. Typography, font characteristics, spacing and text treatment.
+3. Color palette, contrast, textures and lighting.
+4. The movement of each major element.
+5. Timing, pacing, easing and staggered animation.
+6. Scene transitions and continuity.
+7. Depth, camera movement and layering.
+8. Sound effects and their relationship to visual events.
+9. Which design choices create the premium look.
+10. Which aspects can be recreated in Remotion and which require external assets or specialist tools.
+Separate observable facts from uncertain interpretations.
+
+Create an implementation plan that captures the reference's underlying design principles without unnecessarily copying its branding or exact creative expression.
+
+Do not write the full implementation until the breakdown is complete.</code></pre></div>
+        <p>A reference gives Claude more information than abstract adjectives alone. However, you should still specify what you want to preserve and what you want to change. A reference may be difficult to reproduce exactly if it depends on complex 3D rendering, custom footage, or advanced compositing.</p>
+        <div class="repo">
+          <p class="repo-title">In this repo: references</p>
+          <p>Keep reference stills or clips next to the brief in the project folder and add a short "keep / change" list to <code>brief.md</code>. If point 10 of the breakdown says a shot needs real 3D or compositing, that is the signal to plan Blender or After Effects for that shot rather than fake it.</p>
+        </div>
+      </section>
+
+      <!-- 8 -->
+      <section class="doc" id="design-system">
+        <h2>8. Make a reusable motion-design system</h2>
+        <p>Once you create a good video, don't start from scratch every time. Ask Claude to create a small library of reusable components, such as:</p>
+        <ul>
+          <li>Animated title and subtitle reveals.</li>
+          <li>Lower thirds and captions.</li>
+          <li>Staggered word and character animations.</li>
+          <li>Animated statistics and charts.</li>
+          <li>Shape masks and transitions.</li>
+          <li>Background systems, grids and textures.</li>
+          <li>Audio cue helpers.</li>
+          <li>A consistent typography and color system.</li>
+        </ul>
+        <p>Then maintain a <code>DESIGN_SYSTEM.md</code> file containing your palette, fonts, spacing rules, motion principles, transitions, and examples of approved components.</p>
+        <div class="code"><div class="code-head"><span class="label">Prompt: design-system library</span><button class="copy" type="button">Copy</button></div><pre><code>Review this project and create a reusable motion-design component library.
+
+First identify the visual patterns that occur repeatedly. Design reusable components for titles, subtitles, captions, text reveals, statistics, diagrams, backgrounds, and scene transitions.
+
+Create a consistent design system with typography, color tokens, spacing, easing conventions, timing defaults, and safe margins.
+
+Each component should expose sensible parameters for content, duration, delay, color, size, and movement where appropriate.
+
+Create a short example composition demonstrating the components. Document how to reuse them and when each component is appropriate.
+
+Avoid building a large collection of effects without a consistent design language. Prioritize a small set of high-quality, composable components.</code></pre></div>
+        <p>This is particularly valuable if you intend to create many videos for a product, YouTube channel, startup or social media brand. Community examples also describe using component libraries and style guides to improve consistency across longer projects.</p>
+        <div class="repo">
+          <p class="repo-title">In this repo: the design system</p>
+          <ul>
+            <li>Components: <code>studio/src/lib/</code>. Reuse before you write a new one.</li>
+            <li>Tokens (palette, type, spacing, easing, timing defaults, safe margins): <code>studio/src/lib/tokens.ts</code>. No hard-coded colours or durations in scenes.</li>
+            <li>Rules and approved examples: <code>studio/DESIGN_SYSTEM.md</code>. Update it when a video introduces a component worth keeping.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- 9 -->
+      <section class="doc" id="learn">
+        <h2>9. What should you learn to get the most out of Claude?</h2>
+        <p>You don't need to master every animation tool. Learn these in this order.</p>
+        <ul class="terms">
+          <li>
+            <span class="term">Level 1: visual design fundamentals</span>
+            Typography, contrast, composition, alignment, spacing, color theory and negative space. These determine whether a scene looks designed or improvised.
+            <span class="goal"><strong>Goal:</strong> look at a reference and explain why it works.</span>
+          </li>
+          <li>
+            <span class="term">Level 2: motion design</span>
+            Easing, anticipation, follow-through, overshoot, stagger, timing, staging, continuity and the classic principles of animation.
+            <span class="goal"><strong>Goal:</strong> describe precisely how an element should move, not merely where it should end up.</span>
+          </li>
+          <li>
+            <span class="term">Level 3: storyboarding and editing</span>
+            How to establish a visual hook, build information progressively, control pacing, use match cuts, and create a clear ending.
+            <span class="goal"><strong>Goal:</strong> make a 15-second video feel like a coherent piece rather than a collection of unrelated effects.</span>
+          </li>
+          <li>
+            <span class="term">Level 4: Remotion and React basics</span>
+            Components, props, frame-based animation, interpolations, sequences, transitions, asset handling and rendering. You don't need to become a full-time frontend developer.
+            <span class="goal"><strong>Goal:</strong> understand enough of the generated code to request targeted improvements and debug failures.</span>
+          </li>
+          <li>
+            <span class="term">Level 5: sound design and finishing</span>
+            Layer ambience, music, impacts, whooshes and short accents. Understand audio levels, synchronization, licensing and export settings.
+            <span class="goal"><strong>Goal:</strong> make the sound feel integrated with the animation, not added as an afterthought.</span>
+          </li>
+        </ul>
+      </section>
+
+      <!-- 10 -->
+      <section class="doc" id="seven-day">
+        <h2>10. A practical 7-day learning plan</h2>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Day</th><th>Project</th><th>Main skill</th></tr></thead>
+            <tbody>
+              <tr><td class="num">1</td><td>5-second animated title</td><td>Typography and composition</td></tr>
+              <tr><td class="num">2</td><td>Kinetic typography sequence</td><td>Timing, easing and stagger</td></tr>
+              <tr><td class="num">3</td><td>Animated product UI demo</td><td>Layout and scene choreography</td></tr>
+              <tr><td class="num">4</td><td>Data visualization</td><td>Visual hierarchy and information design</td></tr>
+              <tr><td class="num">5</td><td>15-second product teaser</td><td>Storyboarding and transitions</td></tr>
+              <tr><td class="num">6</td><td>Sound-designed version</td><td>Audio synchronization and pacing</td></tr>
+              <tr><td class="num">7</td><td>Recreate a reference style</td><td>Art direction, iteration and QA</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>For every project, save the prompt, storyboard, rendered version and notes on what you changed. Your goal is to build a repeatable production process, not to find one magic prompt.</p>
+        <div class="repo">
+          <p class="repo-title">In this repo: the learning folder</p>
+          <p><code>learning/</code> has one folder per day with its brief, prompt, storyboard and notes. Do the day's work in <code>studio/</code> as a normal video, then write in the day's notes what you changed and why. Lessons that are about technique (not about the subject) also go into <code>skills/motion-studio/references/learnings.md</code>.</p>
+        </div>
+      </section>
+
+      <!-- 11 -->
+      <section class="doc" id="model-choice">
+        <h2>11. What about model choice and your Claude subscription?</h2>
+        <p>Start with the strongest coding-capable model available in your account for the first complex project. Model availability and subscription usage limits can change, so don't assume that one model automatically produces better motion graphics.</p>
+        <p>For this workflow, these factors are usually more important than model choice alone:</p>
+        <ol>
+          <li>Whether Claude has the relevant Remotion skills and documentation.</li>
+          <li>Whether you provide a coherent visual reference and storyboard.</li>
+          <li>Whether the project uses reusable components and consistent design rules.</li>
+          <li>Whether you actually preview, inspect and revise the rendered output.</li>
+          <li>Whether you know enough about motion design to judge the result.</li>
+        </ol>
+        <p>A more capable model may write better code or make better creative decisions, but it cannot compensate fully for a vague brief or a missing review process.</p>
+      </section>
+
+      <!-- 12 -->
+      <section class="doc" id="resources">
+        <h2>12. The resources to bookmark</h2>
+        <ul class="terms">
+          <li>
+            <span class="term"><a href="https://www.remotion.dev/docs/">Remotion: official documentation</a></span>
+            The core resource for project setup, animation, audio, transitions, rendering and AI-assisted video creation. Read the <a href="https://www.remotion.dev/docs/ai/">AI workflow guide</a> and the "Start your first video" page. <span class="muted small">(The notes give no separate link for "Start your first video"; find it from the docs home.)</span>
+          </li>
+          <li>
+            <span class="term"><a href="https://www.remotion.dev/docs/ai/skills">Remotion Agent Skills</a></span>
+            Official guidance for teaching coding agents the framework's best practices.
+          </li>
+          <li>
+            <span class="term">Practical tutorial: Claude Code + Remotion</span>
+            A step-by-step example of using scene planning, prompts and iterative rendering. <span class="muted small">(No link in the notes.)</span>
+          </li>
+          <li>
+            <span class="term">Community motion-graphics skill</span>
+            An additional open-source skill with example compositions and a render-inspect-fix workflow. Treat this as third-party guidance and review its code and license before using it. <span class="muted small">(No link in the notes.)</span>
+          </li>
+        </ul>
+        <p>The official docs are the best source for current API behavior. Tutorials and community projects are useful for creative techniques and workflow ideas, but verify their instructions against the current framework version.</p>
+      </section>
+
+      <!-- Final -->
+      <section class="doc" id="final">
+        <h2>Final recommendation</h2>
+        <ol>
+          <li>Set up Claude Code with the official Remotion skills.</li>
+          <li>Create one excellent 10–15-second video using a reference, storyboard and scene-by-scene implementation.</li>
+          <li>Turn the best components and visual rules into a reusable motion-design system.</li>
+        </ol>
+        <blockquote>
+          <p>The single most valuable habit is to judge the rendered video, not the code or Claude's description of it.</p>
+        </blockquote>
+        <p>A technically correct implementation can still have poor typography, awkward pacing or weak art direction. Previewing and fixing those issues is what turns a quick AI-generated draft into polished work.</p>
+      </section>
+
+      <!-- In this repo: new video -->
+      <section class="doc" id="new-video">
+        <h2>In this repo: start a new video</h2>
+        <div class="repo">
+          <p class="repo-title">In this repo</p>
+          <ol>
+            <li><strong>Pick the engine.</strong> Remotion in <code>studio/</code> by default; the motion-studio HTML engine for voice-driven films; After Effects or Blender only for real compositing or 3D.</li>
+            <li><strong>Make the paper-trail folder</strong> <code>projects/&lt;yyyy-mm-dd&gt;-&lt;slug&gt;/</code> with <code>brief.md</code> (the ten ingredients), <code>directions.md</code>, <code>storyboard.md</code>, <code>review.md</code> and <code>notes.md</code>. Renders go in its <code>out/</code>, which is gitignored.</li>
+            <li><strong>Copy the video template</strong> <code>studio/src/videos/_template</code> to <code>studio/src/videos/&lt;slug&gt;/</code> and register the composition in <code>studio/src/Root.tsx</code>.</li>
+            <li><strong>Open <code>prompts/INDEX.md</code></strong> and follow the stages: master prompt, three directions, storyboard, one scene, review, then the rest.</li>
+            <li><strong>Inspect with stills</strong> after every scene and every review round.</li>
+            <li><strong>Run the <a href="#qa">QA checklist</a></strong>, then render the final file.</li>
+            <li><strong>Log what you learned.</strong> Append technique-only lessons to <code>skills/motion-studio/references/learnings.md</code> and run <code>node tools/install-skills.mjs</code> again. Commit locally; do not push unless asked.</li>
+          </ol>
+          <div class="code"><div class="code-head"><span class="label">Example: set up a new video (Git Bash, repo root)</span><button class="copy" type="button">Copy</button></div><pre><code>SLUG=launch-teaser
+DIR=projects/$(date +%F)-$SLUG
+mkdir -p "$DIR/out"
+touch "$DIR"/{brief,directions,storyboard,review,notes}.md
+cp -r studio/src/videos/_template "studio/src/videos/$SLUG"
+# then register the composition in studio/src/Root.tsx</code></pre></div>
+          <div class="code"><div class="code-head"><span class="label">Preview and inspect (in studio/)</span><button class="copy" type="button">Copy</button></div><pre><code>npm run dev
+npm run stills -- &lt;CompId&gt; &lt;frames&gt;</code></pre></div>
+          <p class="small">Replace <code>&lt;CompId&gt;</code> with the composition id from <code>Root.tsx</code> and <code>&lt;frames&gt;</code> with the frame numbers you want to inspect.</p>
+        </div>
+      </section>
+
+      <!-- QA -->
+      <section class="doc" id="qa">
+        <h2>In this repo: pre-delivery QA checklist</h2>
+        <div class="repo">
+          <p class="repo-title">In this repo</p>
+          <p>Run this on rendered stills and on one full watch with sound, before you hand anything over. Tick boxes are for your own use and are not saved.</p>
+          <ul class="checklist">
+            <li><input type="checkbox" id="qa1"><label for="qa1"><strong>Clipping.</strong> No text or element cut off by the frame, a mask or its container.</label></li>
+            <li><input type="checkbox" id="qa2"><label for="qa2"><strong>Overflow.</strong> No caption runs past its box or wraps onto a third line; the longest real string fits.</label></li>
+            <li><input type="checkbox" id="qa3"><label for="qa3"><strong>Alignment.</strong> Left edges line up across scenes; nothing is a few pixels off the grid.</label></li>
+            <li><input type="checkbox" id="qa4"><label for="qa4"><strong>Type consistency.</strong> One family, the agreed weights and sizes from the tokens, no stray fallback font.</label></li>
+            <li><input type="checkbox" id="qa5"><label for="qa5"><strong>Pacing.</strong> Long and short beats alternate; numbers and the call to action hold still for 1.5 to 2 seconds.</label></li>
+            <li><input type="checkbox" id="qa6"><label for="qa6"><strong>Flicker.</strong> Rendering the same frame twice gives the same image; no one-frame pops at scene boundaries.</label></li>
+            <li><input type="checkbox" id="qa7"><label for="qa7"><strong>Timing.</strong> Scene durations match the storyboard; every change lands on its cue.</label></li>
+            <li><input type="checkbox" id="qa8"><label for="qa8"><strong>Discontinuities.</strong> No jumps in position, scale or colour across cuts and transitions; transitions cover the full frame at their peak.</label></li>
+            <li><input type="checkbox" id="qa9"><label for="qa9"><strong>Audio sync.</strong> Sound effects hit on the visual event (place them by their peak); voice and music do not fight.</label></li>
+            <li><input type="checkbox" id="qa10"><label for="qa10"><strong>Loudness.</strong> -14 LUFS integrated and no more than -1 dBTP for web and social (about -16 LUFS for presentations).</label></li>
+            <li><input type="checkbox" id="qa11"><label for="qa11"><strong>Safe margins per format.</strong> 16:9: 72 px for a brand mark, 120 px for important text. 9:16: no text in the top 220 px or bottom 380 px (platform UI). 4:5 and 1:1 composed for their own frame, never centre-cropped from the master.</label></li>
+            <li><input type="checkbox" id="qa12"><label for="qa12"><strong>Final frame.</strong> A clean end card (name, one-line promise, one call to action) that holds still for at least 2 seconds. Frame 0 also reads as a finished title card.</label></li>
+          </ul>
+          <p class="small">Then check the delivered file itself (resolution, frame rate, duration, audio stream), for example with <code>ffprobe</code>.</p>
+        </div>
+      </section>
+
+      <!-- Extra rules -->
+      <section class="doc" id="studio-rules">
+        <h2>Extra studio rules</h2>
+        <p>Rules collected from the motion-studio skill. They are not in the source notes, but they apply to every video made here.</p>
+
+        <h3 id="rules-story">Story and captions</h3>
+        <ul>
+          <li><strong>Hook in the first 2 seconds</strong> with a concrete human moment or a bold, specific claim. Never open on the logo, a feature list or a generic "Introducing". Muted autoplay shows the opening, so frame 0 should already be a finished title card.</li>
+          <li><strong>One idea per frame.</strong> One caption per beat, at most 5 words and 2 lines, readable in under 2 seconds. The voice can say more than the caption.</li>
+          <li><strong>Left-align captions</strong> that build word by word. Centred ones look lopsided because hidden words still take space.</li>
+          <li><strong>Length by kind:</strong> ads 15 to 20 s, launch films 30 to 45 s, feature films and explainers 45 to 75 s.</li>
+          <li><strong>Write the script for the ear:</strong> short sentences, one idea each, about 2.2 to 2.8 words per second. Avoid one-word lines; speech recognition mishears them.</li>
+          <li><strong>One call to action:</strong> one action, one label, a real URL or in-app path, on screen and still for at least 2 seconds.</li>
+          <li><strong>No em dashes</strong> in on-screen text or subtitles, no numbered section labels, no decorative eyebrow on every scene.</li>
+        </ul>
+
+        <h3 id="rules-honesty">Honesty</h3>
+        <ul>
+          <li><strong>Never invent numbers.</strong> Every number on screen is real and carries its reference on the same frame.</li>
+          <li>When a visual needs "more" or "different" without real data, use relative bars or skeleton lines, and hand over a list of which visuals are illustrative.</li>
+          <li><strong>Show the real product</strong>, flat and legible, in a plain frame with one soft shadow. No fake div-built UIs, bevelled 3D buttons or tilted 3D pages.</li>
+          <li>Demo data is created through the product's UI and is fictional; Claude never types passwords. Planning and script are approved before anything is recorded.</li>
+        </ul>
+
+        <h3 id="rules-look">Look</h3>
+        <ul>
+          <li><strong>One accent colour, one radius scale, one type family.</strong> Emphasis comes from weight or colour, not a second font.</li>
+          <li>The premium look is flat, editorial and quiet. Avoid glows on components, lens flares, particle bursts, RGB split, camera shake, depth of field on UI and bouncy easing.</li>
+          <li>An emotional palette shift can structure a film without text: the problem in the dark, the solution in the light, the end card in the brand colour.</li>
+          <li>Tint surfaces; no pure black or pure white. Never put text on busy or white UI without a scrim.</li>
+        </ul>
+
+        <h3 id="rules-motion">Motion and camera</h3>
+        <ul>
+          <li><strong>Motion must be motivated:</strong> hierarchy, story, feedback or a state change. If you cannot say what it communicates in a sentence, cut it.</li>
+          <li>Springs rather than linear, with at most a tiny overshoot (damping ratio around 0.8 to 0.9). Enter moving, leave accelerating; exits are faster than entrances. Stagger 40 to 80 ms, or put each item on its spoken word.</li>
+          <li><strong>The camera holds between moves</strong> and only moves on a spoken beat. One named move per shot; never zoom in and straight back out. Interpolate zoom in log space so the speed feels constant.</li>
+          <li><strong>Focus with light, not depth:</strong> a spotlight that dims everything but the region (with a thin accent outline), plus a screen-recorder zoom on the region the voice talks about.</li>
+          <li>Transitions carry meaning: a flood for a change of world, a shared element for continuity, a hard cut only on a downbeat and at most three per film. No cross-dissolves between unrelated shots, no star wipes.</li>
+          <li>Reserve showpieces for two or three moments.</li>
+        </ul>
+
+        <h3 id="rules-sound">Voice and sound</h3>
+        <ul>
+          <li>Offer 3 to 4 voice samples and let the person pick by ear; check every clip against a transcript.</li>
+          <li>Music on the same beat grid as the edit, ducked under the voice. Place every sound effect by its peak on the visual hit. Fewer effects are better: transitions, clicks, the payoff.</li>
+          <li>Final mix at -14 LUFS integrated and -1 dBTP; fade the last 1.2 seconds.</li>
+        </ul>
+
+        <h3 id="rules-process">Review and delivery</h3>
+        <ul>
+          <li><strong>Review live, render once.</strong> Iterate in the live preview (Remotion Studio or the motion-studio HTML player) and render the final MP4 only after approval. A long film at 60 fps with motion blur takes minutes; a reload takes seconds.</li>
+          <li>Look at contact sheets or stills yourself before every handover. They catch overflowing captions, transitions that do not cover the corners, overlays one frame late.</li>
+          <li>Compose each format as its own stage (16:9 master at 1920 by 1080; 9:16, 4:5 and 1:1 with their own layout). Never centre-crop the master.</li>
+          <li>Deliver an <code>.srt</code> per language alongside the MP4, and keep a poster frame (the end card) for thumbnails.</li>
+          <li>After every video, add technique-only lessons (no client or product names) to the learnings file, so the next video starts smarter.</li>
+        </ul>
+      </section>
+
+      <footer class="doc-foot">
+        <p>Source: <code>source/claude-motion-graphics-notes.md</code>. Repo-specific boxes and extra rules from <code>CLAUDE.md</code> and the motion-studio skill.</p>
+      </footer>
+    </div>
+  </main>
+</div>
+
+<script>
+(function () {
+  "use strict";
+  var root = document.documentElement;
+
+  /* Theme */
+  function store(key, val) {
+    try { if (val === undefined) return localStorage.getItem(key); localStorage.setItem(key, val); } catch (e) { return null; }
+    return null;
+  }
+  var saved = store("vs-guide-theme");
+  if (saved === "light" || saved === "dark") root.setAttribute("data-theme", saved);
+  var mq = window.matchMedia ? window.matchMedia("(prefers-color-scheme: dark)") : null;
+  function effectiveTheme() {
+    var t = root.getAttribute("data-theme");
+    if (t) return t;
+    return mq && mq.matches ? "dark" : "light";
+  }
+  var toggles = document.querySelectorAll(".theme-toggle");
+  function syncToggleLabels() {
+    var next = effectiveTheme() === "dark" ? "Light mode" : "Dark mode";
+    toggles.forEach(function (b) { b.textContent = next; b.setAttribute("aria-label", "Switch to " + next.toLowerCase()); });
+  }
+  toggles.forEach(function (b) {
+    b.addEventListener("click", function () {
+      var next = effectiveTheme() === "dark" ? "light" : "dark";
+      root.setAttribute("data-theme", next);
+      store("vs-guide-theme", next);
+      syncToggleLabels();
+    });
+  });
+  if (mq && mq.addEventListener) mq.addEventListener("change", syncToggleLabels);
+  syncToggleLabels();
+
+  /* Copy buttons */
+  function fallbackCopy(text) {
+    var ta = document.createElement("textarea");
+    ta.value = text;
+    ta.setAttribute("readonly", "");
+    ta.style.position = "fixed";
+    ta.style.top = "-1000px";
+    document.body.appendChild(ta);
+    ta.select();
+    var ok = false;
+    try { ok = document.execCommand("copy"); } catch (e) { ok = false; }
+    document.body.removeChild(ta);
+    return ok;
+  }
+  function flash(btn, msg) {
+    btn.textContent = msg;
+    btn.classList.toggle("done", msg === "Copied");
+    clearTimeout(btn._t);
+    btn._t = setTimeout(function () { btn.textContent = "Copy"; btn.classList.remove("done"); }, 1600);
+  }
+  document.querySelectorAll(".code .copy").forEach(function (btn) {
+    btn.setAttribute("aria-label", "Copy: " + (btn.previousElementSibling ? btn.previousElementSibling.textContent : "code"));
+    btn.addEventListener("click", function () {
+      var code = btn.closest(".code").querySelector("pre code");
+      var text = code.textContent;
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(function () { flash(btn, "Copied"); }, function () {
+          flash(btn, fallbackCopy(text) ? "Copied" : "Press Ctrl+C");
+        });
+      } else {
+        flash(btn, fallbackCopy(text) ? "Copied" : "Press Ctrl+C");
+      }
+    });
+  });
+
+  /* Mobile contents toggle */
+  var sidebar = document.getElementById("sidebar");
+  var tocToggle = document.getElementById("tocToggle");
+  function setToc(open) {
+    sidebar.classList.toggle("open", open);
+    tocToggle.setAttribute("aria-expanded", open ? "true" : "false");
+  }
+  tocToggle.addEventListener("click", function () { setToc(!sidebar.classList.contains("open")); });
+  sidebar.querySelectorAll(".toc a").forEach(function (a) {
+    a.addEventListener("click", function () { if (tocToggle.offsetParent !== null) setToc(false); });
+  });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") setToc(false); });
+
+  /* Scroll spy */
+  var sections = Array.prototype.slice.call(document.querySelectorAll("section.doc"));
+  var links = {};
+  document.querySelectorAll("#tocList a").forEach(function (a) { links[a.getAttribute("href").slice(1)] = a; });
+  function setActive(id) {
+    Object.keys(links).forEach(function (k) { links[k].classList.toggle("active", k === id); });
+  }
+  function spy() {
+    var line = window.innerHeight * 0.25;
+    var current = null;
+    for (var i = 0; i < sections.length; i++) {
+      var s = sections[i];
+      if (s.classList.contains("hidden")) continue;
+      if (s.getBoundingClientRect().top - line <= 0) current = s.id;
+      else if (current === null) { current = s.id; break; }
+      else break;
+    }
+    if ((window.innerHeight + window.scrollY) >= document.body.scrollHeight - 4) {
+      for (var j = sections.length - 1; j >= 0; j--) { if (!sections[j].classList.contains("hidden")) { current = sections[j].id; break; } }
+    }
+    if (current) setActive(current);
+  }
+  var ticking = false;
+  window.addEventListener("scroll", function () {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(function () { spy(); ticking = false; });
+  }, { passive: true });
+  window.addEventListener("resize", spy);
+  spy();
+
+  /* Section filter */
+  var q = document.getElementById("q");
+  var status = document.getElementById("searchStatus");
+  var none = document.getElementById("noResults");
+  var texts = sections.map(function (s) { return s.textContent.toLowerCase().replace(/\s+/g, " "); });
+  function filter() {
+    var term = q.value.trim().toLowerCase();
+    var shown = 0;
+    sections.forEach(function (s, i) {
+      var match = !term || texts[i].indexOf(term) !== -1;
+      s.classList.toggle("hidden", !match);
+      var li = document.querySelector('#tocList li[data-for="' + s.id + '"]');
+      if (li) li.classList.toggle("hidden", !match);
+      if (match) shown++;
+    });
+    none.classList.toggle("show", shown === 0);
+    status.textContent = term ? (shown === 0 ? "No sections match" : shown + " of " + sections.length + " sections") : "";
+    if (term) window.scrollTo(0, 0);
+    spy();
+  }
+  q.addEventListener("input", filter);
+  q.addEventListener("keydown", function (e) { if (e.key === "Escape") { q.value = ""; filter(); } });
+})();
+</script>
+</body>
+</html>

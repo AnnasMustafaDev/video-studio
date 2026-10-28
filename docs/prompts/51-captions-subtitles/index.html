@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>51 · Captions and subtitles · Video Studio</title>
+<meta name="description" content="Add readable burned-in captions and/or deliver .srt subtitle files, timed to the voice.">
+<meta property="og:title" content="51 · Captions and subtitles · Video Studio">
+<meta property="og:description" content="Add readable burned-in captions and/or deliver .srt subtitle files, timed to the voice.">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23eef3ff'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%233b6cf6'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../assets/site.css">
+<link rel="stylesheet" href="../../assets/panel-skills.css">
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="../../"><span class="dot"></span>Video Studio</a>
+    <nav class="main" aria-label="Main"><a href="../../">Home</a><a href="../../tour/">Tour</a><a href="../../guide/">Guide</a><a href="../../skills/">Skills</a><a href="../../prompts/" aria-current="page">Prompts</a><a href="../../studio/">Studio</a><a href="../../techniques/">Techniques</a><a href="../../shot-library/">Shot library</a><a href="../../research/">Research</a><a href="../../gallery/">Gallery</a><a href="../../credits/">Credits</a></nav>
+    <div class="tools">
+      <a class="btn" href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">GitHub</a>
+      <button class="btn" id="theme-toggle" type="button" aria-label="Toggle light or dark theme">Theme</button>
+    </div>
+  </div>
+</header>
+<main>
+  <div class="wrap">
+<nav class="crumbs ps-crumbs" aria-label="Breadcrumb"><a href="../../">Home</a> <span aria-hidden="true">/</span> <a href="../../prompts/">Prompts</a> <span aria-hidden="true">/</span> <span aria-current="page">51 · Captions and subtitles</span></nav><div class="ps-narrow"><header class="ps-head"><div class="ps-badges"><span class="badge plain">Prompt 51</span> <span class="badge">Finishing</span> </div><h1>Captions and subtitles</h1></header><dl class="ps-info ps-info-prompt"><div class="wide"><dt>Purpose</dt><dd>Add readable burned-in captions and/or deliver <code>.srt</code> subtitle files, timed to the voice.</dd></div><div class=""><dt>Use when</dt><dd>The video has voice-over or speech, or will autoplay muted in a feed (most social formats).</dd></div><div class=""><dt>Stage</dt><dd>Finishing, after <a href="../50-sound-design/"><code>50-sound-design.md</code></a> (voice timing must be final), before <a href="../52-recompose-formats/"><code>52</code></a> and <a href="../53-final-render-delivery/"><code>53</code></a>.</dd></div><div class=""><dt>Inputs you must fill in</dt><dd><code>[CompId]</code>, <code>[VO or speech file]</code>, <code>[script text if available]</code>, <code>[languages]</code>, <code>[style: word-by-word highlight | line captions | subtitles only (.srt)]</code>, <code>[format(s)]</code>.</dd></div><div class=""><dt>Expected output</dt><dd>Word-level timings, a caption track in the composition (if burned in), <code>.srt</code> per language, stills proving readability at the busiest frames.</dd></div><div class=""><dt>Next prompt</dt><dd><a href="../52-recompose-formats/"><code>52-recompose-formats.md</code></a> or <a href="../53-final-render-delivery/"><code>53-final-render-delivery.md</code></a>.</dd></div></dl><section class="ps-section ps-prompt"><h2 id="prompt">Prompt</h2>
+<pre><code class="lang-text">Add captions to [CompId].
+
+Source audio: [VO file]. Script: [script text or &quot;transcribe&quot;]. Languages: [languages]. Style: [word-by-word highlight | line captions | .srt only]. Formats: [16:9 | 9:16 | 1:1].
+
+1. Timing: get word-level timestamps from the audio (transcription), then correct the words against the script so the spelling is exact. Report any place where the speech differs from the script.
+2. Segmenting: break into caption pages of at most [2] lines and about [32] characters per line for 16:9 ([20 to 24] for 9:16). Break at natural phrase boundaries, never between an article and its noun or a number and its unit. Each page on screen at least 1 s; extend the last word by 0.2 to 0.3 s.
+3. Style (burned in): one type family from the design system, high contrast (a soft dark box or strong shadow when the background is busy), positioned inside the safe area and never over the focal element. For word-by-word highlight, the active word changes colour or weight only; no bouncing words unless the brief asks for it. No em or en dashes as separators; use a comma or colon.
+4. Check collisions: list the frames where captions overlap on-screen titles, lower thirds or UI and move or hide the caption for that beat.
+5. Deliver .srt for every language, even if captions are burned in.
+6. Render stills at the busiest frames and the longest caption page, in each format, and inspect them.</code></pre></section><section class="ps-section ps-additions"><h2 id="studio-additions">Studio additions</h2>
+<pre><code class="lang-text">Use the Remotion captions skill in studio/.claude/skills/ and @remotion/captions (Caption type, createTikTokStyleCaptions for word-highlight pages). Store captions as JSON in studio/public/captions/[slug].[lang].json and the .srt files in projects/[yyyy-mm-dd]-[slug]/out/. If a local Whisper (faster-whisper) or @remotion/install-whisper-cpp is available use it; otherwise tell me and ask for the transcript.
+Stills: npm run stills -- [CompId] [frames]. If you could not view them, say so.</code></pre></section><nav class="ps-prevnext" aria-label="Previous and next"><a class="ps-pn prev" href="../50-sound-design/"><span class="ps-pn-dir">Previous</span><span class="ps-pn-title">50 · Sound design pass</span></a><a class="ps-pn next" href="../52-recompose-formats/"><span class="ps-pn-dir">Next</span><span class="ps-pn-title">52 · Recompose for 9:16 and 1:1</span></a></nav><p class="ps-small"><a href="https://github.com/AnnasMustafaDev/video-studio/blob/main/prompts/51-captions-subtitles.md" rel="noopener noreferrer">View this prompt on GitHub</a></p></div>
+  </div>
+</main>
+<footer class="site">
+  <div class="wrap cols">
+    <div>
+      <strong>Video Studio</strong><br>
+      A personal studio for motion graphics and animated videos with Claude Code.
+    </div>
+    <div>
+      <a href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">Source on GitHub</a><br>
+      <a href="../../credits/">Credits and licences</a>
+    </div>
+  </div>
+</footer>
+<script src="../../assets/site.js" defer></script>
+</body>
+</html>

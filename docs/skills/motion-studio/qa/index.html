@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>QA checklists (motion-studio) · Video Studio</title>
+<meta name="description" content="The loop that uses these checklists (stills, phone pages, strips, sync, scored review rounds, stop rule) is in [review.md](review.md); the final checks and report are in...">
+<meta property="og:title" content="QA checklists (motion-studio) · Video Studio">
+<meta property="og:description" content="The loop that uses these checklists (stills, phone pages, strips, sync, scored review rounds, stop rule) is in [review.md](review.md); the final checks and report are in...">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23eef3ff'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%233b6cf6'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../../assets/site.css">
+<link rel="stylesheet" href="../../../assets/panel-skills.css">
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="../../../"><span class="dot"></span>Video Studio</a>
+    <nav class="main" aria-label="Main"><a href="../../../">Home</a><a href="../../../tour/">Tour</a><a href="../../../guide/">Guide</a><a href="../../../skills/" aria-current="page">Skills</a><a href="../../../prompts/">Prompts</a><a href="../../../studio/">Studio</a><a href="../../../techniques/">Techniques</a><a href="../../../shot-library/">Shot library</a><a href="../../../research/">Research</a><a href="../../../gallery/">Gallery</a><a href="../../../credits/">Credits</a></nav>
+    <div class="tools">
+      <a class="btn" href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">GitHub</a>
+      <button class="btn" id="theme-toggle" type="button" aria-label="Toggle light or dark theme">Theme</button>
+    </div>
+  </div>
+</header>
+<main>
+  <div class="wrap">
+<nav class="crumbs ps-crumbs" aria-label="Breadcrumb"><a href="../../../">Home</a> <span aria-hidden="true">/</span> <a href="../../../skills/">Skills</a> <span aria-hidden="true">/</span> <a href="../../../skills/motion-studio/">motion-studio</a> <span aria-hidden="true">/</span> <span aria-current="page">QA checklists</span></nav><header class="ps-head"><div class="ps-badges"><span class="badge plain">Reference</span> <span class="badge">motion-studio</span></div><h1>QA checklists</h1></header><div class="ps-doc"><article class="ps-article"><p>The loop that uses these checklists (stills, phone pages, strips, sync, scored review rounds, stop rule) is in <a href="../review/">review.md</a>; the final checks and report are in <a href="../delivery/">delivery.md</a>.</p>
+<h2 id="before-showing-a-draft-contact-sheets">Before showing a draft (contact sheets)</h2>
+<p>Render stills at every settled state and at transition midpoints (<code>node tools/render.mjs preview ...</code>) and look at every one:</p>
+<ul><li>[ ] Frame 0 reads as a finished title card.</li><li>[ ] The first 2 seconds would stop a scroll.</li><li>[ ] Every caption ≤ 5 words, ≤ 2 lines, readable, not clipped, not overlapping the window.</li><li>[ ] Text never sits on busy or white UI without contrast.</li><li>[ ] Every number is real and has its reference on the same frame.</li><li>[ ] Spotlights and cursor targets sit exactly on the UI they name at every zoom.</li><li>[ ] No overlay is one frame late (camera updated first).</li><li>[ ] No edge of the recording shows during zooms.</li><li>[ ] Transitions cover the full frame at their peak (flood radius ≥ distance to the farthest corner).</li><li>[ ] One accent colour, one radius scale, one family; no em dashes on screen.</li><li>[ ] Every word readable on the phone pages (<code>inspect.mjs tile shots</code>).</li><li>[ ] Strips across each transition: the cut frame shows the new image, no blank or flash frames.</li><li>[ ] Console clean (the renderer reports page errors and 4xx responses).</li></ul>
+<h2 id="before-the-final-render">Before the final render</h2>
+<ul><li>[ ] The user approved the cut in the HTML player.</li><li>[ ] Voice: <code>heard</code> matches the script for every line; no clipped words.</li><li>[ ] Every visual change lands on its word (±0.1 s); clicks 80 to 150 ms before the UI reacts.</li><li>[ ] Holds: numbers and CTA still for ≥ 1.5 to 2 s.</li><li>[ ] CTA: one action, real URL or path.</li><li>[ ] Music on the grid; payoff impact lands on the result; ducking audible but not pumping.</li><li>[ ] Loudness: -14 LUFS integrated, ≤ -1 dBTP.</li><li>[ ] Subtitles: timing, register, no dash separators. SRT files written.</li><li>[ ] Illustrative visuals listed for the hand-over.</li></ul>
+<h2 id="after-delivery">After delivery</h2>
+<ul><li>[ ] <code>inspect.mjs probe</code> every file (resolution, fps, duration, yuv420p, audio, loudness) and open its first and last encoded frame.</li><li>[ ] <code>inspect.mjs sync</code> against <code>build/comp_timing.json</code>; poster frame written.</li><li>[ ] Delivery report written (<a href="../delivery/">delivery.md</a>).</li><li>[ ] Append technique-only lessons to <code>learnings.md</code>.</li></ul>
+<h2 id="additional-checks-techniques-from-the-research-round">Additional checks (techniques from the research round)</h2>
+<p>Before a draft:</p>
+<ul><li>[ ] Every item in the film&#39;s <strong>Banned for this film</strong> list was looked for in the stills (<a href="../banned-effects/">banned-effects.md</a>).</li><li>[ ] The relevant <a href="../gotchas/">gotchas.md</a> lines were read: fast moves at 8 subframes, no fade under 0.3 s, no <code>will-change</code> on scaled text, no highlight box, each scene starts at the previous end zoom, frame-arithmetic traps.</li><li>[ ] Copy budget: 1 to 4 word fragments, about 15 to 25 words per 30 s, copy on under about 65 percent of frames.</li><li>[ ] Every transition names the carried element (<code>X becomes Y</code>); the frame before a hand-off contains the thing the next frame grows from.</li><li>[ ] Type is on the frame ramp and above the text floor; one accent mark per frame.</li><li>[ ] Density: dense scenes are rare and deliberate; no static screen under the voice.</li></ul>
+<p>Motion:</p>
+<ul><li>[ ] A move that feels wrong gets plotted before any code change: <code>inspect.mjs plot</code> (value and velocity; look for a zero-velocity run mid-move).</li><li>[ ] Camera glides and transitions: <code>inspect.mjs flow</code> on a 30 fps draft (speed never dips, zoom does not reverse, speed continues across velocity-matched cuts).</li><li>[ ] Rendered file: <code>inspect.mjs forensics</code> for frozen stretches, one-frame pops, ghost frames and banding; declare designed moments (a planned freeze, a flash cut) with a reason so thresholds stay strict elsewhere. A cheaper read: <code>inspect.mjs compare</code> against the approved golden scene or a reference.</li></ul>
+<p>Loops (social loops, showreel):</p>
+<ul><li>[ ] Last frame equals first, including cursor position and speed; accent, cursor and type match. Diff frame N-1 against frame 0 and preview the loop twice (<code>inspect.mjs probe</code> returns both frames).</li></ul>
+<p>Music-led:</p>
+<ul><li>[ ] Beat-grid residual at most about 15 ms; cut error at most 3 frames; at most 3 full-frame beat hits, 16 beats apart.</li><li>[ ] Voice about 9 dB above music per phrase between 300 Hz and 4 kHz.</li><li>[ ] Web embed: the checklist in <a href="../formats/">formats.md</a>.</li></ul><nav class="ps-prevnext" aria-label="Previous and next"><a class="ps-pn prev" href="../motion/"><span class="ps-pn-dir">Previous</span><span class="ps-pn-title">Motion</span></a><a class="ps-pn next" href="../reference-analysis/"><span class="ps-pn-dir">Next</span><span class="ps-pn-title">Using a visual reference</span></a></nav></article><aside class="ps-side"><details class="ps-side-d" open><summary>On this page</summary><ul class="ps-toc"><li class="l2"><a href="#before-showing-a-draft-contact-sheets">Before showing a draft (contact sheets)</a></li><li class="l2"><a href="#before-the-final-render">Before the final render</a></li><li class="l2"><a href="#after-delivery">After delivery</a></li><li class="l2"><a href="#additional-checks-techniques-from-the-research-round">Additional checks (techniques from the research round)</a></li></ul></details><details class="ps-side-d" open><summary>In motion-studio</summary><ul class="ps-sidelist"><li><a href="../">SKILL.md</a></li><li><a href="../audio/">Music, sound effects, loudness</a></li><li><a href="../banned-effects/">Banned effects: a list per film</a></li><li><a href="../capture/">Capturing a real app</a></li><li><a href="../delivery/">Final delivery (Phase 5)</a></li><li><a href="../design-system/">A reusable motion-design system</a></li><li><a href="../design/">Visual design</a></li><li><a href="../direction/">Direction: brief, story, script, captions</a></li><li><a href="../engine/">Engine: composition, live player, renderer</a></li><li><a href="../formats/">Formats and delivery</a></li><li><a href="../golden-scene/">Build loop: golden scene, plan check, commits, acceptance criteria</a></li><li><a href="../gotchas/">Gotchas catalogue</a></li><li><a href="../learnings/">Learnings log</a></li><li><a href="../motion/">Motion</a></li><li class="on"><span aria-current="page">QA checklists</span></li><li><a href="../reference-analysis/">Using a visual reference</a></li><li><a href="../review/">Render, inspect, fix: the review loop</a></li><li><a href="../three-d/">3D (three.js): rarely the right call</a></li><li><a href="../transitions/">Transitions: &quot;X becomes Y&quot;, velocity handoff, hidden cuts</a></li><li><a href="../vocabulary/">Vocabulary → recipes in this engine</a></li><li><a href="../voice/">Voice-over</a></li><li><a href="../workflow/">Staged workflow</a></li></ul></details><p class="ps-side-foot"><a href="https://github.com/AnnasMustafaDev/video-studio/blob/main/skills/motion-studio/references/qa.md" rel="noopener noreferrer">View source on GitHub</a></p></aside></div><script>
+(function(){
+  var mq = window.matchMedia('(min-width: 981px)');
+  function sync(){ document.querySelectorAll('details.ps-side-d').forEach(function(d){ d.open = mq.matches; }); }
+  sync();
+  if (mq.addEventListener) mq.addEventListener('change', sync);
+  var links = [].slice.call(document.querySelectorAll('.ps-toc a'));
+  if (!links.length || !('IntersectionObserver' in window)) return;
+  var byId = {};
+  links.forEach(function(a){ byId[decodeURIComponent(a.getAttribute('href').slice(1))] = a; });
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (!e.isIntersecting) return;
+      links.forEach(function(a){ a.classList.remove('on'); });
+      var a = byId[e.target.id]; if (a) a.classList.add('on');
+    });
+  }, { rootMargin: '-70px 0px -70% 0px' });
+  Object.keys(byId).forEach(function(id){ var el = document.getElementById(id); if (el) io.observe(el); });
+})();
+</script>
+  </div>
+</main>
+<footer class="site">
+  <div class="wrap cols">
+    <div>
+      <strong>Video Studio</strong><br>
+      A personal studio for motion graphics and animated videos with Claude Code.
+    </div>
+    <div>
+      <a href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">Source on GitHub</a><br>
+      <a href="../../../credits/">Credits and licences</a>
+    </div>
+  </div>
+</footer>
+<script src="../../../assets/site.js" defer></script>
+</body>
+</html>

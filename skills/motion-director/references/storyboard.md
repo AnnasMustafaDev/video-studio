@@ -37,3 +37,13 @@ Every accent that should have a sound, one row each: `time (s) | frame | visual 
 - Entrances 0.4 to 0.7 s; exits faster (0.25 to 0.35 s); stagger 40 to 80 ms.
 - Something new every 2 to 4 s; alternate long and short beats.
 - The end card holds at least 2 s.
+
+## Additions to the scene table
+
+- **Transition out reads "X becomes Y".** The outgoing object, what it carries (label, words, colour), the incoming object. Never "cut" or "fade" on its own; a hard cut onto an already set page is written as that. Morph vocabulary (iris, accordion squeeze, flood-and-contract, line carry, bezel or mat grows, text rises from a mask line): `motion-studio/references/transitions.md`. Check on the contact sheet: does frame N-1 contain the thing frame N grows from? Why: naming the carried element removes the crossfade default. Evidence: shown in two finished films.
+- **Density tag** per scene (sparse, medium, dense). Dense is rare and deliberate; "dead air" (a static screen under the voice) is a flag. Evidence: shown in a published workflow repo, not validated.
+- **Colour-flow table** (section, time, dominant colour, mood) so the palette shift is planned. Not adopted: the source's fixed 1920x1080-only sizes and its purple and blue colour-psychology table.
+- **Where real footage goes:** a list of scenes where an animated placeholder stands in until a real capture replaces it.
+- **Beat map** (music-led only): beat, bar, event, sound; BPM, total beats, beats before the drop. No dead time does not mean constant motion.
+- **Sanity numbers** (reference, not gates): median shot about 1.5 s, a new beat about every 0.7 to 1 s, no low-energy stretch over 4 s, one earned stillness of 1.0 to 1.6 s on the key claim, end card about 2 s. Author's measurements of other films (claimed).
+- **Copy:** exact text is written as 1 to 4 word fragments; about 15 to 25 words per 30 s. See `motion-studio/references/design.md` "Copy budget and fragment chains".

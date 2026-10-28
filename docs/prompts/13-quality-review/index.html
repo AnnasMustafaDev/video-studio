@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>13 · Visual quality review · Video Studio</title>
+<meta name="description" content="Run a strict director&#39;s review on rendered output, find the five worst defects, fix the biggest and re-render.">
+<meta property="og:title" content="13 · Visual quality review · Video Studio">
+<meta property="og:description" content="Run a strict director&#39;s review on rendered output, find the five worst defects, fix the biggest and re-render.">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23eef3ff'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%233b6cf6'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../assets/site.css">
+<link rel="stylesheet" href="../../assets/panel-skills.css">
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="../../"><span class="dot"></span>Video Studio</a>
+    <nav class="main" aria-label="Main"><a href="../../">Home</a><a href="../../tour/">Tour</a><a href="../../guide/">Guide</a><a href="../../skills/">Skills</a><a href="../../prompts/" aria-current="page">Prompts</a><a href="../../studio/">Studio</a><a href="../../techniques/">Techniques</a><a href="../../shot-library/">Shot library</a><a href="../../research/">Research</a><a href="../../gallery/">Gallery</a><a href="../../credits/">Credits</a></nav>
+    <div class="tools">
+      <a class="btn" href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">GitHub</a>
+      <button class="btn" id="theme-toggle" type="button" aria-label="Toggle light or dark theme">Theme</button>
+    </div>
+  </div>
+</header>
+<main>
+  <div class="wrap">
+<nav class="crumbs ps-crumbs" aria-label="Breadcrumb"><a href="../../">Home</a> <span aria-hidden="true">/</span> <a href="../../prompts/">Prompts</a> <span aria-hidden="true">/</span> <span aria-current="page">13 · Visual quality review</span></nav><div class="ps-narrow"><header class="ps-head"><div class="ps-badges"><span class="badge plain">Prompt 13</span> <span class="badge">Staged build</span> </div><h1>Visual quality review</h1></header><dl class="ps-info ps-info-prompt"><div class="wide"><dt>Purpose</dt><dd>Run a strict director&#39;s review on rendered output, find the five worst defects, fix the biggest and re-render.</dd></div><div class=""><dt>Use when</dt><dd>After every built scene, after a full assembly, and before the final render. Run it more than once.</dd></div><div class=""><dt>Stage</dt><dd>Staged prompt 4 of 4. Preview, inspect and revise (master phase 4).</dd></div><div class=""><dt>Inputs you must fill in</dt><dd>None in the original. Studio additions: <code>[CompId]</code>, <code>[frames or scene range]</code>.</dd></div><div class=""><dt>Expected output</dt><dd>Ranked list of five defects with specific corrections, the highest-impact fixes implemented, a fresh render, and a before/after note.</dd></div><div class=""><dt>Next prompt</dt><dd>More scenes: <a href="../14-build-next-scene/"><code>14-build-next-scene.md</code></a>. A single stubborn problem: <a href="../15-fix-defect/"><code>15-fix-defect.md</code></a>. Everything built and clean: <a href="../50-sound-design/"><code>50-sound-design.md</code></a>.</dd></div></dl><div class="ps-intro-text"><p>Source: notes §6, prompt 4, verbatim.</p></div><section class="ps-section ps-prompt"><h2 id="prompt">Prompt</h2>
+<pre><code class="lang-text">Act as a strict motion-design director reviewing the rendered output. Evaluate typography, hierarchy, spacing, timing, easing, transitions, visual consistency, pacing, and sound synchronization. Identify the five most consequential defects. Give specific corrections, then implement the highest-impact fixes and render again. Do not add new effects unless they solve a real problem.</code></pre></section><section class="ps-section ps-additions"><h2 id="studio-additions">Studio additions</h2>
+<pre><code class="lang-text">Review [CompId], [frames or scene range]. Render stills first: npm run stills -- [CompId] [frames] (use the &quot;stills to check&quot; column in projects/[yyyy-mm-dd]-[slug]/storyboard.md, plus every scene boundary and the final frame). Judge the images, not the code. For timing and easing, also render 3 consecutive frames around each key move so you can see spacing.
+Checklist on top of the prompt: no clipped or overflowing text; safe margins held; one focal point per frame; holds of 1.5 to 2 s on numbers and CTA; one accent colour, one type family; transitions fully cover the frame at their peak; no element pops in on a single frame; final frame is a clean end card.
+For each defect give: frame number, what is wrong, why it matters, exact fix (values, not adjectives).
+Append the review to projects/[yyyy-mm-dd]-[slug]/review.md with the date. If you could not view the images, say so instead of claiming the result was verified.</code></pre></section><nav class="ps-prevnext" aria-label="Previous and next"><a class="ps-pn prev" href="../12-build-one-scene/"><span class="ps-pn-dir">Previous</span><span class="ps-pn-title">12 · Build one scene</span></a><a class="ps-pn next" href="../14-build-next-scene/"><span class="ps-pn-dir">Next</span><span class="ps-pn-title">14 · Build the next scene</span></a></nav><p class="ps-small"><a href="https://github.com/AnnasMustafaDev/video-studio/blob/main/prompts/13-quality-review.md" rel="noopener noreferrer">View this prompt on GitHub</a></p></div>
+  </div>
+</main>
+<footer class="site">
+  <div class="wrap cols">
+    <div>
+      <strong>Video Studio</strong><br>
+      A personal studio for motion graphics and animated videos with Claude Code.
+    </div>
+    <div>
+      <a href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">Source on GitHub</a><br>
+      <a href="../../credits/">Credits and licences</a>
+    </div>
+  </div>
+</footer>
+<script src="../../assets/site.js" defer></script>
+</body>
+</html>

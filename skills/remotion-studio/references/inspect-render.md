@@ -10,7 +10,7 @@ For each scene: first frame, every settled state, mid-transition frames, the den
 
 ## 2. Render stills and the contact sheet
 
-From `C:\Users\Annas Mustafa\Documents\me\video-studio\studio`:
+From `{{VIDEO_STUDIO}}\studio`:
 
 ```
 npm run stills -- <CompId> 0,30,45,60,90,119
@@ -50,3 +50,11 @@ Fix defects 1 to 3 at least, re-render the same frames, spawn a new reviewer. St
 - `--scale=0.5` and `--frames=a-b` for drafts; full scale only for the final.
 - Keep Remotion Studio (`npm run dev`) for the user's own scrubbing; your verification is stills and sheets.
 - Re-render only frames affected by a fix plus their neighbours and the scene boundaries.
+
+## Measured checks (research round)
+
+- **Motion bug? Plot first.** When a move pauses, snaps or feels late, do not try another eased variant. Run `inspect.mjs plot` on the timing function (value and velocity over frames) and look for a zero-velocity run mid-move, kinks, false overshoot. Fix the cause, plot again. (Evidence: a first-hand write-up: five blind fixes failed, the plot showed 16 percent of the move at zero velocity.)
+- **Camera and transitions:** `inspect.mjs flow` on a 30 fps draft: speed never dips, zoom does not reverse, speed continues across a velocity-matched cut. (Evidence: described in a prompt, results not shown.)
+- **Rendered file:** `inspect.mjs forensics` for frozen stretches, one-frame pops, ghost frames and banding that sheets hide; declare designed moments (a planned freeze or flash cut) with a reason. (Evidence: three repos converged; one reported about 10 of 36 s frozen.) `inspect.mjs compare` against the golden scene's sheet gives the reviewer something to fall short of.
+- **Ghost steps:** zoom into a fast-move frame pair; if steps remain, render 8 subframes or slow the move.
+- **Review inputs:** hand the reviewer the film's banned list, glossary and acceptance criteria as well as the storyboard.

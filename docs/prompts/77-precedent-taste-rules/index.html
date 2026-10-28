@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>77 · Precedent taste rules (rule, case, self-check) · Video Studio</title>
+<meta name="description" content="Check a draft against short taste rules that each came from real rework, so avoidable review rounds are skipped. Also the format for adding your own rules after a post-mortem.">
+<meta property="og:title" content="77 · Precedent taste rules (rule, case, self-check) · Video Studio">
+<meta property="og:description" content="Check a draft against short taste rules that each came from real rework, so avoidable review rounds are skipped. Also the format for adding your own rules after a post-mortem.">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23eef3ff'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%233b6cf6'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../assets/site.css">
+<link rel="stylesheet" href="../../assets/panel-skills.css">
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="../../"><span class="dot"></span>Video Studio</a>
+    <nav class="main" aria-label="Main"><a href="../../">Home</a><a href="../../tour/">Tour</a><a href="../../guide/">Guide</a><a href="../../skills/">Skills</a><a href="../../prompts/" aria-current="page">Prompts</a><a href="../../studio/">Studio</a><a href="../../techniques/">Techniques</a><a href="../../shot-library/">Shot library</a><a href="../../research/">Research</a><a href="../../gallery/">Gallery</a><a href="../../credits/">Credits</a></nav>
+    <div class="tools">
+      <a class="btn" href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">GitHub</a>
+      <button class="btn" id="theme-toggle" type="button" aria-label="Toggle light or dark theme">Theme</button>
+    </div>
+  </div>
+</header>
+<main>
+  <div class="wrap">
+<nav class="crumbs ps-crumbs" aria-label="Breadcrumb"><a href="../../">Home</a> <span aria-hidden="true">/</span> <a href="../../prompts/">Prompts</a> <span aria-hidden="true">/</span> <span aria-current="page">77 · Precedent taste rules (rule, case, self-check)</span></nav><div class="ps-narrow"><header class="ps-head"><div class="ps-badges"><span class="badge plain">Prompt 77</span> <span class="badge">Process and review</span> <span class="badge ">Documented</span></div><h1>Precedent taste rules (rule, case, self-check)</h1></header><dl class="ps-info ps-info-prompt"><div class="wide"><dt>Purpose</dt><dd>Check a draft against short taste rules that each came from real rework, so avoidable review rounds are skipped. Also the format for adding your own rules after a post-mortem.</dd></div><div class=""><dt>Use when</dt><dd>Before <a href="../13-quality-review/"><code>13</code></a> on any draft, and when writing a lesson in <a href="../70-post-mortem/"><code>70</code></a>.</dd></div><div class=""><dt>Stage</dt><dd>Review, light pre-pass.</dd></div><div class=""><dt>Inputs you must fill in</dt><dd><code>[CompId]</code>, <code>[stills or contact sheet]</code>.</dd></div><div class=""><dt>Expected output</dt><dd>Each rule answered pass, fail or not applicable with a frame, and a list of new rules in rule/case/self-check form to propose.</dd></div><div class=""><dt>Why this exists</dt><dd>Each rule cites a defect a reviewer repeatedly sent back. Evidence: first-hand but from one author&#39;s product-video projects; no film seen by us. Merge with <code>learnings.md</code>, do not duplicate. Finding F-A12.</dd></div><div class=""><dt>Next prompt</dt><dd><a href="../13-quality-review/"><code>13-quality-review.md</code></a>.</dd></div></dl><section class="ps-section ps-prompt"><h2 id="prompt">Prompt</h2>
+<pre><code class="lang-text">Check [CompId] against these rules, one line each: pass, fail or n/a, with the frame number. If you could not look at stills, say so.
+
+1. Wordmark or logo is held a full second. Self-check: how many frames is it settled?
+2. Batch entrances accelerate, never move at constant speed, and end with about half a second of rest. Self-check: are the spacing steps between items increasing?
+3. First drafts are almost always too fast: is any beat shorter than a viewer can read? Default one notch slower.
+4. No handheld shake in bright UI films.
+5. At most one sheen or glint per hero element, clipped to its corner radius.
+6. Sharp text inside a 3D perspective needs high-resolution rasterising (fix with layout-level zoom, not by blaming depth of field).
+7. Last beat: no small source or disclaimer text unless it stays 2.5 s or more at half opacity or higher.
+8. Fade length: no fade under 0.3 s unless intended; a 0.05 s fade reads as a pop.
+9. A highlight box behind a word reads as a text selection: is that intended?
+10. Camera hand-off: does each scene start at the zoom the last ended on?
+Then propose up to 3 new rules from what you saw, each as: Rule, Case (the defect that produced it), Self-check question.</code></pre></section><section class="ps-section ps-additions"><h2 id="studio-additions">Studio additions</h2>
+<pre><code class="lang-text">Approved new rules go to skills/motion-studio/references/learnings.md as technique-only lines (see 70). Rules 1 to 7 follow Vincentwei1021&#39;s video-shotcraft (aesthetic-rules.md) and anything2explainer (lessons.md); 8 to 10 follow the prompt-motion.com gotchas of @twoclipping and @rossaxbt. Our wording.</code></pre></section><nav class="ps-prevnext" aria-label="Previous and next"><a class="ps-pn prev" href="../74-reference-golden-compare/"><span class="ps-pn-dir">Previous</span><span class="ps-pn-title">74 · Compare the render with a reference</span></a><a class="ps-pn next" href="../50-sound-design/"><span class="ps-pn-dir">Next</span><span class="ps-pn-title">50 · Sound design pass</span></a></nav><p class="ps-small"><a href="https://github.com/AnnasMustafaDev/video-studio/blob/main/prompts/77-precedent-taste-rules.md" rel="noopener noreferrer">View this prompt on GitHub</a></p></div>
+  </div>
+</main>
+<footer class="site">
+  <div class="wrap cols">
+    <div>
+      <strong>Video Studio</strong><br>
+      A personal studio for motion graphics and animated videos with Claude Code.
+    </div>
+    <div>
+      <a href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">Source on GitHub</a><br>
+      <a href="../../credits/">Credits and licences</a>
+    </div>
+  </div>
+</footer>
+<script src="../../assets/site.js" defer></script>
+</body>
+</html>

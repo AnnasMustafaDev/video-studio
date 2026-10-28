@@ -14,7 +14,7 @@ A builder grading its own scene is too kind. After each render-inspect pass, the
 Use the motion-review skill (~/.claude/skills/motion-review/SKILL.md). Read it and
 references/rubric.md first.
 
-Project home: C:\Users\Annas Mustafa\Documents\me\video-studio
+Project home: {{VIDEO_STUDIO}}
 Paper trail: projects/<yyyy-mm-dd>-<slug>/ (brief.md, storyboard.md, review.md)
 Design rules: studio/DESIGN_SYSTEM.md            (or: <html project>/comp/style.css tokens)
 Rendered video: <absolute path to mp4, or "none yet">
@@ -23,16 +23,22 @@ Hits table: <absolute path to hits.json or "none">
 Formats to review: <16:9 | 9:16 | ...>
 Round: <N>
 
-Make the contact, phone, strip, sync and probe evidence with tools/inspect.mjs, open every
-image, then append your round to projects/<slug>/review.md in the exact output shape of the
+Optional inputs: qa.json <path or none>, reference <clip|sheet|golden scene or none>,
+previous report <review.md round N-1 defect list, verification round only>.
+
+Make the evidence with tools/inspect.mjs: probe, forensics (with qa.json), flow if the camera
+moves, contact, phone, strip, sync (plus compare when a reference is given). Open every image,
+then append your round to projects/<slug>/review.md in the exact output shape of the
 skill. Do not edit source files. If you cannot open images, answer NOT VISUALLY VERIFIED.
-Reply with: the score row, the top 5 defects, the verdict, and the list of images you opened.
+In a verification round (round 2 or more): mark each earlier defect FIXED / PARTLY / STILL PRESENT
+with a frame, hunt for regressions around each change, end with at most 3 fixes and SHIP or ONE MORE PASS.
+Reply with: the score row, the measured block (forensics and flow verdicts), the top 5 defects, the verdict, and the list of images you opened.
 ```
 
 ## What the builder does with the answer
 
 1. Fix defects 1 to 3 at least (more if cheap), nothing else. No new effects unless they solve a listed defect.
 2. Re-render the same frames plus the frames around each fix.
-3. Spawn a **new** reviewer for the next round (fresh eyes), passing the round number.
+3. Spawn a **new** reviewer for the next round (fresh eyes), passing the round number and the previous defect list only (never what you fixed or why). For a motion bug in a single animated value, plot it (`inspect.mjs plot --deriv`) before changing code.
 4. Stop on READY, or bring the remaining defects to the user on ASK THE USER.
 5. Relay the scores and remaining defects to the user honestly; if the reviewer said NOT VISUALLY VERIFIED, so do you.

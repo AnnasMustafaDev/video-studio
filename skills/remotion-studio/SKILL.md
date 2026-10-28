@@ -1,7 +1,7 @@
 ---
 name: remotion-studio
-description: "Build, revise and render personal motion-graphics videos in the user's own Remotion project (React, frame-based) at C:\\Users\\Annas Mustafa\\Documents\\me\\video-studio\\studio, the default engine for kinetic typography, animated titles, UI and product demos, diagrams, data visualisation, explainers, captions, launch teasers, social reels and reusable video templates. Runs the staged workflow (brief, directions, storyboard, one scene, independent review, the rest), reuses the studio component library and design tokens, enforces deterministic frame-based animation, inspects rendered stills and contact sheets before claiming quality, renders and ffprobe-checks the MP4, and writes a delivery report. Use whenever the user asks for a video, animation, motion graphics, Remotion composition, intro, title sequence, lower third, explainer, promo or reel for personal (non-work) projects, or asks to fix, retime or re-render one, from any working directory."
-version: 0.1.0
+description: "Build, revise and render personal motion-graphics videos in the user's own Remotion project (React, frame-based) in the studio folder of the video-studio repo, the default engine for kinetic typography, animated titles, UI and product demos, diagrams, data visualisation, explainers, captions, launch teasers, social reels and reusable video templates. Runs the staged workflow (tagged brief with a per-film banned list, directions, storyboard, start gate, one golden scene, independent review, the rest), reuses the studio component library and design tokens, enforces deterministic frame-based animation, inspects rendered stills and contact sheets and measures motion (velocity plots, optical flow, forensics) before claiming quality, renders and ffprobe-checks the MP4, and writes a delivery report. Use whenever the user asks for a video, animation, motion graphics, Remotion composition, intro, title sequence, lower third, explainer, promo or reel for personal (non-work) projects, or asks to fix, retime or re-render one, from any working directory."
+version: 0.2.0
 ---
 
 # Remotion studio
@@ -10,7 +10,7 @@ You are a small motion-design studio: director, designer, animator, sound design
 
 ## Home (works from any cwd)
 
-- Repo: `C:\Users\Annas Mustafa\Documents\me\video-studio` (call it `$VS`). All personal animation and motion-graphics work starts there. Read `$VS\CLAUDE.md` and `$VS\prompts\INDEX.md` first; the master prompt is `$VS\prompts\00-master-workflow.md`.
+- Repo: `{{VIDEO_STUDIO}}` (call it `$VS`). All personal animation and motion-graphics work starts there. Read `$VS\CLAUDE.md` and `$VS\prompts\INDEX.md` first; the master prompt is `$VS\prompts\00-master-workflow.md`.
 - Remotion project: `$VS\studio`. Run every npm / npx command from there.
 - **Hand off to `brag`** (third-party, vendored in `$VS\third_party\brag`) when the user just wants a quick 15 to 25 s launch video of a project they just built, in one command, with no brief, directions or review rounds: run it from that project's folder, it writes to `brag-output/` there. Stay here when they want a directed piece (chosen direction, storyboard, house style, reviewed scenes), or when a brag result should be rebuilt properly. Never edit the vendored files.
 
@@ -40,8 +40,12 @@ If one of these does not exist yet, say so and continue with the rules in this s
 - **Reuse before you write.** Components from `studio/src/lib/`; a new pattern used twice becomes a library component (tell the user; do not silently rewrite the library or working infrastructure).
 - **Compilation is not quality.** Judge rendered frames. If you could not look at images, say "not visually verified" and why. Never imply otherwise.
 - **Real assets keep their aspect ratio**; no invented numbers; illustrative visuals are listed in the report.
+- **Golden scene and plan check:** after scene 1 passes, it is the source for scenes 2 to N; a five-line plan before each scene; one local commit per approved scene with the diff read ([references/phases.md](references/phases.md)).
+- **Banned list per film** from the brief; the gotchas and frame-arithmetic traps ([references/determinism.md](references/determinism.md)) are read before building.
+- **Measure, do not guess:** a move that feels wrong gets `inspect.mjs plot` before a code change; glides and cuts get `inspect.mjs flow`.
+- **Say what you cannot render or view** at the start of a job.
 - **Restraint:** no random particles, excessive glow, constant movement or transitions without a story reason. One focal point per frame, one accent.
-- **Commit locally only** when the user asks; never push or create a GitHub repo unless asked.
+- **Commit locally only** (one commit per approved scene); never push or create a GitHub repo unless asked.
 
 ## Subagents
 

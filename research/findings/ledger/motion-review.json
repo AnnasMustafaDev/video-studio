@@ -1,0 +1,121 @@
+[
+ {
+  "id": "F-A1",
+  "status": "landed",
+  "paths": [
+   "skills/motion-review/tools/inspect.mjs",
+   "skills/motion-review/tools/analysis.mjs",
+   "skills/motion-review/references/rubric.md",
+   "skills/motion-review/SKILL.md"
+  ],
+  "why": "Closes our biggest QA hole (a 2 s freeze passes stills review) and is pure ffmpeg + Node, so it fits the deterministic-frames bar.",
+  "note": "`forensics` implements still holds, pops, one-frame flashes, ghost frames, judder (repeats + irregular pts), banding, loop seam, hard-cut shot lengths, declared-intent qa.json, flagged contact strip. Self-test on B and C drafts found real still holds and a slow open; banding is a heuristic score, judder near-stalls are pointers only."
+ },
+ {
+  "id": "F-A10",
+  "status": "landed",
+  "paths": [
+   "skills/motion-review/agent.md",
+   "skills/motion-review/SKILL.md"
+  ],
+  "why": "We already used a fresh reviewer; the verification-round template and regression hunt are cheap and catch real regressions.",
+  "note": "Verification rounds (FIXED/PARTLY/STILL PRESENT, at most 3 fixes, dense windows), ledger table in review.md, one-round-after-gates then ask, hard stop at 6. Builder passes only the previous defect list."
+ },
+ {
+  "id": "F-A9",
+  "status": "partial",
+  "paths": [
+   "skills/motion-review/tools/inspect.mjs",
+   "skills/motion-review/references/rubric.md"
+  ],
+  "why": "The cap on full-frame beat hits is a hard, checkable rule; the least-squares beat-grid fit belongs to sound-design, not review.",
+  "note": "Landed: sync reports full-frame hit count (max 3) and min gap in beats (16, via --bpm), loop seam in forensics, rubric line. Deferred to prompts/50 and audio.md owners: beat-grid fit, half/double-time check, band-classified onsets."
+ },
+ {
+  "id": "F-A13",
+  "status": "landed",
+  "paths": [
+   "skills/motion-review/references/rubric.md"
+  ],
+  "why": "Numbers give reviews something to check, but the source films are unnamed, so they are reference points, not gates.",
+  "note": "Pacing norms in rubric as reading points; forensics supplies the numbers (median shot, still share, hard cuts). Explicitly not pass/fail, except the spent-once stillness rule."
+ },
+ {
+  "id": "F-B4",
+  "status": "partial",
+  "paths": [
+   "skills/motion-review/tools/inspect.mjs",
+   "skills/motion-review/tools/analysis.mjs",
+   "skills/motion-review/references/rubric.md"
+  ],
+  "why": "Optical-flow check catches surges and stops that stills cannot show; the speed-table brief format is a motion-doc matter.",
+  "note": "`flow` = global affine Lucas-Kanade pyramid on a 30 fps copy, speed in frame widths/s incl. zoom, speed dips, zoom reversals, plot. Verified on synthetic pan-with-stall (dip found at 2.03-3.03 s, truth 2-3 s) and zoom reversal (found at 3.03 s, truth 3.0 s). Not a real-camera test beyond the two drafts; local type animation is skipped as non-camera. Speed-table format for briefs left to the motion-studio/director docs."
+ },
+ {
+  "id": "F-B5",
+  "status": "landed",
+  "paths": [
+   "skills/motion-review/tools/inspect.mjs",
+   "skills/motion-review/tools/analysis.mjs",
+   "skills/motion-review/references/rubric.md"
+  ],
+  "why": "Plotting value and velocity before changing code beats guessing, and costs seconds.",
+  "note": "`plot` takes JSON/CSV in several shapes, --deriv adds velocity and flags zero-velocity stretches mid-curve. Studio-side exporter helper and prompt 15 step belong to the studio/prompts owners."
+ },
+ {
+  "id": "F-C4",
+  "status": "landed",
+  "paths": [
+   "skills/motion-review/tools/inspect.mjs",
+   "skills/motion-review/tools/analysis.mjs",
+   "skills/motion-review/references/rubric.md",
+   "skills/motion-review/SKILL.md"
+  ],
+  "why": "Scoring against an exemplar tells the builder how ours falls short, which a vacuum score cannot.",
+  "note": "`compare` accepts an image, a contact sheet (--cols/--rows) or a video, matched times, reference row over ours, per-pair palette/luma hint; rubric asks for one gap line per pair and forbids copying the reference look."
+ },
+ {
+  "id": "F-C5",
+  "status": "landed",
+  "paths": [
+   "skills/motion-review/references/rubric.md"
+  ],
+  "why": "The critics' warning is more useful than the list: even rhythm is the AI-motion tell, so variance is reviewed.",
+  "note": "Pacing and tension variance section and checklist: name the hard cut and the fast fade, same duration everywhere flagged, one easing everywhere flagged; crossfade-everything and one-easing-everywhere rejected as rules."
+ },
+ {
+  "id": "F-C6",
+  "status": "partial",
+  "paths": [
+   "skills/motion-review/references/rubric.md",
+   "skills/motion-review/SKILL.md"
+  ],
+  "why": "Reviewing against stated, measurable criteria is cheap; writing the glossary belongs to the brief template.",
+  "note": "Reviewer now checks glossary/acceptance criteria by number and flags undefined vague words. Brief template glossary block and revision prompt output owned by others."
+ },
+ {
+  "id": "F-C7",
+  "status": "deferred",
+  "paths": [],
+  "why": "A pre-build plan critic is a builder step and sits in the build prompts, not the post-render reviewer.",
+  "note": "No reviewer change; the optional fresh critic can reuse agent.md's spawn pattern. Belongs in prompts/12 and 14 and phases.md."
+ },
+ {
+  "id": "F-A11",
+  "status": "partial",
+  "paths": [
+   "skills/motion-review/references/rubric.md"
+  ],
+  "why": "Only its cheap-tells catalogue is review material; the concept triple is a direction matter.",
+  "note": "Borrowed tells into banned-effects check (borrowed props, demo with no cause, recycled end card, device dropping at a seam)."
+ },
+ {
+  "id": "F-A12",
+  "status": "partial",
+  "paths": [
+   "skills/motion-review/references/rubric.md"
+  ],
+  "why": "Selected rework-derived rules are cheap pre-empting checks; the rest are taste rules for build docs.",
+  "note": "Added checks: wordmark hold under 1 s, one sheen per hero, handheld shake, last-beat disclaimer 2.5 s."
+ }
+]

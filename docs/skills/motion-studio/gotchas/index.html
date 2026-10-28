@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gotchas catalogue (motion-studio) · Video Studio</title>
+<meta name="description" content="Failure-derived checks. Each line: rule, why, and the evidence level. Read before the first draft; the reviewer and qa.md use the same list. External sources are...">
+<meta property="og:title" content="Gotchas catalogue (motion-studio) · Video Studio">
+<meta property="og:description" content="Failure-derived checks. Each line: rule, why, and the evidence level. Read before the first draft; the reviewer and qa.md use the same list. External sources are...">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23eef3ff'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%233b6cf6'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../../assets/site.css">
+<link rel="stylesheet" href="../../../assets/panel-skills.css">
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="../../../"><span class="dot"></span>Video Studio</a>
+    <nav class="main" aria-label="Main"><a href="../../../">Home</a><a href="../../../tour/">Tour</a><a href="../../../guide/">Guide</a><a href="../../../skills/" aria-current="page">Skills</a><a href="../../../prompts/">Prompts</a><a href="../../../studio/">Studio</a><a href="../../../techniques/">Techniques</a><a href="../../../shot-library/">Shot library</a><a href="../../../research/">Research</a><a href="../../../gallery/">Gallery</a><a href="../../../credits/">Credits</a></nav>
+    <div class="tools">
+      <a class="btn" href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">GitHub</a>
+      <button class="btn" id="theme-toggle" type="button" aria-label="Toggle light or dark theme">Theme</button>
+    </div>
+  </div>
+</header>
+<main>
+  <div class="wrap">
+<nav class="crumbs ps-crumbs" aria-label="Breadcrumb"><a href="../../../">Home</a> <span aria-hidden="true">/</span> <a href="../../../skills/">Skills</a> <span aria-hidden="true">/</span> <a href="../../../skills/motion-studio/">motion-studio</a> <span aria-hidden="true">/</span> <span aria-current="page">Gotchas catalogue</span></nav><header class="ps-head"><div class="ps-badges"><span class="badge plain">Reference</span> <span class="badge">motion-studio</span></div><h1>Gotchas catalogue</h1></header><div class="ps-doc"><article class="ps-article"><p>Failure-derived checks. Each line: rule, why, and the evidence level. Read before the first draft; the reviewer and <code>qa.md</code> use the same list. External sources are credited in <code>learnings.md</code>.</p>
+<h2 id="render-and-layout">Render and layout</h2>
+<table><thead><tr><th>Rule</th><th>Why (evidence)</th></tr></thead><tbody><tr><td>Fast moves (flood, wipe, drag, whip) render <strong>8 motion-blur subframes</strong>, with a shutter below 360 degrees (about 0.7 of a frame). 4 stays the default elsewhere. If ghost steps remain, slow the move instead.</td><td>4 subframes leave ghost copies on fast moves; two authors found it independently (claimed in three prompts, not measured on our output). Check by zooming a fast-move frame pair.</td></tr><tr><td>No <code>will-change</code> on anything the camera scales.</td><td>Blurry scaled text (failure-derived, already in our rules; corroborated).</td></tr><tr><td>A child set <code>visibility: visible</code> shows through a hidden parent; use <code>visibility: inherit</code>.</td><td>Layers appear during a hand-off (failure-derived).</td></tr><tr><td>A flood needs 0.3 to 0.35 s and must overscale past all corners; give every layer an explicit z-index so cards never float above it.</td><td>Half the screen changes in one frame otherwise (we hit this ourselves).</td></tr><tr><td>Typed text sits on fixed lines (layout locked, see design.md &quot;Typed text&quot;) so the camera never follows a wrapping cursor.</td><td>Camera lurches on line wraps (failure-derived).</td></tr><tr><td>Text that swaps inside a morphing shape gets its own mask and its own enter and exit timing.</td><td>Old and new text overlap otherwise (already in motion.md; corroborated).</td></tr><tr><td>A fade shorter than 0.3 s reads as a pop (0.05 s certainly does). Fade at least 0.3 s unless the pop is the intent.</td><td>Failure-derived, from finished films.</td></tr><tr><td>A highlight box behind a word reads like a Windows text selection. Use colour, weight or an underline rule.</td><td>Failure-derived.</td></tr><tr><td>Start each scene at the zoom the previous one ended on; a camera that resets to 1.0 at a hand-off snaps.</td><td>We already hit this (camera reset).</td></tr><tr><td>Fade a card out into the haze or background colour before cutting it to transparent; fading through transparency shows what is behind.</td><td>Failure-derived (fly-over prompt).</td></tr><tr><td>Loop footage is re-encoded all-intra (<code>-g 1</code>) and seeked by blob URL when the server cannot range-seek.</td><td>Failure-derived.</td></tr></tbody></table>
+<h2 id="frame-arithmetic-traps-frame-driven-animation">Frame arithmetic traps (frame-driven animation)</h2>
+<p>Evidence: failure-derived, real rework in a 44-shot explainer (F-A14); all apply to Remotion and the HTML engine.</p>
+<ul><li>A fade-in that returns 0 at frame 0 leaves the first frame of a shot empty. Start soft at 25 to 57 percent opacity, or start on a settled frame.</li><li>A faded exit that ends at 40 to 57 percent opacity pops at a hard cut. Finish the fade (an ease like <code>1 - (n/N)^1.5</code>) or end on a full cut frame.</li><li>First elements of a shot start on the shot&#39;s first frame, not when the caption starts; otherwise an empty beat opens each group.</li><li>An element rendered twice (one steady, one glitching) hides the effect behind the steady copy.</li><li>Do not wrap an already ramping component in a second fade.</li><li>A keyframe table starts with the off-screen value at shot start, or the element parks on screen early.</li><li>A slide-in from below that travels more than about 120 px crosses the caption band.</li><li>Freeze the words before hard-coding frame numbers; changed words shift every number after them (see voice.md).</li><li>Check how many frames the last beat has left before giving it a long animation.</li></ul>
+<h2 id="taste-precedents-each-came-from-a-rework-round">Taste precedents (each came from a rework round)</h2>
+<p>Evidence: first-hand rules from one author&#39;s product-video projects (F-A12); each rule cites a rework.</p>
+<ul><li>Hold a brand wordmark a full second.</li><li>Batch entrances accelerate; they never move at constant speed. End the batch with a half-second rest.</li><li>First drafts are almost always too fast: default one notch slower, then judge.</li><li>No handheld shake in bright UI films.</li><li>At most one sheen or glint per hero element, clipped to its corner radius.</li><li>Sharp text in 3D perspective needs high-resolution rasterising (layout-level zoom), never depth of field as the fix (see three-d.md).</li><li>No small source or disclaimer text on the last beat; if it must be there it needs 2.5 s or more at half opacity or higher.</li></ul><nav class="ps-prevnext" aria-label="Previous and next"><a class="ps-pn prev" href="../golden-scene/"><span class="ps-pn-dir">Previous</span><span class="ps-pn-title">Build loop: golden scene, plan check, commits, acceptance criteria</span></a><a class="ps-pn next" href="../learnings/"><span class="ps-pn-dir">Next</span><span class="ps-pn-title">Learnings log</span></a></nav></article><aside class="ps-side"><details class="ps-side-d" open><summary>On this page</summary><ul class="ps-toc"><li class="l2"><a href="#render-and-layout">Render and layout</a></li><li class="l2"><a href="#frame-arithmetic-traps-frame-driven-animation">Frame arithmetic traps (frame-driven animation)</a></li><li class="l2"><a href="#taste-precedents-each-came-from-a-rework-round">Taste precedents (each came from a rework round)</a></li></ul></details><details class="ps-side-d" open><summary>In motion-studio</summary><ul class="ps-sidelist"><li><a href="../">SKILL.md</a></li><li><a href="../audio/">Music, sound effects, loudness</a></li><li><a href="../banned-effects/">Banned effects: a list per film</a></li><li><a href="../capture/">Capturing a real app</a></li><li><a href="../delivery/">Final delivery (Phase 5)</a></li><li><a href="../design-system/">A reusable motion-design system</a></li><li><a href="../design/">Visual design</a></li><li><a href="../direction/">Direction: brief, story, script, captions</a></li><li><a href="../engine/">Engine: composition, live player, renderer</a></li><li><a href="../formats/">Formats and delivery</a></li><li><a href="../golden-scene/">Build loop: golden scene, plan check, commits, acceptance criteria</a></li><li class="on"><span aria-current="page">Gotchas catalogue</span></li><li><a href="../learnings/">Learnings log</a></li><li><a href="../motion/">Motion</a></li><li><a href="../qa/">QA checklists</a></li><li><a href="../reference-analysis/">Using a visual reference</a></li><li><a href="../review/">Render, inspect, fix: the review loop</a></li><li><a href="../three-d/">3D (three.js): rarely the right call</a></li><li><a href="../transitions/">Transitions: &quot;X becomes Y&quot;, velocity handoff, hidden cuts</a></li><li><a href="../vocabulary/">Vocabulary → recipes in this engine</a></li><li><a href="../voice/">Voice-over</a></li><li><a href="../workflow/">Staged workflow</a></li></ul></details><p class="ps-side-foot"><a href="https://github.com/AnnasMustafaDev/video-studio/blob/main/skills/motion-studio/references/gotchas.md" rel="noopener noreferrer">View source on GitHub</a></p></aside></div><script>
+(function(){
+  var mq = window.matchMedia('(min-width: 981px)');
+  function sync(){ document.querySelectorAll('details.ps-side-d').forEach(function(d){ d.open = mq.matches; }); }
+  sync();
+  if (mq.addEventListener) mq.addEventListener('change', sync);
+  var links = [].slice.call(document.querySelectorAll('.ps-toc a'));
+  if (!links.length || !('IntersectionObserver' in window)) return;
+  var byId = {};
+  links.forEach(function(a){ byId[decodeURIComponent(a.getAttribute('href').slice(1))] = a; });
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (!e.isIntersecting) return;
+      links.forEach(function(a){ a.classList.remove('on'); });
+      var a = byId[e.target.id]; if (a) a.classList.add('on');
+    });
+  }, { rootMargin: '-70px 0px -70% 0px' });
+  Object.keys(byId).forEach(function(id){ var el = document.getElementById(id); if (el) io.observe(el); });
+})();
+</script>
+  </div>
+</main>
+<footer class="site">
+  <div class="wrap cols">
+    <div>
+      <strong>Video Studio</strong><br>
+      A personal studio for motion graphics and animated videos with Claude Code.
+    </div>
+    <div>
+      <a href="https://github.com/AnnasMustafaDev/video-studio" rel="noopener noreferrer">Source on GitHub</a><br>
+      <a href="../../../credits/">Credits and licences</a>
+    </div>
+  </div>
+</footer>
+<script src="../../../assets/site.js" defer></script>
+</body>
+</html>

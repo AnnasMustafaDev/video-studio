@@ -16,6 +16,17 @@
 //        -> per hit: offset of the nearest sound onset (ms) + <out>/sync_wave.png (waveform, red line per hit)
 //        hits.json: [{"t": 2.5, "label": "logo lands"}], [[2.5, "logo lands"]], {"fps":30,"hits":[{"frame":75,...}]}
 //        or the HTML engine's build/comp_timing.json ({"sfx":[{"name","at"}]})
+//   node inspect.mjs forensics <video> [--qa qa.json] [--w 256] [--out dir]
+//        -> measured defects on the ENCODED file: still holds / frozen time, one-frame pops and flashes, ghost (blended) frames
+//           at cuts, judder (duplicate frames inside motion, irregular timestamps), banding, loop-seam match, hard-cut shot lengths.
+//           Writes forensics.json, forensics.md, flagged_contact.png (one labelled frame per finding). qa.json declares intent:
+//           {"loop":true,"holds":[{"from":3,"to":4.6,"reason":"..."}],"flashes":[{"t":5.1,"reason":"..."}],"cuts":[...],"ghosts":[...],"pops":[...],"ignore":["banding"]}
+//   node inspect.mjs flow     <video> [--fps 30] [--cruise <frame-widths/s>] [--out dir]
+//        -> global motion speed (frame-widths per second, incl. zoom) and zoom rate per frame, speed dips and zoom reversals, flow.png + flow.json
+//   node inspect.mjs plot     <data.json|csv> --out plot.png [--fps 30] [--deriv] [--title t]
+//        -> value-over-time plot (and with --deriv its velocity) for any exported motion curve; flags velocity stalls
+//   node inspect.mjs compare  <video> <reference-image|sheet|video> [--cols 4 --rows 3] [--times 1,3,5] [--n 6] [--out dir]
+//        -> compare.png: reference tiles over our frames at matched times, plus a palette/luma drift number per pair
 //
 // Default --out is "<video dir>/qa/<video name>/" (or "<dir>/qa/" for tile).
 import { spawnSync } from 'node:child_process';
@@ -38,7 +49,7 @@ const done = (result, metadata = {}) => { console.log(JSON.stringify({ status: '
 const fail = (error, details) => { console.log(JSON.stringify({ status: 'error', error, details })); process.exit(1); };
 
 if (!cmd || cmd === '--help' || cmd === 'help') {
-  console.log('usage: inspect.mjs sheet|tile|strip|poster|probe|sync ... (see header of this file)');
+  console.log('usage: inspect.mjs sheet|tile|strip|poster|probe|sync|forensics|flow|plot|compare ... (see header of this file)');
   process.exit(cmd ? 0 : 1);
 }
 
@@ -245,8 +256,18 @@ if (cmd === 'sync') {
   const marks = hits.map((h) => `drawbox=x=${Math.round((h.t / info) * W)}:y=0:w=2:h=240:color=red@0.9:t=fill`).join(',');
   const wave = join(out, 'sync_wave.png');
   ff(['-i', file, '-filter_complex', `[0:a]aformat=channel_layouts=mono,showwavespic=s=${W}x240:colors=0x9ad0ff${marks ? ',' + marks : ''}`, '-frames:v', '1', wave]);
-  done({ hits: results, wave, tolerance_ms: tol, all_pass: results.every((r) => r.pass) },
+  // beat-hit cap: full-frame / camera-layer impacts at most 3 per film, at least 16 beats apart (mark them "scope":"full" in hits.json; pass --bpm)
+  const rawList = list.filter((h) => !Array.isArray(h));
+  const full = hits.filter((h, i) => rawList[i] && (rawList[i].scope === 'full' || rawList[i].full === true)).map((h) => h.t).sort((a, b) => a - b);
+  let fullCap = null;
+  if (full.length) {
+    const beat = flags.bpm ? 60 / Number(flags.bpm) : null;
+    const gaps = full.slice(1).map((t, i) => t - full[i]);
+    fullCap = { count: full.length, max_allowed: 3, count_ok: full.length <= 3, min_gap_s: gaps.length ? Math.round(Math.min(...gaps) * 100) / 100 : null, min_gap_beats: beat && gaps.length ? Math.round((Math.min(...gaps) / beat) * 10) / 10 : 'pass --bpm to count beats', gap_ok: beat && gaps.length ? Math.min(...gaps) / beat >= 16 : null };
+  }
+  done({ hits: results, wave, tolerance_ms: tol, all_pass: results.every((r) => r.pass), full_frame_hits: fullCap },
     { note: 'Onset of the loudest 10 ms event within ±150 ms of each hit (positive = sound late). Voice or music can be louder than a soft SFX: read failures against sync_wave.png (red lines = hits) before acting.' });
 }
 
+await import('./analysis.mjs').then((m) => m.main({ cmd, flags, pos, helpers: { run, ff, probe, outDir, frameAt, pages, label, esc, FONT, done, fail } }));
 fail(`unknown command ${cmd}`);

@@ -58,6 +58,30 @@ Skills: `remotion-best-practices` (router, start here), `remotion-create`, `remo
 
 Update them with `npx remotion skills update`.
 
+## Techniques (new helpers)
+
+`TechniquesDemo` (`src/videos/techniques-demo/`, 11.4 s; `REGISTER.md` there lists the lines to add to `Root.tsx`) uses each once. All frame-based, exported from `src/lib`:
+
+| Helper | Use it when | Why (evidence) |
+|---|---|---|
+| `buoyant(bob?)` easing | A rising element should keep drifting through its peak | One production write-up; a velocity plot found a 16 % stall |
+| `exitRamp`, `entryDecay`, `velocityCut` | Momentum across a cut | Author-measured numbers, claimed |
+| `occluderCut` | Hide a cut behind a soft band | Tuned on placeholder material |
+| `frameRamp`, `frameType`, `useFrameType` | Hero type in vw, text floor enforced | Published launch-video spec |
+| `FragmentChain`, `lintCopy` | Copy as 1 to 4 word fragments with a word budget | Eight-film study, author's claim |
+| `speedCurve`, `logZoom`, `Camera` | Glide shots from a speed table | One precisely described prompt |
+| `GhostType` | Typed text without reflow | Well-known layout trick |
+| `paginateCaptions(..., {maxPageMs, breakOnSentence})` | Captions on cut audio | One reported failure |
+| `sampleCurve`, `longestStall`, exporter script | Plot a move instead of guessing | The write-up above |
+
+Scripts (not yet in `package.json`, which this change did not touch): `node scripts/export-curve.mjs <buoyant|cubicOut|exitRamp|entryDecay|speedCurve> [--frames N] [--count N] [--out file]` writes `out/curves/<name>.json` as `{name, fps, unit, startFrame, values[]}` and prints the longest mid-move stall (more than 2 frames reads as a stall); `node scripts/copy-lint.mjs "a|b|c" --seconds 11` checks the copy budget. Both need Node 22.13+ (they load the `.ts` files directly).
+
+Frame-arithmetic traps (F-A14) are listed in the header of `src/lib/curves.ts`.
+
+### Motion blur per shot (F-B12)
+
+Fast moves (wipes, drags, the velocity cut) show ghost steps at few subframes; the source reports 8 subframes (16 for fly-overs, shutter under 360 degrees) and slowing the move as the alternative. Here, `velocityCut` fakes a directional blur with an SVG blur sized from the per-frame step. For real subframe blur the official `@remotion/motion-blur` (`<CameraMotionBlur samples shutterAngle>`) exists at 4.0.537, MIT, about 24 KB. It is NOT installed. Vet before adding: install at the exact pinned version, wrap only the fast shot (it renders children several times, so render time grows only there), then zoom into a fast frame pair to look for steps. Evidence: stated in three prompts, not measured on this studio's output.
+
 ## Rendering notes
 
 - Everything is deterministic: `useCurrentFrame()` / `interpolate()` / `spring()` only, `random(seed)` for noise. No CSS transitions, `requestAnimationFrame`, timers or `Math.random()`.

@@ -46,14 +46,17 @@ The paper trail for each video (brief, storyboard, review) lives in `../projects
 
 ## Official Remotion agent skills
 
-Installed with `npx remotion skills add` (source: `remotion-dev/skills`, pinned in `skills-lock.json`):
+Not committed to git (the upstream `remotion-dev/skills` repo declares no licence, so this repo does not redistribute them). Install them after cloning, from `studio/`:
 
-- `.agents/skills/`: the canonical copies (read by Cursor, Codex and other agents).
-- `.claude/skills/`: the same skills for Claude Code (real copies; the installer creates absolute-path junctions on Windows, which were replaced so the repo stays portable).
+```bash
+npx remotion skills add
+```
+
+The versions are pinned in `skills-lock.json`. They land in `.agents/skills/` (Cursor, Codex and other agents) and `.claude/skills/` (Claude Code); on Windows the installer creates absolute-path junctions for the second, which is fine locally.
 
 Skills: `remotion-best-practices` (router, start here), `remotion-create`, `remotion-markup`, `remotion-interactivity`, `remotion-captions`, `remotion-render`, `remotion-studio`, `remotion-docs`, `remotion-multimedia`, `remotion-maps`, `remotion-saas`, `remotion-upgrade`.
 
-Update them with `npx remotion skills update`, then re-copy `.agents/skills/*` into `.claude/skills/`.
+Update them with `npx remotion skills update`.
 
 ## Rendering notes
 

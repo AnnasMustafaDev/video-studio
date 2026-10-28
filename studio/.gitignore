@@ -5,3 +5,8 @@ dist
 
 # Renders, stills and the stills bundle. Videos you import go in public/ and are tracked.
 out/
+
+# Official Remotion agent skills: installed per machine with `npx remotion skills add`
+# (pinned in skills-lock.json); upstream declares no licence, so they are not redistributed here.
+.agents/skills/
+.claude/skills/

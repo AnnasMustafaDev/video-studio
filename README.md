@@ -37,7 +37,7 @@ More recipes (launch teaser, YouTube explainer, Instagram reel, data story, UI d
 
 | Path | What it is |
 |---|---|
-| [`studio/`](studio/) | Remotion 4 project (React, frame-based). Component library in `src/lib/` (titles, kinetic type, captions, lower thirds, counters, charts, transitions, backgrounds, sound cues), design tokens, [`DESIGN_SYSTEM.md`](studio/DESIGN_SYSTEM.md), the official Remotion agent skills, and a `_template` for new videos |
+| [`studio/`](studio/) | Remotion 4 project (React, frame-based). Component library in `src/lib/` (titles, kinetic type, captions, lower thirds, counters, charts, transitions, backgrounds, sound cues), design tokens, [`DESIGN_SYSTEM.md`](studio/DESIGN_SYSTEM.md), a lock file for the official Remotion agent skills (`npx remotion skills add`), and a `_template` for new videos |
 | [`prompts/`](prompts/) | Prompt library. [`prompts/INDEX.md`](prompts/INDEX.md) says which prompt to use for which purpose, and in what order |
 | [`skills/`](skills/) | Claude Code skills (see below). Installed into `~/.claude/skills` with `node tools/install-skills.mjs` |
 | [`third_party/`](third_party/) | Vendored third-party skills, pinned to an upstream commit and never edited here (each has an `UPSTREAM.md` with source, licence and how to update). The same install script installs them |
@@ -67,6 +67,7 @@ cd video-studio
 node tools/install-skills.mjs        # copies skills/ into ~/.claude/skills (backs up existing ones)
 cd studio
 npm install
+npx remotion skills add             # official Remotion agent skills (pinned in skills-lock.json)
 npm run stills -- LibraryShowcase 50,130,245,350,449   # renders frames + a contact sheet
 npm run dev                                           # Remotion Studio preview
 ```

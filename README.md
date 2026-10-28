@@ -4,6 +4,47 @@ A personal studio for making motion graphics and animated videos with Claude Cod
 
 The idea: Claude works as creative director, motion designer, animator and engineer, and you direct it stage by stage. You don't ask for a whole video in one shot. Every frame is rendered from code, and quality is judged on rendered frames, never on the code.
 
+![The 15 s library showcase, rendered entirely from code in studio/](docs/media/showcase.gif)
+
+<sub>The library showcase (15 s, 1920x1080, 30 fps), built from the components in <code>studio/src/lib</code>. Full quality with sound: <a href="docs/media/showcase.mp4">showcase.mp4</a>.</sub>
+
+## Demo
+
+### Frames from the showcase
+
+Title reveal, kinetic type with one accent word, an animated counter and bar chart, a lower third, word-timed captions and the end card. Each one is a reusable component with props for content, timing and colour.
+
+![Six settled frames from the library showcase](docs/media/frames.png)
+
+### The same system in 9:16
+
+A vertical cut recomposed for its own frame (not cropped), using the 9:16 safe margins from the design tokens. Video: [showcase-vertical.mp4](docs/media/showcase-vertical.mp4).
+
+<img src="docs/media/vertical-frames.png" alt="Two frames from the vertical showcase" width="520">
+
+### The guide
+
+[`guide/index.html`](guide/index.html) is a single offline page with every prompt behind a copy button, a section filter and light and dark themes.
+
+![The illustrated guide](docs/media/guide.png)
+
+## Examples
+
+What to type in Claude Code, and which part of the studio picks it up.
+
+| You ask | What happens | Uses |
+|---|---|---|
+| "I want a 20 s launch teaser for my side project. Give me three creative directions, no code yet." | Three genuinely different directions (look, type, pacing, transitions, sound), one recommended with reasons | `motion-director`, `prompts/10` |
+| "Direction B. Storyboard it." | A timed scene table: first and last frame, focal point, exact text, motion, easing, transition, sound cue per scene, plus a hits table | `motion-director`, `prompts/11` |
+| "Build scene 1 only and show me the stills." | One scene in `studio/src/videos/<slug>/`, rendered stills and a contact sheet that Claude actually looks at and fixes | `remotion-studio`, `prompts/12` |
+| "Strict review." | A fresh reviewer scores nine dimensions from the rendered frames and lists the five worst defects with fixes | `motion-review`, `prompts/13` |
+| "Find me product UI animations on prompt-motion that use a phone." | Three to five matches with the original prompt, author credit and a link to watch, then a proper brief from the one you pick | `prompt-motion-search`, `prompts/21` |
+| "Analyse this reel and make something with the same feel for my app." | A breakdown of composition, type, motion, timing and sound, separating what is observed from what is guessed, then a plan that keeps the principles but not the branding | `motion-director`, `prompts/20` |
+| "Make the 9:16 and 1:1 versions." | Each format recomposed for its own frame and safe margins | `remotion-studio`, `prompts/52` |
+| "/brag" (inside a project you just built) | A 15 to 25 s launch video of that project in one command | `brag` |
+
+More recipes (launch teaser, YouTube explainer, Instagram reel, data story, UI demo) are in [`prompts/INDEX.md`](prompts/INDEX.md).
+
 ## What's inside
 
 | Path | What it is |

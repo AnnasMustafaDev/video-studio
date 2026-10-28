@@ -10,18 +10,6 @@ The idea: Claude works as creative director, motion designer, animator and engin
 
 ## Demo
 
-### Frames from the showcase
-
-Title reveal, kinetic type with one accent word, an animated counter and bar chart, a lower third, word-timed captions and the end card. Each one is a reusable component with props for content, timing and colour.
-
-![Six settled frames from the library showcase](docs/media/frames.png)
-
-### The same system in 9:16
-
-A vertical cut recomposed for its own frame (not cropped), using the 9:16 safe margins from the design tokens. Video: [showcase-vertical.mp4](docs/media/showcase-vertical.mp4).
-
-<img src="docs/media/vertical-frames.png" alt="Two frames from the vertical showcase" width="520">
-
 ### The guide
 
 [`guide/index.html`](guide/index.html) is a single offline page with every prompt behind a copy button, a section filter and light and dark themes.
